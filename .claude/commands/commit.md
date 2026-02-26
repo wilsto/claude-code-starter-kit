@@ -60,7 +60,29 @@ If tests fail → **STOP**. Do not commit broken code. Show the failure output.
   - Example: `fix(auth): prevent session token from expiring on idle`
 - Never add `Co-Authored-By` in commit messages
 
-## Step 7: Push (if requested)
+## Step 7: Update CHANGELOG.md
+
+After a successful commit, update `CHANGELOG.md`:
+
+1. Read the current CHANGELOG.md
+2. Add the commit to the `## [Unreleased]` section under the appropriate category:
+   - `feat` → **Added**
+   - `fix` → **Fixed**
+   - `refactor` → **Changed**
+   - `perf` → **Changed**
+   - `docs` → **Changed** (or skip if trivial)
+   - `chore` → skip (unless significant infrastructure change)
+   - `test` → skip (unless notable testing infrastructure change)
+3. Write a human-readable one-liner (not the raw commit message — rephrase for a changelog audience)
+4. Stage and amend the commit to include the changelog update:
+   ```bash
+   git add CHANGELOG.md
+   git commit --amend --no-edit
+   ```
+
+If CHANGELOG.md does not exist, create it with the [Keep a Changelog](https://keepachangelog.com/) format.
+
+## Step 8: Push (if requested)
 
 ```bash
 git push origin {{DEFAULT_BRANCH}}
