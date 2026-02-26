@@ -84,12 +84,15 @@ Then run `/setup` or manually replace the `{{PLACEHOLDER}}` values ([see guide](
 | **`/audit-conformity`** | Analyzes an existing project against the template. Produces a scorecard with corrective actions. |
 
 > **Commands vs Skills** — Claude Code has two extension mechanisms:
-> - **Slash commands** (`.claude/commands/*.md`) — You type `/name` to invoke them. All 4 commands above work this way.
+> - **Slash commands** (`.claude/commands/*.md`) — You type `/name` to invoke them explicitly.
 > - **Skills** (`.claude/skills/*/SKILL.md`) — Claude auto-invokes them when the context matches, without you typing anything.
->
-> `/tdd` and `/commit` exist as **both** command + skill: you can invoke them explicitly, and Claude will also activate them automatically when relevant (e.g., starting a bug fix triggers TDD, staging changes triggers commit quality gate).
->
-> `/setup` and `/audit-conformity` are **command-only**: they run only when you explicitly ask — Claude won't auto-trigger a project setup or audit on its own.
+
+| Feature | `/command` (you type) | Auto-skill (Claude triggers) |
+|---------|:---------------------:|:----------------------------:|
+| `/tdd` | yes | yes — activates on bug fix / feature work |
+| `/commit` | yes | yes — activates when staging changes |
+| `/setup` | yes | no — runs only when you ask |
+| `/audit-conformity` | yes | no — runs only when you ask |
 
 ### Memory System (cross-session persistence)
 
