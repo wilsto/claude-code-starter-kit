@@ -35,7 +35,7 @@ Claude Code is powerful out of the box. But without guardrails, it will:
 - Create inconsistent commits with no quality checks
 - Forget lessons learned in previous sessions
 
-This starter kit solves all of that with **5 hooks**, **4 skills**, and a **persistent memory system** — all language-agnostic, all battle-tested in production.
+This starter kit solves all of that with **6 hooks**, **7 commands**, and a **persistent memory system** — all language-agnostic, all battle-tested in production.
 
 ---
 
@@ -66,17 +66,18 @@ Then run `/setup` or manually replace the `{{PLACEHOLDER}}` values ([see guide](
 
 ## What's Included
 
-### 5 Hooks (automatic, zero effort)
+### 6 Hooks (automatic, zero effort)
 
 | Hook | Type | What it does |
 |------|------|-------------|
 | **block-secrets** | `PreToolUse` (hard deny) | Blocks Claude from editing `.env*`, `secrets.*`, `config.json`. Zero tolerance. |
 | **tdd-guard** | `PreToolUse` (soft reminder) | Reminds you to write a failing test before editing source files. Non-blocking. |
-| **session-context** | `SessionStart` | Injects memory + session handoff at startup and after `/compact`. Prevents context amnesia. |
+| **skill-evaluator** | `PreToolUse` (advisory) | Detects raw `git commit`/`git add -A` and suggests using `/commit` instead. Customizable triggers. |
+| **session-context** | `SessionStart` | Injects environment, memory, active context, scratchpad, and session handoff at startup and after `/compact`. Token-budgeted (~890 tokens max). |
 | **post-commit-lessons** | `PostToolUse` (advisory) | After a successful `git commit`, prompts Claude to evaluate if lessons should be saved to memory. |
 | **commit-reminder** | `PostToolUse` (advisory) | After tests pass with uncommitted changes, suggests committing at natural breakpoints. |
 
-### 4 Slash Commands
+### 7 Slash Commands
 
 | Command | What it does |
 |---------|-------------|
@@ -84,6 +85,9 @@ Then run `/setup` or manually replace the `{{PLACEHOLDER}}` values ([see guide](
 | **`/commit`** | Quality gate: secret scan (blocking) + slop scan + format check + test gate + conventional commit. |
 | **`/setup`** | Interactive wizard. Asks your stack, fills all placeholders, configures hooks automatically. |
 | **`/audit-conformity`** | Analyzes an existing project against the template. Produces a scorecard with corrective actions. |
+| **`/review`** | Spawns a code-review sub-agent. Analyzes `git diff` for correctness, conventions, security. Read-only. |
+| **`/simplify`** | Spawns a simplifier sub-agent. Finds dead code, over-abstraction, duplication. Read-only. |
+| **`/test-runner`** | Spawns a test diagnostics sub-agent. Runs tests, parses failures, diagnoses root causes. Read-only. |
 
 > **Commands vs Skills** — Claude Code has two extension mechanisms:
 > - **Slash commands** (`.claude/commands/*.md`) — You type `/name` to invoke them explicitly.
@@ -95,14 +99,20 @@ Then run `/setup` or manually replace the `{{PLACEHOLDER}}` values ([see guide](
 | `/commit` | yes | yes — activates when staging changes |
 | `/setup` | yes | no — runs only when you ask |
 | `/audit-conformity` | yes | no — runs only when you ask |
+| `/review` | yes | no — runs only when you ask |
+| `/simplify` | yes | no — runs only when you ask |
+| `/test-runner` | yes | no — runs only when you ask |
 
 ### Memory System (cross-session persistence)
 
-| File | Auto-injected? | Purpose |
-|------|---------------|---------|
-| `memory/MEMORY.md` | Yes (every session) | Index file: project identity, preferences, session notes. Under 200 lines. |
-| `memory/patterns.md` | No (on demand) | Technical patterns, debugging lessons, reusable solutions. |
-| `memory/session-cache.json` | Yes (via hook) | Structured handoff: done/decisions/next/gotchas. Written by Stop hook. |
+| File | Auto-injected? | Purpose | Token budget |
+|------|---------------|---------|-------------|
+| `memory/MEMORY.md` | Yes (session notes) | Index file: project identity, preferences, session notes. Under 200 lines. | ~100 |
+| `memory/active-context.md` | Yes (focus + next steps) | Current work context. Only "Current Focus" and "Immediate Next Steps" are injected. | ~150 |
+| `memory/scratchpad.md` | Yes (last 30 lines) | Append-only work log. Survives `/compact`. Cleared at start of each new feature. | ~500 |
+| `memory/decisions.md` | No (on demand) | Architectural Decision Records (ADR-lite). Prevents relitigating across sessions. | — |
+| `memory/patterns.md` | No (on demand) | Technical patterns, debugging lessons, reusable solutions. | — |
+| `memory/session-cache.json` | Yes (via hook) | Structured handoff: done/decisions/next/gotchas. Written by Stop hook. | ~100 |
 
 ### Safety Net (permissions)
 
@@ -170,11 +180,15 @@ claude-code-starter-kit/
 │   │   ├── tdd.md               # /tdd
 │   │   ├── commit.md            # /commit
 │   │   ├── setup.md             # /setup
-│   │   └── audit-conformity.md  # /audit-conformity
+│   │   ├── audit-conformity.md  # /audit-conformity
+│   │   ├── review.md            # /review (sub-agent code review)
+│   │   ├── simplify.md          # /simplify (sub-agent complexity analysis)
+│   │   └── test-runner.md       # /test-runner (sub-agent test diagnostics)
 │   ├── hooks/                   # Automatic hooks (run without user action)
 │   │   ├── block-secrets.js     # Hard-deny on secret files
 │   │   ├── tdd-guard.js         # Soft TDD reminder on source edits
-│   │   ├── session-context.js   # Memory injection at startup + compact
+│   │   ├── skill-evaluator.js   # Suggests skills when raw commands detected
+│   │   ├── session-context.js   # Memory + env injection at startup + compact
 │   │   ├── post-commit-lessons.js # Lesson evaluation after each commit
 │   │   └── commit-reminder.js   # Commit suggestion after tests pass
 │   └── skills/                  # Auto-invoked by Claude when context matches
@@ -182,7 +196,11 @@ claude-code-starter-kit/
 │       └── commit/SKILL.md      # Auto-activates when staging changes
 └── memory/
     ├── MEMORY.md                # Auto-injected index (< 200 lines)
-    └── patterns.md              # On-demand technical patterns
+    ├── active-context.md        # Current work context (focus + next steps injected)
+    ├── scratchpad.md            # Append-only work log (last 30 lines injected)
+    ├── decisions.md             # Architectural decision records (on-demand)
+    ├── patterns.md              # On-demand technical patterns
+    └── session-cache.json       # Session handoff (auto-generated)
 ```
 
 ---
@@ -219,6 +237,7 @@ Every configurable value is clearly marked in the source:
 
 - **`block-secrets.js`** — `BLOCKED_PATHS` array at the top
 - **`tdd-guard.js`** — `SRC_DIRS`, `EXCLUDED_PATTERNS`, `SOURCE_EXTENSIONS` arrays at the top
+- **`skill-evaluator.js`** — `SKILL_TRIGGERS` array: add regex patterns for new skills
 - **`CLAUDE.md`** — `{{PLACEHOLDER}}` values throughout
 - **Skills** — `{{TEST_COMMAND}}`, `{{FORMAT_COMMAND}}` etc.
 

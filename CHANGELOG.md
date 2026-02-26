@@ -6,6 +6,26 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), using [Conventi
 
 ## [Unreleased]
 
+## [1.3.0] - 2026-02-26
+
+### Added
+
+- **Skill evaluator hook** (`skill-evaluator.js`): PreToolUse on Bash detects raw `git commit`/`git add -A` and suggests `/commit` workflow (advisory, never blocks)
+- **3 sub-agent commands**: `/review` (code review), `/simplify` (complexity analysis), `/test-runner` (test diagnostics) — all read-only, using Task tool delegation
+- **Extended memory bank**: `memory/decisions.md` (ADR-lite, on-demand), `memory/active-context.md` (auto-injected: focus + next steps, ~150 tokens)
+- **Compact-resilient scratchpad** (`memory/scratchpad.md`): append-only work log, last 30 lines auto-injected after /compact (~500 tokens max)
+- **Environment context injection**: session-context.js now injects cwd, branch, git status, and detected stack at session start and after /compact (~40 tokens)
+- Scratchpad Protocol section in CLAUDE.md
+- Active context update in Stop hook prompt
+- Token budget documentation (~890 tokens max per SessionStart injection)
+
+### Changed
+
+- `session-context.js` enhanced with 4 new injection blocks (environment, active context, scratchpad, all with size limits)
+- `settings.json` updated with skill-evaluator PreToolUse matcher and enriched Stop prompt
+- CLAUDE.md Structure section expanded with full memory/ and .claude/ tree
+- MEMORY.md updated with new topic files and auto-injected files sections
+
 ## [1.2.0] - 2026-02-26
 
 ### Added
@@ -54,7 +74,8 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), using [Conventi
 - Plan mode approval required before audit applies fixes
 - Language examples for Python, Node.js, Go, Rust (later replaced by stacks)
 
-[Unreleased]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.2.0...HEAD
+[Unreleased]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.3.0...HEAD
+[1.3.0]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.1.1...v1.2.0
 [1.1.1]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.1.0...v1.1.1
 [1.1.0]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.0.0...v1.1.0
