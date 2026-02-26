@@ -14,7 +14,7 @@ Use this table throughout the audit for display and persistence.
 | `tdd-guard` | 2 | TDD Guard | HIGH | ~10 min | Quality |
 | `session-memory` | 3 | Session Memory | MEDIUM | ~5 min | Productivity |
 | `deny-list` | 4 | Destructive Deny List | CRITICAL | ~2 min | Security |
-| `claude-md-reconciliation` | 5 | CLAUDE.md Reconciliation | MEDIUM | ~15 min | Documentation |
+| `claude-md-reconciliation` | 5 | CLAUDE.md Reconciliation | HIGH | ~15 min | Documentation |
 | `context-optimization` | 6 | Context Optimization | LOW | ~5 min | Performance |
 | `git-hygiene` | 7 | Git Hygiene | MEDIUM | ~2 min | Hygiene |
 | `stack-guides` | 8 | Stack Guides | LOW | ~20 min | Documentation |
@@ -121,14 +121,40 @@ This check goes beyond verifying sections — it performs a full **reconciliatio
 
 ### Phase B — Gap & Conflict Analysis
 
-Check for these **required template sections** (search across CLAUDE.md AND .claude/rules/):
+Check for the following **template sections** across CLAUDE.md, `.claude/rules/`, and CLAUDE.local.md. Sections are organized in 3 tiers by behavioral impact.
 
-- TDD Rules (or equivalent TDD section)
-- Quality Gate (or equivalent pre-commit checks)
-- Conventions (commit format, secrets policy)
-- Model Selection (or equivalent)
+#### CRITICAL sections (5) — Behavioral guardrails. Any missing = check FAIL.
 
-For each required section, classify:
+| Section | Search patterns (case-insensitive) | Why it matters |
+|---------|-----------------------------------|----------------|
+| Roles | `## Roles`, `PO.*Dev Team`, `Product Owner` | Defines the PO/Dev Team contract — without it Claude may self-direct |
+| Decision Authority | `## Decision Authority`, `## Autonomy`, `Level 1.*autonomy` | 4-level autonomy model — without it Claude has no permission boundaries |
+| Stopping Protocol | `## Stopping Protocol`, `**Done:**.*Blocked` | Mandatory done/blocked format — ensures accountability |
+| Quality Gate | `## Quality Gate`, `pre-commit checks` | Pre-commit safety net (secrets, tests, format) |
+| Conventions | `## Conventions`, `commit format`, `secrets policy` | Commit format, secrets policy, core behavioral rules |
+
+#### RECOMMENDED sections (5) — Workflow. Missing = warning, counted in score.
+
+| Section | Search patterns (case-insensitive) | Why it matters |
+|---------|-----------------------------------|----------------|
+| Task Workflow | `## Task Workflow`, `TodoWrite.*subtask` | Systematic 6-step task decomposition process |
+| TDD Rules | `## TDD`, `RED.*GREEN`, `failing test` | Mandatory test-first discipline |
+| Commit Rhythm | `## Commit Rhythm`, `natural breakpoint` | Commit cadence guidance, prevents lost work |
+| Scratchpad Protocol | `## Scratchpad`, `scratchpad.md` | Running work log that survives /compact |
+| Compact Instructions | `## Compact`, `/compact.*preserve` | What to preserve when /compact is triggered |
+
+#### INFORMATIONAL sections (4) — Project-specific. Noted but not scored.
+
+| Section | Search patterns (case-insensitive) | Why it matters |
+|---------|-----------------------------------|----------------|
+| Project Identity | `## Project Identity`, `## About`, `## Description` | Placeholder — expected to be customized per project |
+| Structure | `## Structure`, `## Project Structure`, `## Layout` | Project-specific directory layout |
+| Workflow | `## Workflow` (but not `## Task Workflow`) | Project-specific commands (test, push) |
+| Model Selection | `## Model Selection`, `Haiku.*Sonnet.*Opus` | Optional model guidance |
+
+#### Classification per section
+
+For each section found (or not), classify:
 
 - **MISSING** — not found anywhere (CLAUDE.md, rules/, local)
 - **PRESENT** — found in CLAUDE.md or `.claude/rules/`
@@ -154,18 +180,36 @@ For each finding, propose the appropriate action:
 
 Existing CLAUDE.md: X lines (sections: ...)
 .claude/rules/: N files (list them)
-Template sections: found M/4
 
-Analysis:
-  [MISSING]   TDD Rules — not found anywhere
+CRITICAL sections (5): found C/5
+  [PRESENT]   Roles — found in CLAUDE.md line 20
+  [MISSING]   Decision Authority — not found anywhere
+  [PRESENT]   Stopping Protocol — found in CLAUDE.md line 72
   [PRESENT]   Quality Gate — found in CLAUDE.md line 45
   [CONFLICT]  Conventions — project says "tabs" vs template "spaces"
+
+RECOMMENDED sections (5): found R/5
+  [MISSING]   Task Workflow — not found anywhere
+  [PRESENT]   TDD Rules — found in CLAUDE.md line 50
+  [PRESENT]   Commit Rhythm — found in .claude/rules/workflow.md
+  [MISSING]   Scratchpad Protocol — not found anywhere
+  [PRESENT]   Compact Instructions — found in CLAUDE.md line 80
+
+INFORMATIONAL sections (4): noted
+  [EXISTING]  Project Identity — customized (12 lines)
+  [MISSING]   Structure — not found (consider adding project layout)
+  [PRESENT]   Workflow — found in CLAUDE.md line 40
+  [PRESENT]   Model Selection — found in CLAUDE.md line 90
+
+Project-specific sections (not in template):
   [EXISTING]  Architecture (32 lines) — project-specific, keep as-is
 
 Proposed reconciliation:
-  1. Add TDD Rules section to CLAUDE.md (no conflict)
-  2. Keep project's Conventions, add template extras → .claude/rules/template-conventions.md
-  3. Move Architecture section → .claude/rules/architecture.md (declutter)
+  1. [CRITICAL] Add Decision Authority to CLAUDE.md (no conflict)
+  2. [RECOMMENDED] Add Task Workflow to CLAUDE.md (no conflict)
+  3. [RECOMMENDED] Add Scratchpad Protocol to CLAUDE.md (no conflict)
+  4. Keep project's Conventions, add template extras → .claude/rules/template-conventions.md
+  5. Move Architecture section → .claude/rules/architecture.md (declutter)
 ```
 
 ### Zero-loss guarantee
@@ -178,8 +222,9 @@ Strict rules:
 - Show a clear diff for each proposed change
 - When in doubt → ask the user, never assume
 
-**PASS**: All 4 required sections present (in CLAUDE.md or rules/), no unresolved conflicts.
-**FAIL**: Missing sections or unresolved conflicts. List the gaps and proposals.
+**PASS**: All 5 CRITICAL sections present (in CLAUDE.md or rules/), no unresolved conflicts. RECOMMENDED sections may have gaps (noted as warnings).
+**WARN**: All CRITICAL sections present, but 1+ RECOMMENDED sections missing. Score counts both tiers. Mapped to PASS in audit-config.json.
+**FAIL**: Any CRITICAL section missing OR unresolved conflicts in CRITICAL sections. List the gaps and proposals with tier labels.
 
 ## Check 6: Context Optimization
 
@@ -251,7 +296,7 @@ Score: X/Y applicable (Z skipped)
   [FAIL] 2. TDD Guard                [HIGH     | ~10 min] — SRC_DIRS missing: internal/, pkg/
   [PASS] 3. Session Memory            [MEDIUM   | ~5 min]  — MEMORY.md has content, hooks wired
   [PASS] 4. Deny List                 [CRITICAL | ~2 min]  — all critical patterns denied
-  [FAIL] 5. CLAUDE.md Reconciliation  [MEDIUM   | ~15 min] — missing: TDD Rules, Model Selection
+  [FAIL] 5. CLAUDE.md Reconciliation  [HIGH     | ~15 min] — CRITICAL: 4/5, RECOMMENDED: 3/5 (missing: Decision Authority, Task Workflow, Scratchpad)
   [PASS] 6. Context Optimization      [LOW      | ~5 min]  — .claudeignore covers 5 directories
   [SKIP] 7. Git Hygiene               — "Pre-commit hooks instead" (2026-02-15)
   [SKIP] 8. Stack Guides              — "Custom mono-repo stack" (2026-02-20)
@@ -293,7 +338,7 @@ If there are any FAIL items, present this menu using **AskUserQuestion** (one si
 
 Failed items:
   [1] Fix: TDD Guard — add internal/, pkg/ to SRC_DIRS              [HIGH | ~10 min]
-  [2] Fix: CLAUDE.md Reconciliation — add TDD Rules, Model Selection [MEDIUM | ~15 min]
+  [2] Fix: CLAUDE.md Reconciliation — add Decision Authority [CRITICAL], Task Workflow, Scratchpad [RECOMMENDED]  [HIGH | ~15 min]
 
 Options:
   [S] Skip a check permanently (mark as "not applicable" for this project)

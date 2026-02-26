@@ -6,6 +6,12 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), using [Conventi
 
 ## [Unreleased]
 
+## [1.6.0] - 2026-02-26
+
+### Changed
+
+- **CLAUDE.md Reconciliation** (Check 5): expanded from 4 hardcoded sections to 14 template sections organized in 3 tiers (5 CRITICAL, 5 RECOMMENDED, 4 INFORMATIONAL) with flexible search patterns and PASS/WARN/FAIL criteria — impact raised to HIGH
+
 ## [1.5.0] - 2026-02-26
 
 ### Added
@@ -109,7 +115,8 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), using [Conventi
 - Plan mode approval required before audit applies fixes
 - Language examples for Python, Node.js, Go, Rust (later replaced by stacks)
 
-[Unreleased]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.5.0...HEAD
+[Unreleased]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.6.0...HEAD
+[1.6.0]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.5.0...v1.6.0
 [1.5.0]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.4.0...v1.5.0
 [1.4.0]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.3.0...v1.4.0
 [1.3.0]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.2.0...v1.3.0
