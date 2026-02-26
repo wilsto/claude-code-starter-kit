@@ -55,14 +55,9 @@ description: >
 {{TEST_COMMAND_COVERAGE}}
 ```
 
-## Examples by language
+## Multi-stack projects
 
-<!-- Uncomment the relevant block for your stack -->
-
-<!-- Node/Vitest:   npx vitest run / npx vitest run path/to/test / npx vitest run --coverage -->
-<!-- Python/pytest:  pytest / pytest path/to/test.py / pytest --cov -->
-<!-- Go:             go test ./... / go test ./pkg/... / go test -cover ./... -->
-<!-- Rust:           cargo test / cargo test test_name / cargo tarpaulin -->
+If CLAUDE.md has an `## Active Stacks` section, determine which stack the current file belongs to based on its path, then use that stack's test command. Read the corresponding `.claude/stacks/<stack>.md` for language-specific testing conventions.
 
 ## Anti-patterns to avoid
 

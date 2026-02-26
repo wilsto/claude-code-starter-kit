@@ -10,7 +10,7 @@
   <a href="#quick-start">Quick Start</a> &bull;
   <a href="#whats-included">What's Included</a> &bull;
   <a href="#two-modes">Two Modes</a> &bull;
-  <a href="#examples">Examples</a> &bull;
+  <a href="#stacks">Stacks</a> &bull;
   <a href="#skills">Skills</a> &bull;
   <a href="#plugins">Plugins</a>
 </p>
@@ -134,16 +134,19 @@ For step-by-step instructions, see the [detailed guide](docs/GUIDE.md#mode-2--co
 
 ---
 
-## Examples
+## Stacks
 
-Pre-filled configurations for popular stacks. Copy the relevant `CLAUDE.md` to replace the template version.
+Language-specific guides that Claude reads for idiomatic patterns, tooling, and conventions. Selected during `/setup` (multi-select). Stackable — a project can use Python (backend) + Next.js (frontend).
 
-| Stack | Test Runner | Formatter | Example |
-|-------|------------|-----------|---------|
-| **Node.js** | Vitest | Prettier | [`examples/node-vitest/`](examples/node-vitest/) |
-| **Python** | pytest | Black | [`examples/python-pytest/`](examples/python-pytest/) |
-| **Go** | go test | gofmt | [`examples/go/`](examples/go/) |
-| **Rust** | cargo test | cargo fmt | [`examples/rust/`](examples/rust/) |
+| Stack | File | Recommended Tools | Status |
+|-------|------|-------------------|--------|
+| **Python** | [`.claude/stacks/python.md`](.claude/stacks/python.md) | pytest, ruff, mypy | Complete |
+| **Next.js** | [`.claude/stacks/nextjs.md`](.claude/stacks/nextjs.md) | vitest, playwright, prettier, eslint, TypeScript strict | Complete |
+| **Node.js** | [`.claude/stacks/node.md`](.claude/stacks/node.md) | vitest, prettier | Stub |
+| **Go** | [`.claude/stacks/go.md`](.claude/stacks/go.md) | go test, gofmt, golangci-lint | Stub |
+| **Rust** | [`.claude/stacks/rust.md`](.claude/stacks/rust.md) | cargo test, cargo fmt, clippy | Stub |
+
+Each stack file contains: **Defaults** (auto-fill for `/setup`), **Testing** conventions, **Formatting & Linting** tools, **Type Checking**, **Idiomatic Patterns** (DO/DON'T), **Common Pitfalls**, **CI/CD** workflow, **Deploy** patterns, and **Reference** links.
 
 ---
 
@@ -159,7 +162,7 @@ claude-code-starter-kit/
 ├── LICENSE                      # MIT
 ├── docs/
 │   └── GUIDE.md                 # Detailed setup guide (2 modes, placeholder table, hook tests)
-├── examples/                    # Pre-filled configs per language stack
+├── .claude/stacks/              # Language-specific guides (stackable)
 ├── .claude/
 │   ├── settings.json            # Permissions + hook wiring
 │   ├── commands/                # Slash commands (user types /name)
@@ -238,7 +241,7 @@ This kit follows three principles:
 
 Contributions welcome! Areas where help is appreciated:
 
-- New language examples in `examples/`
+- New stack guides in `.claude/stacks/`
 - Hook improvements (new guards, better patterns)
 - Skill enhancements (more quality gates, better wizards)
 - Documentation and translations

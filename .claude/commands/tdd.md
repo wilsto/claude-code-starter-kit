@@ -47,6 +47,10 @@
 {{TEST_COMMAND_COVERAGE}}
 ```
 
+## Multi-stack projects
+
+If CLAUDE.md has an `## Active Stacks` section, determine which stack the current file belongs to based on its path, then use that stack's test command. Read the corresponding `.claude/stacks/<stack>.md` for language-specific testing conventions.
+
 ## Anti-patterns to avoid
 
 | Anti-pattern | Why it's bad |

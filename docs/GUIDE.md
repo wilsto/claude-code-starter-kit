@@ -18,6 +18,12 @@ Template-claude/
 │   │   ├── block-secrets.js     # Hard-deny sur fichiers secrets
 │   │   ├── tdd-guard.js         # Rappel TDD soft sur source edits
 │   │   └── session-context.js   # Injecte memory au startup + apres /compact
+│   ├── stacks/                  # Language-specific guides (stackable)
+│   │   ├── python.md
+│   │   ├── nextjs.md
+│   │   ├── node.md
+│   │   ├── go.md
+│   │   └── rust.md
 │   └── skills/
 │       ├── tdd/SKILL.md         # /tdd Red-Green-Refactor workflow
 │       └── commit/SKILL.md      # /commit quality gate + conventional commit
@@ -46,9 +52,9 @@ Template-claude/
    | `{{TEST_COMMAND}}` | CLAUDE.md, skills/tdd, skills/commit | `npx vitest run` / `pytest` / `go test ./...` |
    | `{{TEST_COMMAND_SINGLE}}` | skills/tdd | `npx vitest run` / `pytest` / `go test` |
    | `{{TEST_COMMAND_COVERAGE}}` | skills/tdd | `npx vitest run --coverage` / `pytest --cov` |
-   | `{{FORMAT_COMMAND}}` | CLAUDE.md | `npx prettier --check .` / `black --check .` |
+   | `{{FORMAT_COMMAND}}` | CLAUDE.md | `npx prettier --check .` / `ruff check . && ruff format --check .` |
    | `{{FORMAT_CHECK_COMMAND}}` | skills/commit | idem |
-   | `{{FORMAT_FIX_COMMAND}}` | skills/commit | `npx prettier --write .` / `black .` |
+   | `{{FORMAT_FIX_COMMAND}}` | skills/commit | `npx prettier --write .` / `ruff check --fix . && ruff format .` |
    | `{{DEFAULT_BRANCH}}` | skills/commit | `main` |
    | `{{CONVERSATION_LANGUAGE}}` | CLAUDE.md | `francais` / `english` |
 
@@ -167,6 +173,9 @@ claude plugin install pro-workflow
 | Protection secrets (hook) | MCP server configs |
 | TDD enforcement (hook + skill) | Deploy scripts |
 | Session memory (hook + files) | Task manager integration |
-| Quality-gated commits (skill) | CI/CD pipelines |
+| Quality-gated commits (skill) | Custom CI/CD pipelines |
 | Destructive command deny list | Server-specific permissions |
-| Context window optimization | Language-specific linters |
+| Context window optimization | — |
+| Stack guides (`.claude/stacks/`) | — |
+
+> **Tip** : Les valeurs par defaut des placeholders sont definies dans chaque fichier stack (`.claude/stacks/<stack>.md`, section `## Defaults`). Le wizard `/setup` les charge automatiquement.

@@ -79,6 +79,10 @@ After push, remind user to check CI status if applicable:
 gh run list --limit 3
 ```
 
+## Multi-stack projects
+
+If CLAUDE.md has an `## Active Stacks` section, run format check and tests for **each stack** using its specific commands. A commit should only proceed if all stacks pass their respective gates. Read the corresponding `.claude/stacks/<stack>.md` for language-specific conventions.
+
 ## Rules
 - Secret scan is always blocking — no exceptions
 - If tests fail, the commit does not happen

@@ -26,6 +26,7 @@ SETUP CHECKLIST — Run once, then delete this block:
 ├── {{TEST_DIR}}       → test files (mirror of src/)
 ├── docs/              → documentation
 ├── .claude/           → Claude Code config (hooks, skills)
+│   └── stacks/        → language-specific guides (read on demand)
 └── memory/            → persistent cross-session memory
 ```
 
@@ -35,6 +36,27 @@ SETUP CHECKLIST — Run once, then delete this block:
 2. Run tests: `{{TEST_COMMAND}}`
 3. `/commit` → conventional commit with quality gate
 4. Push: `git push origin {{DEFAULT_BRANCH}}`
+
+<!-- MULTI-STACK: If this project uses multiple stacks (e.g., Python backend + Next.js frontend),
+     /setup will replace the single {{TEST_COMMAND}} references above with this section.
+     Delete this comment block for single-stack projects.
+
+## Active Stacks
+
+### Backend — {{STACK_NAME}}
+- **Source**: `{{STACK_SRC_DIR}}`
+- **Tests**: `{{STACK_TEST_DIR}}`
+- **Test command**: `{{STACK_TEST_COMMAND}}`
+- **Format**: `{{STACK_FORMAT_CHECK_COMMAND}}`
+- **Stack guide**: `.claude/stacks/{{STACK_FILE}}`
+
+### Frontend — {{STACK_NAME}}
+- **Source**: `{{STACK_SRC_DIR}}`
+- **Tests**: `{{STACK_TEST_DIR}}`
+- **Test command**: `{{STACK_TEST_COMMAND}}`
+- **Format**: `{{STACK_FORMAT_CHECK_COMMAND}}`
+- **Stack guide**: `.claude/stacks/{{STACK_FILE}}`
+-->
 
 ## TDD Rules (mandatory)
 

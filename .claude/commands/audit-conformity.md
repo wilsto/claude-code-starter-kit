@@ -94,14 +94,40 @@ Analyze the current project against the starter kit standards. For each check, r
 **PASS**: All hygiene rules present.
 **FAIL**: Missing entries. List the gaps.
 
+## Check 8: Stack Guides
+
+Detect the language stacks in use and verify that matching stack guides are present.
+
+### Detection via indicator files
+
+Use Glob to search for these files at the project root:
+
+| Indicator files | Stack detected |
+|---|---|
+| `pyproject.toml`, `requirements.txt`, `setup.py`, `Pipfile` | Python |
+| `next.config.*` (`next.config.ts`, `next.config.mjs`, `next.config.js`) | Next.js |
+| `package.json` (without any `next.config.*`) | Node.js |
+| `go.mod` | Go |
+| `Cargo.toml` | Rust |
+
+### Verification
+
+For each detected stack:
+1. Check if `.claude/stacks/<stack>.md` exists in the project
+2. If multi-stack (2+ detected): check if CLAUDE.md has an `## Active Stacks` section
+3. If single-stack: check if CLAUDE.md has the stack's test/format commands filled in (not `{{PLACEHOLDER}}`)
+
+**PASS**: All detected stacks have matching guide files, and CLAUDE.md references them correctly.
+**FAIL**: Missing stack guide(s) or CLAUDE.md not configured for detected stacks. List the gaps.
+
 ## Report
 
-After all 7 checks, produce a scorecard:
+After all 8 checks, produce a scorecard:
 
 ```
 === Claude Code Conformity Audit ===
 
-Score: X/7
+Score: X/8
 
   [PASS] 1. Secret Protection — block-secrets.js covers N secret files
   [FAIL] 2. TDD Guard — SRC_DIRS missing: internal/, pkg/
@@ -110,6 +136,7 @@ Score: X/7
   [PASS] 5. CLAUDE.md Sections — all 4 required sections found
   [PASS] 6. Context Optimization — .claudeignore covers 5 directories
   [FAIL] 7. Git Hygiene — missing CLAUDE.local.md in .gitignore
+  [FAIL] 8. Stack Guides — Next.js detected (next.config.ts) but no .claude/stacks/nextjs.md
 
 === Corrective Actions ===
 
