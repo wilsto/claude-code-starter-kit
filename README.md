@@ -74,7 +74,7 @@ Then run `/setup` or manually replace the `{{PLACEHOLDER}}` values ([see guide](
 | **tdd-guard** | `PreToolUse` (soft reminder) | Reminds you to write a failing test before editing source files. Non-blocking. |
 | **session-context** | `SessionStart` | Injects memory + session handoff at startup and after `/compact`. Prevents context amnesia. |
 
-### 4 Slash Commands + Auto-Skills
+### 4 Slash Commands
 
 | Command | What it does |
 |---------|-------------|
@@ -83,11 +83,13 @@ Then run `/setup` or manually replace the `{{PLACEHOLDER}}` values ([see guide](
 | **`/setup`** | Interactive wizard. Asks your stack, fills all placeholders, configures hooks automatically. |
 | **`/audit-conformity`** | Analyzes an existing project against the template. Produces a scorecard with corrective actions. |
 
-> **How it works** — Claude Code has two extension mechanisms:
-> - **Slash commands** (`.claude/commands/*.md`) — You type `/name` to invoke them explicitly.
-> - **Skills** (`.claude/skills/*/SKILL.md`) — Claude auto-invokes them when the context matches (e.g., when you start TDD work, Claude activates the TDD skill without you typing `/tdd`).
+> **Commands vs Skills** — Claude Code has two extension mechanisms:
+> - **Slash commands** (`.claude/commands/*.md`) — You type `/name` to invoke them. All 4 commands above work this way.
+> - **Skills** (`.claude/skills/*/SKILL.md`) — Claude auto-invokes them when the context matches, without you typing anything.
 >
-> This kit includes **both** for each feature: a command for when you want control, a skill for when you want automation.
+> `/tdd` and `/commit` exist as **both** command + skill: you can invoke them explicitly, and Claude will also activate them automatically when relevant (e.g., starting a bug fix triggers TDD, staging changes triggers commit quality gate).
+>
+> `/setup` and `/audit-conformity` are **command-only**: they run only when you explicitly ask — Claude won't auto-trigger a project setup or audit on its own.
 
 ### Memory System (cross-session persistence)
 
@@ -165,10 +167,8 @@ claude-code-starter-kit/
 │   │   ├── tdd-guard.js         # Soft TDD reminder on source edits
 │   │   └── session-context.js   # Memory injection at startup + compact
 │   └── skills/                  # Auto-invoked by Claude when context matches
-│       ├── tdd/SKILL.md
-│       ├── commit/SKILL.md
-│       ├── setup/SKILL.md
-│       └── audit-conformity/SKILL.md
+│       ├── tdd/SKILL.md         # Auto-activates on bug fix / feature work
+│       └── commit/SKILL.md      # Auto-activates when staging changes
 └── memory/
     ├── MEMORY.md                # Auto-injected index (< 200 lines)
     └── patterns.md              # On-demand technical patterns
