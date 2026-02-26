@@ -6,6 +6,27 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), using [Conventi
 
 ## [Unreleased]
 
+## [1.5.0] - 2026-02-26
+
+### Added
+
+- **Selective audit conformity**: `/audit-conformity` now lets users cherry-pick which checks to fix, skip permanently (with reason), or defer — instead of all-or-nothing
+- **CLAUDE.md reconciliation** (Check 5 rewrite): 3-phase inventory → gap/conflict analysis → reconciliation proposals with zero-loss guarantee — existing project directives are never overwritten
+- **3-layer CLAUDE.md strategy**: template base (`CLAUDE.md`) → project overrides (`.claude/rules/`) → personal preferences (`CLAUDE.local.md`) — leverages Claude Code's native precedence hierarchy
+- **Audit persistence** (`.claude/audit-config.json`): stores skip decisions and last audit results for delta reporting between runs, stale skip nudge after 90 days
+- **Impact/effort metadata** per check: CRITICAL/HIGH/MEDIUM/LOW impact + estimated fix time displayed in scorecard
+- **Interactive selection menu**: numbered fix selection, [S]kip, [R]eview skips, [A]ll, [Q]uit — single AskUserQuestion prompt
+- **Delta report**: shows IMPROVED/REGRESSED/UNCHANGED between consecutive audit runs
+
+### Changed
+
+- `/audit-conformity` rewritten from 192 to ~390 lines with 6-phase workflow (load config → enriched scorecard → interactive menu → scoped context analysis → plan mode → persist results)
+- Check 5 renamed from "CLAUDE.md Sections" to "CLAUDE.md Reconciliation" — now searches across CLAUDE.md AND `.claude/rules/` for required sections
+- Score denominator changed to "applicable checks" (total minus skipped) instead of fixed 8
+- CLAUDE.md Structure section updated with `rules/` and `audit-config.json`
+- README Mode 2 section expanded with reconciliation workflow description
+- GUIDE.md Mode 2 rewritten with "Strategie 3 couches" section and automatic (Option A) vs manual (Option B) reconciliation paths
+
 ## [1.4.0] - 2026-02-26
 
 ### Added
@@ -88,7 +109,8 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), using [Conventi
 - Plan mode approval required before audit applies fixes
 - Language examples for Python, Node.js, Go, Rust (later replaced by stacks)
 
-[Unreleased]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.4.0...HEAD
+[Unreleased]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.5.0...HEAD
+[1.5.0]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.4.0...v1.5.0
 [1.4.0]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.3.0...v1.4.0
 [1.3.0]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.1.1...v1.2.0

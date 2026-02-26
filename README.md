@@ -84,7 +84,7 @@ Then run `/setup` or manually replace the `{{PLACEHOLDER}}` values ([see guide](
 | **`/tdd`** | Red-Green-Refactor workflow. Write failing test, confirm RED, implement, confirm GREEN. |
 | **`/commit`** | Quality gate: secret scan (blocking) + slop scan + format check + test gate + conventional commit. |
 | **`/setup`** | Interactive wizard. Asks your stack, fills all placeholders, configures hooks automatically. |
-| **`/audit-conformity`** | Analyzes an existing project against the template. Produces a scorecard with corrective actions. |
+| **`/audit-conformity`** | Analyzes an existing project against the template. Produces a scorecard, then lets you cherry-pick fixes, skip checks, or defer — with CLAUDE.md reconciliation and zero-loss guarantee. |
 | **`/review`** | Spawns a code-review sub-agent. Analyzes `git diff` for correctness, conventions, security. Read-only. |
 | **`/simplify`** | Spawns a simplifier sub-agent. Finds dead code, over-abstraction, duplication. Read-only. |
 | **`/test-runner`** | Spawns a test diagnostics sub-agent. Runs tests, parses failures, diagnoses root causes. Read-only. |
@@ -136,9 +136,14 @@ For manual setup, see the [detailed guide](docs/GUIDE.md#mode-1--create--nouveau
 
 ### Mode 2: Conformity — Existing project
 
-Run `/audit-conformity` in your existing project to get a scorecard of what's missing.
+Run `/audit-conformity` in your existing project. The audit:
 
-Then copy the missing pieces from this template and merge them in. The skill tells you exactly what to do.
+1. **Scores** 8 compliance checks with impact/effort per item
+2. **Reconciles** your existing CLAUDE.md with the template (3-layer strategy: template base → `.claude/rules/` overrides → personal `CLAUDE.local.md`)
+3. **Lets you choose**: fix specific items, skip checks permanently with a reason, or fix everything
+4. **Persists** decisions in `.claude/audit-config.json` for delta reporting between runs
+
+Zero-loss guarantee — your existing directives are never overwritten, only augmented or moved to `.claude/rules/` (higher precedence).
 
 For step-by-step instructions, see the [detailed guide](docs/GUIDE.md#mode-2--conformite--projet-existant).
 

@@ -90,7 +90,9 @@ Never declare "Done" without proof (test output, working demo, logs).
 ├── .claude/           → Claude Code config (hooks, skills, commands)
 │   ├── hooks/         → automatic hooks (security, TDD, memory, skill eval)
 │   ├── commands/      → slash commands (/commit, /tdd, /review, /simplify, /test-runner)
-│   └── stacks/        → language-specific guides (read on demand)
+│   ├── rules/         → project-specific overrides (higher precedence than CLAUDE.md)
+│   ├── stacks/        → language-specific guides (read on demand)
+│   └── audit-config.json → audit skip decisions & last results (created by /audit-conformity)
 └── memory/            → persistent cross-session memory
     ├── MEMORY.md          → project identity, session notes (auto-injected)
     ├── patterns.md        → technical patterns, debugging lessons (on-demand)

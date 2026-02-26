@@ -92,7 +92,28 @@ Template-claude/
 
 ## Mode 2 : CONFORMITE — Projet existant
 
-Pour mettre un projet existant aux normes du template.
+Pour mettre un projet existant aux normes du template **sans perdre ses directives existantes**.
+
+### Strategie 3 couches (reconciliation CLAUDE.md)
+
+Claude Code charge les fichiers par precedence croissante. On exploite cette hierarchie :
+
+```text
+Couche 1 — CLAUDE.md (template, committe)
+  TDD rules, quality gates, conventions, commit rhythm
+  → Le socle commun du starter-kit
+
+Couche 2 — .claude/rules/*.md (projet, committe)
+  architecture.md, api-conventions.md, database.md...
+  → Les directives specifiques du projet
+  → SURCHARGE le template si contradiction
+
+Couche 3 — CLAUDE.local.md (perso, gitignored)
+  URLs sandbox, tokens locaux, preferences IDE
+  → Jamais partage, jamais en conflit
+```
+
+**Principe** : le CLAUDE.md du template fournit le socle. Les directives existantes du projet vont dans `.claude/rules/` (precedence plus haute). Aucune perte.
 
 ### Etape 1 : Copier les fichiers manquants
 
@@ -103,16 +124,26 @@ cp Template-claude/.claudeignore .claudeignore  # context exclusions
 cp -r Template-claude/memory/ memory/           # memory system
 ```
 
-### Etape 2 : Fusionner (ne pas ecraser)
+### Etape 2 : Reconcilier CLAUDE.md (ne pas ecraser)
 
-- **`.gitignore`** : ajouter les entrees manquantes (secrets, CLAUDE.local.md), ne pas ecraser
-- **`CLAUDE.md`** : garder le contenu existant, ajouter les sections manquantes :
-  - TDD Rules
-  - Quality Gate
-  - Model Selection
-  - Secrets
-  - Conventions (commit format)
-- **`CLAUDE.local.md`** : ne PAS ecraser si deja present
+**Option A** — Automatique (recommande) :
+
+```bash
+/audit-conformity
+```
+
+L'audit detecte le CLAUDE.md existant, identifie les gaps et conflits, puis propose un plan de reconciliation interactif. Il ne modifie rien sans approbation.
+
+**Option B** — Manuel :
+
+1. **Garder le CLAUDE.md existant** comme base
+2. **Ajouter** les sections template manquantes (TDD Rules, Quality Gate, Model Selection, Conventions)
+3. **Deplacer** les directives projet-specifiques (architecture, API, DB) vers `.claude/rules/` :
+   - `architecture.md` — decisions d'architecture
+   - `api-conventions.md` — conventions API
+   - `database.md` — schema, migrations
+4. **En cas de contradiction** : la directive dans `.claude/rules/` gagne (precedence plus haute)
+5. **Ne PAS ecraser** `CLAUDE.local.md` si deja present
 
 ### Etape 3 : Adapter
 
@@ -127,9 +158,12 @@ cp -r Template-claude/memory/ memory/           # memory system
 - [ ] `tdd-guard.js` couvre les bons repertoires source ?
 - [ ] `.claudeignore` exclut build artifacts et deps ?
 - [ ] `CLAUDE.md` contient TDD Rules + Quality Gate + Conventions ?
+- [ ] Directives projet-specifiques dans `.claude/rules/` (pas dans CLAUDE.md) ?
 - [ ] `memory/MEMORY.md` existe avec Session Notes ?
 - [ ] `settings.json` deny list inclut les destructives ?
 - [ ] `.gitignore` inclut `CLAUDE.local.md` ?
+
+> **Tip** : Relancez `/audit-conformity` apres les modifications pour valider le score. Les checks non applicables peuvent etre marques "skip" avec une raison.
 
 ### Test des hooks
 
