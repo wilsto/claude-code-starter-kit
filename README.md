@@ -74,14 +74,20 @@ Then run `/setup` or manually replace the `{{PLACEHOLDER}}` values ([see guide](
 | **tdd-guard** | `PreToolUse` (soft reminder) | Reminds you to write a failing test before editing source files. Non-blocking. |
 | **session-context** | `SessionStart` | Injects memory + session handoff at startup and after `/compact`. Prevents context amnesia. |
 
-### 4 Skills (invoke when needed)
+### 4 Slash Commands + Auto-Skills
 
-| Skill | Command | What it does |
-|-------|---------|-------------|
-| **TDD** | `/tdd` | Red-Green-Refactor workflow. Write failing test, confirm RED, implement, confirm GREEN. |
-| **Commit** | `/commit` | Quality gate: secret scan (blocking) + slop scan + format check + test gate + conventional commit. |
-| **Setup** | `/setup` | Interactive wizard. Asks your stack, fills all placeholders, configures hooks automatically. |
-| **Audit** | `/audit-conformity` | Analyzes an existing project against the template. Produces a scorecard with corrective actions. |
+| Command | What it does |
+|---------|-------------|
+| **`/tdd`** | Red-Green-Refactor workflow. Write failing test, confirm RED, implement, confirm GREEN. |
+| **`/commit`** | Quality gate: secret scan (blocking) + slop scan + format check + test gate + conventional commit. |
+| **`/setup`** | Interactive wizard. Asks your stack, fills all placeholders, configures hooks automatically. |
+| **`/audit-conformity`** | Analyzes an existing project against the template. Produces a scorecard with corrective actions. |
+
+> **How it works** — Claude Code has two extension mechanisms:
+> - **Slash commands** (`.claude/commands/*.md`) — You type `/name` to invoke them explicitly.
+> - **Skills** (`.claude/skills/*/SKILL.md`) — Claude auto-invokes them when the context matches (e.g., when you start TDD work, Claude activates the TDD skill without you typing `/tdd`).
+>
+> This kit includes **both** for each feature: a command for when you want control, a skill for when you want automation.
 
 ### Memory System (cross-session persistence)
 
@@ -149,15 +155,20 @@ claude-code-starter-kit/
 ├── examples/                    # Pre-filled configs per language stack
 ├── .claude/
 │   ├── settings.json            # Permissions + hook wiring
-│   ├── hooks/
+│   ├── commands/                # Slash commands (user types /name)
+│   │   ├── tdd.md               # /tdd
+│   │   ├── commit.md            # /commit
+│   │   ├── setup.md             # /setup
+│   │   └── audit-conformity.md  # /audit-conformity
+│   ├── hooks/                   # Automatic hooks (run without user action)
 │   │   ├── block-secrets.js     # Hard-deny on secret files
 │   │   ├── tdd-guard.js         # Soft TDD reminder on source edits
 │   │   └── session-context.js   # Memory injection at startup + compact
-│   └── skills/
-│       ├── tdd/SKILL.md         # /tdd — Red-Green-Refactor
-│       ├── commit/SKILL.md      # /commit — Quality-gated conventional commits
-│       ├── setup/SKILL.md       # /setup — Interactive configuration wizard
-│       └── audit-conformity/SKILL.md  # /audit-conformity — Project compliance check
+│   └── skills/                  # Auto-invoked by Claude when context matches
+│       ├── tdd/SKILL.md
+│       ├── commit/SKILL.md
+│       ├── setup/SKILL.md
+│       └── audit-conformity/SKILL.md
 └── memory/
     ├── MEMORY.md                # Auto-injected index (< 200 lines)
     └── patterns.md              # On-demand technical patterns
