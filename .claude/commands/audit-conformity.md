@@ -125,6 +125,12 @@ Priority 3 (hygiene):
 
 ## Offer to fix
 
-After showing the report, ask the user: "Want me to fix the failing checks automatically?"
+After showing the report, if there are any FAIL items:
 
-If yes, apply the corrective actions using Edit tool for each FAIL item.
+1. **Enter plan mode** (use EnterPlanMode tool) to propose the corrective actions
+2. In the plan, list each FAIL item with the exact file and change to make
+3. Wait for user approval before making any changes
+4. Only after approval: apply the corrective actions using Edit tool for each FAIL item
+5. After all fixes, re-run the audit to confirm the new score
+
+**Never apply fixes without user approval.** The audit is read-only until the user explicitly validates the plan.
