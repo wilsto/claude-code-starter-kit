@@ -6,6 +6,12 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), using [Conventi
 
 ## [Unreleased]
 
+## [1.1.1] - 2026-02-26
+
+### Fixed
+- Stacks directory now correctly nested under `.claude/` in README project structure tree
+- Added CHANGELOG.md to README project structure
+
 ## [1.1.0] - 2026-02-26
 
 ### Added
@@ -36,6 +42,7 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), using [Conventi
 - Plan mode approval required before audit applies fixes
 - Language examples for Python, Node.js, Go, Rust (later replaced by stacks)
 
-[Unreleased]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.1.0...HEAD
+[Unreleased]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.1.1...HEAD
+[1.1.1]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.1.0...v1.1.1
 [1.1.0]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/wilsto/claude-code-starter-kit/releases/tag/v1.0.0

@@ -159,12 +159,13 @@ claude-code-starter-kit/
 ├── CLAUDE.local.md              # Personal preferences (gitignored)
 ├── .gitignore                   # Secrets, build artifacts, dependencies
 ├── .claudeignore                # Keeps build/deps out of Claude's context window
+├── CHANGELOG.md                 # Release history (Keep a Changelog format)
 ├── LICENSE                      # MIT
 ├── docs/
 │   └── GUIDE.md                 # Detailed setup guide (2 modes, placeholder table, hook tests)
-├── .claude/stacks/              # Language-specific guides (stackable)
 ├── .claude/
 │   ├── settings.json            # Permissions + hook wiring
+│   ├── stacks/                  # Language-specific guides (stackable)
 │   ├── commands/                # Slash commands (user types /name)
 │   │   ├── tdd.md               # /tdd
 │   │   ├── commit.md            # /commit
