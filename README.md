@@ -35,7 +35,7 @@ Claude Code is powerful out of the box. But without guardrails, it will:
 - Create inconsistent commits with no quality checks
 - Forget lessons learned in previous sessions
 
-This starter kit solves all of that with **6 hooks**, **7 commands**, and a **persistent memory system** — all language-agnostic, all battle-tested in production.
+This starter kit solves all of that with **6 hooks**, **7 commands**, **5 auto-skills**, and a **persistent memory system** — all language-agnostic, all battle-tested in production.
 
 ---
 
@@ -99,9 +99,9 @@ Then run `/setup` or manually replace the `{{PLACEHOLDER}}` values ([see guide](
 | `/commit` | yes | yes — activates when staging changes |
 | `/setup` | yes | no — runs only when you ask |
 | `/audit-conformity` | yes | no — runs only when you ask |
-| `/review` | yes | no — runs only when you ask |
-| `/simplify` | yes | no — runs only when you ask |
-| `/test-runner` | yes | no — runs only when you ask |
+| `/review` | yes | yes — activates before commit (3+ files), after feature completion |
+| `/simplify` | yes | yes — activates after feature/refactor, when complexity detected |
+| `/test-runner` | yes | yes — activates when tests need running, after implementation |
 
 ### Memory System (cross-session persistence)
 
@@ -193,7 +193,10 @@ claude-code-starter-kit/
 │   │   └── commit-reminder.js   # Commit suggestion after tests pass
 │   └── skills/                  # Auto-invoked by Claude when context matches
 │       ├── tdd/SKILL.md         # Auto-activates on bug fix / feature work
-│       └── commit/SKILL.md      # Auto-activates when staging changes
+│       ├── commit/SKILL.md      # Auto-activates when staging changes
+│       ├── review/SKILL.md      # Auto-activates before commit (3+ files), after features
+│       ├── simplify/SKILL.md    # Auto-activates after feature/refactor completion
+│       └── test-runner/SKILL.md # Auto-activates when tests need running
 └── memory/
     ├── MEMORY.md                # Auto-injected index (< 200 lines)
     ├── active-context.md        # Current work context (focus + next steps injected)

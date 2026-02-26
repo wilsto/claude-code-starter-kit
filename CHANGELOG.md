@@ -11,7 +11,7 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), using [Conventi
 ### Added
 
 - **Skill evaluator hook** (`skill-evaluator.js`): PreToolUse on Bash detects raw `git commit`/`git add -A` and suggests `/commit` workflow (advisory, never blocks)
-- **3 sub-agent commands**: `/review` (code review), `/simplify` (complexity analysis), `/test-runner` (test diagnostics) — all read-only, using Task tool delegation
+- **3 sub-agent skills + commands**: `/review` (code review), `/simplify` (complexity analysis), `/test-runner` (test diagnostics) — auto-invoked by Claude as Dev Team tools AND available as manual `/commands`
 - **Extended memory bank**: `memory/decisions.md` (ADR-lite, on-demand), `memory/active-context.md` (auto-injected: focus + next steps, ~150 tokens)
 - **Compact-resilient scratchpad** (`memory/scratchpad.md`): append-only work log, last 30 lines auto-injected after /compact (~500 tokens max)
 - **Environment context injection**: session-context.js now injects cwd, branch, git status, and detected stack at session start and after /compact (~40 tokens)
