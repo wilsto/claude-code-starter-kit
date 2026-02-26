@@ -6,6 +6,8 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), using [Conventi
 
 ## [Unreleased]
 
+## [1.4.0] - 2026-02-26
+
 ### Added
 
 - **Conditional rules** (`.claude/rules/`): 5 stack-specific rule files with `paths:` frontmatter for auto-loading only when editing relevant file types (Python, Next.js, Node.js, Go, Rust) — reduces contextual noise by ~45%
@@ -86,7 +88,8 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), using [Conventi
 - Plan mode approval required before audit applies fixes
 - Language examples for Python, Node.js, Go, Rust (later replaced by stacks)
 
-[Unreleased]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.3.0...HEAD
+[Unreleased]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.4.0...HEAD
+[1.4.0]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.3.0...v1.4.0
 [1.3.0]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.1.1...v1.2.0
 [1.1.1]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.1.0...v1.1.1
