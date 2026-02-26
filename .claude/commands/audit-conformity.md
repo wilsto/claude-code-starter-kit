@@ -123,12 +123,40 @@ Priority 3 (hygiene):
   - Add `CLAUDE.local.md` to .gitignore
 ```
 
+## Context Analysis
+
+Before proposing fixes, analyze the project's existing setup to understand what's already in place:
+
+### Detect existing patterns
+- Read `CLAUDE.md`, `.claude/settings.json`, `.claude/settings.local.json` if they exist
+- Read any existing hooks in `.claude/hooks/`
+- Read any existing skills in `.claude/skills/` and commands in `.claude/commands/`
+- Check for existing CI/CD (`.github/workflows/`, `Makefile`, etc.)
+- Check for existing linters/formatters (`.prettierrc`, `pyproject.toml`, `.eslintrc`, etc.)
+
+### Identify conflicts
+For each FAIL item, check if the proposed fix would conflict with existing configuration:
+- Would a new deny rule conflict with an existing allow rule in settings?
+- Would new `BLOCKED_PATHS` entries block files the project legitimately edits?
+- Would `SRC_DIRS` in tdd-guard overlap or conflict with existing hook logic?
+- Would adding sections to CLAUDE.md duplicate or contradict existing content?
+
+### Identify complementarities
+Also report what the project already does well that complements the template:
+- Existing hooks that cover different concerns (e.g., a lint hook, a deploy guard)
+- Existing skills/commands that fill gaps the template doesn't cover
+- CI/CD pipelines that already enforce some quality gates (making the `/commit` test gate redundant or complementary)
+- Existing memory files or documentation patterns
+
 ## Offer to fix
 
-After showing the report, if there are any FAIL items:
+After showing the scorecard, if there are any FAIL items:
 
 1. **Enter plan mode** (use EnterPlanMode tool) to propose the corrective actions
-2. In the plan, list each FAIL item with the exact file and change to make
+2. In the plan, organize into 3 sections:
+   - **Conflicts** — things that need careful merging (e.g., "settings.json already has a deny list — need to merge, not replace")
+   - **Complementarities** — things already in place that work well with the template (e.g., "existing .prettierrc means /commit format check will work out of the box")
+   - **Actions** — for each FAIL item, the exact file and change to make, noting any merge considerations
 3. Wait for user approval before making any changes
 4. Only after approval: apply the corrective actions using Edit tool for each FAIL item
 5. After all fixes, re-run the audit to confirm the new score
