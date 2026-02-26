@@ -47,6 +47,23 @@ SETUP CHECKLIST — Run once, then delete this block:
 - Always show the user RED output, then GREEN output
 - 1 test → 1 fix → repeat (vertical slicing)
 
+## Commit Rhythm (proactive)
+
+Suggest `/commit` at these natural breakpoints during feature development:
+- **After TDD GREEN**: test passes after implementation — this is a clean commit point
+- **After REFACTOR**: refactoring step complete, tests still green — commit the refactor separately
+- **After a logical unit**: a coherent piece of work is done (new endpoint, new module, config change)
+- **Before switching context**: about to start a different feature or fix
+
+Rules:
+
+- Advisory only — never auto-commit, always ask
+- Do not suggest after every minor edit — only at meaningful breakpoints
+- If the user declines, continue without repeating the suggestion for the same change
+- One commit per logical unit keeps git history clean and reviewable
+- Hook `commit-reminder.js` detects test-pass + uncommitted changes automatically
+- Hook `post-commit-lessons.js` triggers lesson evaluation after each commit
+
 ## Quality Gate (before every commit)
 
 Pre-commit checks run by `/commit` skill:

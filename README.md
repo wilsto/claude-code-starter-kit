@@ -35,7 +35,7 @@ Claude Code is powerful out of the box. But without guardrails, it will:
 - Create inconsistent commits with no quality checks
 - Forget lessons learned in previous sessions
 
-This starter kit solves all of that with **3 hooks**, **4 skills**, and a **persistent memory system** — all language-agnostic, all battle-tested in production.
+This starter kit solves all of that with **5 hooks**, **4 skills**, and a **persistent memory system** — all language-agnostic, all battle-tested in production.
 
 ---
 
@@ -66,13 +66,15 @@ Then run `/setup` or manually replace the `{{PLACEHOLDER}}` values ([see guide](
 
 ## What's Included
 
-### 3 Hooks (automatic, zero effort)
+### 5 Hooks (automatic, zero effort)
 
 | Hook | Type | What it does |
 |------|------|-------------|
 | **block-secrets** | `PreToolUse` (hard deny) | Blocks Claude from editing `.env*`, `secrets.*`, `config.json`. Zero tolerance. |
 | **tdd-guard** | `PreToolUse` (soft reminder) | Reminds you to write a failing test before editing source files. Non-blocking. |
 | **session-context** | `SessionStart` | Injects memory + session handoff at startup and after `/compact`. Prevents context amnesia. |
+| **post-commit-lessons** | `PostToolUse` (advisory) | After a successful `git commit`, prompts Claude to evaluate if lessons should be saved to memory. |
+| **commit-reminder** | `PostToolUse` (advisory) | After tests pass with uncommitted changes, suggests committing at natural breakpoints. |
 
 ### 4 Slash Commands
 
@@ -168,7 +170,9 @@ claude-code-starter-kit/
 │   ├── hooks/                   # Automatic hooks (run without user action)
 │   │   ├── block-secrets.js     # Hard-deny on secret files
 │   │   ├── tdd-guard.js         # Soft TDD reminder on source edits
-│   │   └── session-context.js   # Memory injection at startup + compact
+│   │   ├── session-context.js   # Memory injection at startup + compact
+│   │   ├── post-commit-lessons.js # Lesson evaluation after each commit
+│   │   └── commit-reminder.js   # Commit suggestion after tests pass
 │   └── skills/                  # Auto-invoked by Claude when context matches
 │       ├── tdd/SKILL.md         # Auto-activates on bug fix / feature work
 │       └── commit/SKILL.md      # Auto-activates when staging changes
