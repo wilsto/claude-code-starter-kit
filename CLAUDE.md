@@ -153,10 +153,29 @@ Hooks: `commit-reminder.js` (auto-detect), `post-commit-lessons.js` (post-commit
 
 Maintain `memory/scratchpad.md` as a running work log during active sessions:
 - **When to write**: After completing each subtask, before switching context
-- **Format**: Append-only, latest entry at the bottom
+- **Format**: Append-only, latest entry at the bottom, structured entries:
+
+  ```text
+  ### HH:MM — Task title
+  - Done: what was completed
+  - Next: immediate next step
+  - Decision: key decision made (if any)
+  ---
+  ```
+
 - **Content**: Current task, what was done, what's next, key decisions
 - **Why**: Survives /compact — last 30 lines re-injected by session-context.js
 - **Cleanup**: Clear at the start of each new feature/story
+
+## Compact Instructions
+
+When /compact is triggered, always preserve in the summary:
+
+- Full list of modified files and their purpose
+- Current task status (what's done, what's in progress)
+- Key decisions made and their rationale
+- Active test commands and environment-specific details
+- Any blocking issues or open questions for PO
 
 ## Quality Gate (before every commit)
 

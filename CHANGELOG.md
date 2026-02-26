@@ -6,6 +6,18 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), using [Conventi
 
 ## [Unreleased]
 
+### Added
+
+- **Conditional rules** (`.claude/rules/`): 5 stack-specific rule files with `paths:` frontmatter for auto-loading only when editing relevant file types (Python, Next.js, Node.js, Go, Rust) — reduces contextual noise by ~45%
+- **Compact Instructions** section in CLAUDE.md: directs `/compact` to preserve modified files, task status, decisions, and blocking issues
+- **Structured scratchpad format**: `### HH:MM — Task title` with Done/Next/Decision fields for cleaner context re-injection
+- `memory/session-cache.json` pre-created with empty structure (enables session handoff from first use)
+
+### Changed
+
+- **Stop hook split into 2 focused prompts**: Prompt 1 (session handoff + active context) is quasi-deterministic; Prompt 2 (learning capture) is evaluative — improves reliability over single complex prompt
+- **SessionStart hook** now also fires on `resume` event (previously only `startup` and `compact`)
+
 ## [1.3.0] - 2026-02-26
 
 ### Added

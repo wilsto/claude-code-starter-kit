@@ -3,9 +3,12 @@
 > Append-only during active work. Cleared at the start of each new feature.
 > Last 30 lines auto-injected after /compact by session-context.js.
 
-<!-- Entries go here. Format:
+<!-- Entry format:
+
 ### HH:MM — Task title
-- Done: ...
-- Next: ...
-- Decision: ... (if any)
+- Done: what was completed
+- Next: immediate next step
+- Decision: key decision made (if any)
+---
+
 -->

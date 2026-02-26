@@ -73,7 +73,7 @@ Then run `/setup` or manually replace the `{{PLACEHOLDER}}` values ([see guide](
 | **block-secrets** | `PreToolUse` (hard deny) | Blocks Claude from editing `.env*`, `secrets.*`, `config.json`. Zero tolerance. |
 | **tdd-guard** | `PreToolUse` (soft reminder) | Reminds you to write a failing test before editing source files. Non-blocking. |
 | **skill-evaluator** | `PreToolUse` (advisory) | Detects raw `git commit`/`git add -A` and suggests using `/commit` instead. Customizable triggers. |
-| **session-context** | `SessionStart` | Injects environment, memory, active context, scratchpad, and session handoff at startup and after `/compact`. Token-budgeted (~890 tokens max). |
+| **session-context** | `SessionStart` | Injects environment, memory, active context, scratchpad, and session handoff at startup, after `/compact`, and on resume. Token-budgeted (~890 tokens max). |
 | **post-commit-lessons** | `PostToolUse` (advisory) | After a successful `git commit`, prompts Claude to evaluate if lessons should be saved to memory. |
 | **commit-reminder** | `PostToolUse` (advisory) | After tests pass with uncommitted changes, suggests committing at natural breakpoints. |
 
@@ -175,6 +175,12 @@ claude-code-starter-kit/
 │   └── GUIDE.md                 # Detailed setup guide (2 modes, placeholder table, hook tests)
 ├── .claude/
 │   ├── settings.json            # Permissions + hook wiring
+│   ├── rules/                   # Conditional rules (auto-loaded by file paths)
+│   │   ├── python.md            # Loaded when editing Python files
+│   │   ├── nextjs.md            # Loaded when editing TS/TSX files
+│   │   ├── node.md              # Loaded when editing JS files
+│   │   ├── go.md                # Loaded when editing Go files
+│   │   └── rust.md              # Loaded when editing Rust files
 │   ├── stacks/                  # Language-specific guides (stackable)
 │   ├── commands/                # Slash commands (user types /name)
 │   │   ├── tdd.md               # /tdd

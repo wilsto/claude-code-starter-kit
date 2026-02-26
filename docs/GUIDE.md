@@ -17,7 +17,13 @@ Template-claude/
 │   ├── hooks/
 │   │   ├── block-secrets.js     # Hard-deny sur fichiers secrets
 │   │   ├── tdd-guard.js         # Rappel TDD soft sur source edits
-│   │   └── session-context.js   # Injecte memory au startup + apres /compact
+│   │   └── session-context.js   # Injecte memory au startup/compact/resume
+│   ├── rules/                   # Regles conditionnelles (auto-chargees par paths)
+│   │   ├── python.md            # Charge quand on edite du Python
+│   │   ├── nextjs.md            # Charge quand on edite du TS/TSX
+│   │   ├── node.md              # Charge quand on edite du JS
+│   │   ├── go.md                # Charge quand on edite du Go
+│   │   └── rust.md              # Charge quand on edite du Rust
 │   ├── stacks/                  # Language-specific guides (stackable)
 │   │   ├── python.md
 │   │   ├── nextjs.md
@@ -29,7 +35,11 @@ Template-claude/
 │       └── commit/SKILL.md      # /commit quality gate + conventional commit
 └── memory/
     ├── MEMORY.md                # Index auto-injecte (<200 lignes)
-    └── patterns.md              # Topic file on-demand
+    ├── active-context.md        # Contexte actif (focus + next steps injectes)
+    ├── scratchpad.md            # Log de travail (30 dernieres lignes injectees)
+    ├── decisions.md             # ADR-lite (on-demand)
+    ├── patterns.md              # Topic file on-demand
+    └── session-cache.json       # Handoff de session (auto-genere)
 ```
 
 ---
