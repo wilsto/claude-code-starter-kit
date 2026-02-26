@@ -1,0 +1,36 @@
+# Build artifacts — large, generated, irrelevant to Claude
+dist/
+build/
+out/
+*.egg-info/
+__pycache__/
+target/
+
+# Dependencies — too large, resolved by package manager
+node_modules/
+venv/
+.venv/
+
+# Test output — only relevant when explicitly inspecting
+coverage/
+test-results/
+.nyc_output/
+htmlcov/
+
+# Binary / media
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.mp4
+*.zip
+*.tar.gz
+*.woff
+*.woff2
+
+# Lock files — large and rarely useful for code understanding
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+poetry.lock
+Cargo.lock

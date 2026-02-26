@@ -1,0 +1,89 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(*)",
+      "Edit(*)",
+      "Write(*)",
+      "WebFetch",
+      "WebSearch"
+    ],
+    "deny": [
+      "Bash(rm -rf /*)",
+      "Bash(rm -rf ~*)",
+      "Bash(dd *)",
+      "Bash(mkfs*)",
+      "Bash(git push *--force*)",
+      "Bash(git push *-f *)",
+      "Bash(git reset --hard *)",
+      "Bash(chmod -R 777 *)",
+      "Bash(sudo rm *)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/block-secrets.js\"",
+            "timeout": 5
+          },
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/tdd-guard.js\"",
+            "timeout": 5
+          }
+        ]
+      },
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/block-secrets.js\"",
+            "timeout": 5
+          },
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/tdd-guard.js\"",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "prompt",
+            "prompt": "Analyze the conversation so far.\n\nEvaluate TWO things:\n\n1. MEMORY: Did this session produce any of:\n   - A new technical lesson (platform quirk, library gotcha, deployment issue)\n   - A bug fix that revealed a non-obvious root cause\n   - A new pattern or convention worth remembering across sessions\n   If yes: suggest updating memory/MEMORY.md (for index-level notes) or memory/patterns.md (for detailed patterns). Use the Edit tool to make the update.\n\n2. SESSION HANDOFF: If the session did meaningful work, write a structured handoff to memory/session-cache.json:\n   {\n     \"lastSession\": {\n       \"date\": \"YYYY-MM-DD\",\n       \"done\": \"what was accomplished (1-2 lines)\",\n       \"decisions\": \"key decisions made and WHY\",\n       \"next\": \"immediate next step for the next session\",\n       \"gotchas\": \"non-obvious things discovered\"\n     }\n   }\n   Use the Write tool to update the file.\n\nRespond with ONE of:\n- {\"ok\": true} — nothing to update\n- {\"ok\": false, \"reason\": \"Memory update suggested: <description>\"}\n- {\"ok\": false, \"reason\": \"Session handoff written: <summary>\"}",
+            "timeout": 15
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "startup",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/session-context.js\"",
+            "timeout": 5
+          }
+        ]
+      },
+      {
+        "matcher": "compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/session-context.js\"",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  }
+}
