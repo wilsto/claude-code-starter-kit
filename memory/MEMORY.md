@@ -28,6 +28,12 @@
 ## Topic Files (Read on demand, NOT auto-injected)
 
 - `memory/patterns.md` — technical patterns, debugging lessons, reusable solutions
+- `memory/decisions.md` — architectural decision records (ADR-lite)
+
+## Auto-injected Files
+
+- `memory/active-context.md` — current work context ("Current Focus" + "Next Steps" sections only)
+- `memory/scratchpad.md` — running work log, last 30 lines (survives /compact)
 
 ## Session Notes
 

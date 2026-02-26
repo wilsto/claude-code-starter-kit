@@ -87,9 +87,17 @@ Never declare "Done" without proof (test output, working demo, logs).
 ├── {{SRC_DIR}}        → source code
 ├── {{TEST_DIR}}       → test files (mirror of src/)
 ├── docs/              → documentation
-├── .claude/           → Claude Code config (hooks, skills)
+├── .claude/           → Claude Code config (hooks, skills, commands)
+│   ├── hooks/         → automatic hooks (security, TDD, memory, skill eval)
+│   ├── commands/      → slash commands (/commit, /tdd, /review, /simplify, /test-runner)
 │   └── stacks/        → language-specific guides (read on demand)
 └── memory/            → persistent cross-session memory
+    ├── MEMORY.md          → project identity, session notes (auto-injected)
+    ├── patterns.md        → technical patterns, debugging lessons (on-demand)
+    ├── decisions.md       → architectural decision records (on-demand)
+    ├── active-context.md  → current work context (focus + next steps auto-injected)
+    ├── scratchpad.md      → running work log (last 30 lines auto-injected)
+    └── session-cache.json → session handoff (auto-generated)
 ```
 
 ## Workflow
@@ -141,6 +149,15 @@ Suggest `/commit` at these natural breakpoints:
 Rules: advisory only — never auto-commit. If declined, don't repeat for same change.
 Hooks: `commit-reminder.js` (auto-detect), `post-commit-lessons.js` (post-commit eval).
 
+## Scratchpad Protocol (compact-resilient)
+
+Maintain `memory/scratchpad.md` as a running work log during active sessions:
+- **When to write**: After completing each subtask, before switching context
+- **Format**: Append-only, latest entry at the bottom
+- **Content**: Current task, what was done, what's next, key decisions
+- **Why**: Survives /compact — last 30 lines re-injected by session-context.js
+- **Cleanup**: Clear at the start of each new feature/story
+
 ## Quality Gate (before every commit)
 
 Pre-commit checks run by `/commit` skill:
@@ -157,6 +174,7 @@ Pre-commit checks run by `/commit` skill:
 - **Secrets**: never commit `.env*`, `secrets.*`, `*.secret`, `*.key`, `*.pem`, `config.json` — always maintain `.example` counterparts (enforced by `block-secrets.js`)
 - **If a plan goes off track**: stop and re-plan immediately, do not push forward
 - **Autonomous bug fixing**: diagnose and fix without asking for step-by-step guidance (Level 1-2 autonomy)
+- **Environment awareness**: session-context.js injects cwd, branch, git status, and stack at session start and after /compact
 
 ## Model Selection
 
