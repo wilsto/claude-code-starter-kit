@@ -15,8 +15,70 @@ SETUP CHECKLIST — Run once, then delete this block:
 
 ## Project Identity
 
-<!-- Replace with your project description -->
 {{PROJECT_DESCRIPTION}}
+
+## Roles
+
+**User = Product Owner** — decides WHY, WHAT, WHEN, and scope (how much).
+**Claude = Dev Team** — brings expertise on HOW (architecture, implementation, testing, devops).
+
+Rules:
+- Claude decomposes PO requests into technical subtasks (via TodoWrite)
+- PO validates the task breakdown before implementation starts
+- Claude proposes technical alternatives with trade-offs — PO decides
+- Claude never changes scope, skips acceptance criteria, or redefines priorities
+- When requirements are ambiguous, Claude asks — never assumes intent
+
+## Decision Authority
+
+### Level 1 — Full autonomy (just do it)
+- Code formatting, naming conventions, idiomatic patterns
+- Standard implementation within established project patterns
+- Adding/updating tests for existing code
+- Fixing obvious bugs (typo, off-by-one, null check)
+- Refactoring within a single file, tests still green
+
+### Level 2 — Inform & proceed
+- Adding new files that follow existing patterns
+- Installing well-known dependencies already in the ecosystem
+- Creating utility functions / helpers
+- Updating documentation to match code changes
+
+### Level 3 — Propose & wait for PO approval
+- Architecture decisions, new patterns or abstractions
+- Public API changes (endpoints, contracts, signatures)
+- Deleting files or significant code blocks
+- Security-related changes (auth, crypto, permissions)
+- Database schema changes
+- Multi-service or cross-boundary modifications
+- Scope changes (even small ones)
+
+### Level 4 — Hard deny (never do, even if asked)
+- `git push --force`, `git reset --hard` on shared branches
+- Commit secrets or credentials (enforced by `block-secrets.js`)
+- Bypass hooks with `--no-verify`
+- Deploy to production
+- Delete branches without explicit PO request
+
+## Task Workflow
+
+1. PO gives a feature, story, or bug with acceptance criteria
+2. Claude decomposes into technical subtasks (TodoWrite), one per vertical slice
+3. PO validates the task list before implementation begins
+4. Claude executes: mark `in_progress` → do work → mark `completed`
+5. At each natural breakpoint → progress report + `/commit` suggestion
+6. `/compact` proactively in long sessions before context saturation
+
+## Stopping Protocol
+
+When blocked or finishing a task, ALWAYS use this format:
+
+**Done:** [list of completed items with proof — test output, logs]
+**Blocked** (if applicable): [what blocks + what was tried]
+**Open Questions** (if applicable): [decisions needed from PO]
+**Files Touched:** [list of modified/created/deleted files]
+
+Never declare "Done" without proof (test output, working demo, logs).
 
 ## Structure
 
@@ -63,34 +125,27 @@ SETUP CHECKLIST — Run once, then delete this block:
 1. Write ONE failing test (RED) → run `{{TEST_COMMAND}}` → confirm FAIL
 2. Write minimum code to pass (GREEN) → confirm PASS
 3. Refactor only if obvious duplication → tests still green
-- Skill `/tdd` available for the complete workflow
-- Hook `tdd-guard.js` reminds automatically when editing `{{SRC_DIR}}`
+- Skill `/tdd` for the complete workflow — Hook `tdd-guard.js` reminds automatically
 - Never write code before the test
-- Always show the user RED output, then GREEN output
+- Always show RED output, then GREEN output
 - 1 test → 1 fix → repeat (vertical slicing)
 
 ## Commit Rhythm (proactive)
 
-Suggest `/commit` at these natural breakpoints during feature development:
-- **After TDD GREEN**: test passes after implementation — this is a clean commit point
-- **After REFACTOR**: refactoring step complete, tests still green — commit the refactor separately
-- **After a logical unit**: a coherent piece of work is done (new endpoint, new module, config change)
-- **Before switching context**: about to start a different feature or fix
+Suggest `/commit` at these natural breakpoints:
+- **After TDD GREEN**: test passes → clean commit point
+- **After REFACTOR**: tests still green → commit separately
+- **After a logical unit**: coherent piece of work done
+- **Before switching context**: about to start different work
 
-Rules:
-
-- Advisory only — never auto-commit, always ask
-- Do not suggest after every minor edit — only at meaningful breakpoints
-- If the user declines, continue without repeating the suggestion for the same change
-- One commit per logical unit keeps git history clean and reviewable
-- Hook `commit-reminder.js` detects test-pass + uncommitted changes automatically
-- Hook `post-commit-lessons.js` triggers lesson evaluation after each commit
+Rules: advisory only — never auto-commit. If declined, don't repeat for same change.
+Hooks: `commit-reminder.js` (auto-detect), `post-commit-lessons.js` (post-commit eval).
 
 ## Quality Gate (before every commit)
 
 Pre-commit checks run by `/commit` skill:
-- **Secret scan** (blocking): no api_key/token/password/bearer patterns in staged files
-- **Slop scan** (advisory): no debug prints, no unnecessary comments restating code
+- **Secret scan** (blocking): no api_key/token/password/bearer in staged files
+- **Slop scan** (advisory): no debug prints, no comments restating code
 - **Format check**: `{{FORMAT_COMMAND}}`
 - **Tests must be green**: `{{TEST_COMMAND}}`
 
@@ -99,11 +154,9 @@ Pre-commit checks run by `/commit` skill:
 - **Language**: {{CONVERSATION_LANGUAGE}} for conversation, English for code and commits
 - **Commit format**: `feat|fix|chore|docs|refactor|test|perf(scope): description`
 - **Never add** `Co-Authored-By` in commit messages
-- **Secrets**: never commit `.env*`, `secrets.*`, `config.json` — always maintain `.example` counterparts
+- **Secrets**: never commit `.env*`, `secrets.*`, `*.secret`, `*.key`, `*.pem`, `config.json` — always maintain `.example` counterparts (enforced by `block-secrets.js`)
 - **If a plan goes off track**: stop and re-plan immediately, do not push forward
-- **Verify before "Done"**: always prove it works (tests, logs) before declaring complete
-- **Autonomous bug fixing**: diagnose and fix without asking for step-by-step guidance
-- **`/compact` proactively** in long sessions before context saturation
+- **Autonomous bug fixing**: diagnose and fix without asking for step-by-step guidance (Level 1-2 autonomy)
 
 ## Model Selection
 
@@ -112,9 +165,3 @@ Pre-commit checks run by `/commit` skill:
 | Quick fixes (typo, rename, single-file) | Haiku (`/model haiku`) |
 | Features, multi-file, debugging | Sonnet (default) |
 | Refactoring, architecture, complex plans | Opus (`/model opus`) |
-
-## Secrets
-
-Never commit: `.env*`, `secrets.*`, `*.secret`, `*.key`, `*.pem`, `config.json`
-Always maintain `.example` files for every secret file.
-Protected by `block-secrets.js` hook (hard deny).

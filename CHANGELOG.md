@@ -6,6 +6,18 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), using [Conventi
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-02-26
+
+### Added
+- PO/DevTeam role separation: User decides WHY/WHAT, Claude brings expertise on HOW
+- 4-level Decision Authority matrix (full autonomy → hard deny)
+- Task Workflow with TodoWrite decomposition and PO validation gate
+- Structured Stopping Protocol (done/blocked/questions/files touched)
+
+### Changed
+- Merged duplicate Secrets section into Conventions
+- Condensed Commit Rhythm and TDD sections for conciseness
+
 ## [1.1.1] - 2026-02-26
 
 ### Fixed
@@ -42,7 +54,8 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), using [Conventi
 - Plan mode approval required before audit applies fixes
 - Language examples for Python, Node.js, Go, Rust (later replaced by stacks)
 
-[Unreleased]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.1.1...HEAD
+[Unreleased]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.2.0...HEAD
+[1.2.0]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.1.1...v1.2.0
 [1.1.1]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.1.0...v1.1.1
 [1.1.0]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/wilsto/claude-code-starter-kit/releases/tag/v1.0.0
