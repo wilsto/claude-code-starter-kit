@@ -6,10 +6,15 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), using [Conventi
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-02-26
+
 ### Added
 - **Stackable language complements** (`.claude/stacks/`): Python, Next.js (complete), Go, Rust, Node.js (stubs) — replaces old `examples/` with real value: opinionated tools, patterns, CI/CD, deploy, docs links
 - Multi-stack support in `/setup` (multi-select), CLAUDE.md (Active Stacks section), and `/commit` + `/tdd` (per-stack commands)
 - Stack detection in `/audit-conformity` (Check 8) via indicator files (`pyproject.toml`, `next.config.*`, `go.mod`, `Cargo.toml`)
+- CHANGELOG.md with Keep a Changelog format
+- Systematic changelog update step in `/commit` workflow (Step 7)
+- Incremental release with semver in `/commit` workflow (Step 8)
 
 ### Changed
 - Python tooling: ruff replaces black across all references
@@ -31,5 +36,6 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), using [Conventi
 - Plan mode approval required before audit applies fixes
 - Language examples for Python, Node.js, Go, Rust (later replaced by stacks)
 
-[Unreleased]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.1.0...HEAD
+[1.1.0]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/wilsto/claude-code-starter-kit/releases/tag/v1.0.0

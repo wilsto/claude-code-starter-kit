@@ -91,13 +91,50 @@ After a successful commit, update `CHANGELOG.md`:
 
 If CHANGELOG.md does not exist, create it with the [Keep a Changelog](https://keepachangelog.com/) format.
 
-## Step 8: Push (if requested)
+## Step 8: Push and Release (if requested)
 
 ```bash
 git push origin {{DEFAULT_BRANCH}}
 ```
 
-After push, remind user to check CI status if applicable:
+After push, create an incremental release:
+
+1. **Get the latest tag**:
+
+   ```bash
+   git describe --tags --abbrev=0
+   ```
+
+2. **Determine the next version** using semantic versioning:
+   - Check all commits since the last tag: `git log <last_tag>..HEAD --oneline`
+   - If any commit contains `BREAKING CHANGE` or `!:` → **major** bump (1.x.0 → 2.0.0)
+   - If any commit starts with `feat` → **minor** bump (1.1.x → 1.2.0)
+   - Otherwise (fix, refactor, docs, etc.) → **patch** bump (1.1.0 → 1.1.1)
+
+3. **Convert [Unreleased] to versioned section** in CHANGELOG.md:
+   - Rename `## [Unreleased]` to `## [X.Y.Z] - YYYY-MM-DD`
+   - Add a new empty `## [Unreleased]` section above it
+   - Update the comparison links at the bottom of the file
+   - Amend the commit and re-push:
+
+     ```bash
+     git add CHANGELOG.md
+     git commit --amend --no-edit
+     git push origin {{DEFAULT_BRANCH}} --force-with-lease
+     ```
+
+4. **Create the tag and GitHub release**:
+
+   ```bash
+   git tag vX.Y.Z
+   git push origin vX.Y.Z
+   gh release create vX.Y.Z --title "vX.Y.Z" --notes-file <(changelog section content)
+   ```
+
+   Use the content of the new versioned section from CHANGELOG.md as release notes.
+
+After release, remind user to check CI status if applicable:
+
 ```bash
 gh run list --limit 3
 ```
