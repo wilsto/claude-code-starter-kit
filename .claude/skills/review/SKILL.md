@@ -5,6 +5,7 @@ description: >
   Evaluates correctness, conventions, testing coverage, security, and simplicity.
   Triggers: before /commit with 3+ files changed, after completing a feature, after refactoring,
   when the user asks for review, "review my code", "check my changes", "is this correct".
+type: workflow
 ---
 
 # Code Review — Sub-agent Workflow

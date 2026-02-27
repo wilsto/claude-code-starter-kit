@@ -4,6 +4,7 @@ description: >
   Quality-gated commit workflow: secret scan, slop scan, format check, test gate,
   conventional commit message. Use /commit instead of raw git commands.
   Triggers: "commit", "git commit", "push changes".
+type: workflow
 ---
 
 # Commit — Quality Gate Workflow

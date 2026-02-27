@@ -102,6 +102,56 @@ Never declare "Done" without proof (test output, working demo, logs).
     └── session-cache.json → session handoff (auto-generated)
 ```
 
+## Skills Conventions
+
+### Taxonomy (3 tiers)
+
+| Type | Purpose | Duration | Example |
+| ---- | ------- | -------- | ------- |
+| **component** | Template for a specific deliverable | 10-30 min | `user-story`, `problem-statement` |
+| **interactive** | Guided discovery with adaptive questions | 30-90 min | `prioritization-advisor`, `discovery-interview-prep` |
+| **workflow** | End-to-end process orchestrating other skills | hours-weeks | `prd-development`, `commit`, `tdd` |
+
+### Frontmatter (required)
+
+Every `.claude/skills/<name>/SKILL.md` must start with:
+
+```yaml
+---
+name: kebab-case-name        # must match folder name, max 64 chars
+description: >               # max 200 chars, include trigger phrases
+  What this skill does and when to invoke it.
+  Triggers: "keyword1", "keyword2".
+type: component|interactive|workflow
+---
+```
+
+### Anatomy (6 sections, in order)
+
+1. **Purpose** — What this skill does and when to use it
+2. **Key Concepts** — Frameworks, definitions, anti-patterns
+3. **Application** — Step-by-step instructions (templates for component, question flows for interactive)
+4. **Examples** — Concrete cases showing good and bad usage
+5. **Common Pitfalls** — Named failure modes with Symptom/Consequence/Fix format
+6. **References** — Related skills, external sources, credit
+
+### Interactive Skills Protocol
+
+All interactive skills delegate facilitation behavior to `workshop-facilitation` skill:
+
+- **3 entry modes:** Guided (question by question) / Context dump (paste everything) / Best guess (infer + label assumptions)
+- **Progress labels:** Show `Context Qx/N` during collection, `Scoring Qx/N` during assessment
+- **One question per turn:** Wait for answer before continuing
+- **Decision points only:** Offer numbered recommendations only when a choice is needed
+
+### Available PM Skills
+
+- `/user-story` — Write user stories with Cohn format + Gherkin acceptance criteria
+- `/prd-development` — Structured PRD in 8 phases (2-4 days)
+- `/prioritization-advisor` — Choose the right prioritization framework (RICE, ICE, Kano...)
+- `/discovery-interview-prep` — Prepare customer interviews (Mom Test style)
+- `/opportunity-solution-tree` — OST: outcomes → opportunities → solutions → POC
+
 ## Workflow
 
 1. Edit code in this repo

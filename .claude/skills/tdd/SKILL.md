@@ -4,6 +4,7 @@ description: >
   Enforce Test-Driven Development workflow for bug fixes and features.
   Red-Green-Refactor cycle: write failing test FIRST, confirm RED, then implement, confirm GREEN.
   Triggers: "tdd", "test first", "red green refactor".
+type: workflow
 ---
 
 # TDD Workflow — Red-Green-Refactor

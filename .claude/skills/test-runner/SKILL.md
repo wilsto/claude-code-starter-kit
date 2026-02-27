@@ -5,6 +5,7 @@ description: >
   Use when tests need to be run, when debugging test failures, or to verify implementation.
   Triggers: "run tests", "run the test suite", "check if tests pass", "why is this test failing",
   after implementing a fix, after completing GREEN phase of TDD, "test this".
+type: workflow
 ---
 
 # Test Runner — Sub-agent Workflow

@@ -5,6 +5,7 @@ description: >
   Finds dead code, over-abstraction, duplication, and unnecessary complexity.
   Triggers: after a feature is complete, after refactoring, when code feels complex,
   "simplify", "clean up", "reduce complexity", "too complex".
+type: workflow
 ---
 
 # Code Simplifier — Sub-agent Workflow
