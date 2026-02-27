@@ -95,6 +95,7 @@ Never declare "Done" without proof (test output, working demo, logs).
 │   └── audit-config.json → audit skip decisions & last results (created by /audit-conformity)
 └── memory/            → persistent cross-session memory
     ├── MEMORY.md          → project identity, session notes (auto-injected)
+    ├── polaris.md         → north star: top of mind, goals, values (auto-injected)
     ├── patterns.md        → technical patterns, debugging lessons (on-demand)
     ├── decisions.md       → architectural decision records (on-demand)
     ├── active-context.md  → current work context (focus + next steps auto-injected)
@@ -218,6 +219,17 @@ Maintain `memory/scratchpad.md` as a running work log during active sessions:
 - **Content**: Current task, what was done, what's next, key decisions
 - **Why**: Survives /compact — last 30 lines re-injected by session-context.js
 - **Cleanup**: Clear at the start of each new feature/story
+
+## Polaris Protocol (north star)
+
+`memory/polaris.md` contains the user's strategic context: top of mind, goals, and values.
+
+- **Auto-injected** at session start (~100 tokens) by session-context.js
+- **Setup**: run `/polaris` to fill or update interactively with guided questions
+- **Auto-proposed** when polaris.md is empty at session start
+- **Update frequency**: every 1-2 weeks, or when priorities shift
+- **Modification**: Level 3 (propose & wait for PO approval)
+- **Usage**: reference Polaris when evaluating alignment of decisions, priorities, or new opportunities
 
 ## Compact Instructions
 

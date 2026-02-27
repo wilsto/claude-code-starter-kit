@@ -32,6 +32,7 @@
 
 ## Auto-injected Files
 
+- `memory/polaris.md` — north star: top of mind, goals, values (~100 tokens)
 - `memory/active-context.md` — current work context ("Current Focus" + "Next Steps" sections only)
 - `memory/scratchpad.md` — running work log, last 30 lines (survives /compact)
 

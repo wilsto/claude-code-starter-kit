@@ -6,6 +6,18 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), using [Conventi
 
 ## [Unreleased]
 
+### Added
+
+- **Polaris north star** (`memory/polaris.md`): strategic context layer (top of mind, goals, values) auto-injected at session start (~100 tokens) to align Claude's recommendations with user priorities
+- **`/polaris` command**: interactive fill/update with Update, Rewrite, and Review modes
+- **Polaris skill** (interactive): 8-question guided flow across 3 phases, auto-proposed when polaris.md is empty
+- **Audit check #9** (`polaris-memory`): informational check for Polaris presence and content
+
+### Changed
+
+- `session-context.js`: injects Polaris between session notes and active context
+- `CLAUDE.md`: Polaris Protocol section, updated structure tree and CLAUDE.md reconciliation sections
+
 ## [1.7.0] - 2026-02-27
 
 ### Added

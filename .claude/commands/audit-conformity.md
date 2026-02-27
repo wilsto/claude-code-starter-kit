@@ -18,6 +18,7 @@ Use this table throughout the audit for display and persistence.
 | `context-optimization` | 6 | Context Optimization | LOW | ~5 min | Performance |
 | `git-hygiene` | 7 | Git Hygiene | MEDIUM | ~2 min | Hygiene |
 | `stack-guides` | 8 | Stack Guides | LOW | ~20 min | Documentation |
+| `polaris-memory` | 9 | Polaris North Star | LOW | ~5 min | Productivity |
 
 ---
 
@@ -141,6 +142,7 @@ Check for the following **template sections** across CLAUDE.md, `.claude/rules/`
 | TDD Rules | `## TDD`, `RED.*GREEN`, `failing test` | Mandatory test-first discipline |
 | Commit Rhythm | `## Commit Rhythm`, `natural breakpoint` | Commit cadence guidance, prevents lost work |
 | Scratchpad Protocol | `## Scratchpad`, `scratchpad.md` | Running work log that survives /compact |
+| Polaris Protocol | `## Polaris`, `polaris.md`, `north star` | Strategic north star guiding Claude's recommendations |
 | Compact Instructions | `## Compact`, `/compact.*preserve` | What to preserve when /compact is triggered |
 
 #### INFORMATIONAL sections (4) — Project-specific. Noted but not scored.
@@ -281,11 +283,24 @@ For each detected stack:
 **PASS**: All detected stacks have matching guide files, and CLAUDE.md references them correctly.
 **FAIL**: Missing stack guide(s) or CLAUDE.md not configured for detected stacks. List the gaps.
 
+## Check 9: Polaris North Star
+
+**ID**: `polaris-memory`
+**File**: `memory/polaris.md`
+
+- Does `memory/polaris.md` exist?
+- Does it contain actual content beyond template comments/placeholders in at least one section (Top of Mind, Goals & Direction, Values & Principles)?
+
+**PASS**: File exists with user-written content in at least one section.
+**FAIL**: Missing file or all sections still contain only template placeholders.
+
+> Note: This check is informational (LOW impact). Polaris is optional but recommended for strategic alignment.
+
 ---
 
 ## Phase 2: Display Enriched Scorecard
 
-After all 8 checks, produce the scorecard with impact/effort metadata:
+After all 9 checks, produce the scorecard with impact/effort metadata:
 
 ```text
 === Claude Code Conformity Audit ===
@@ -300,6 +315,7 @@ Score: X/Y applicable (Z skipped)
   [PASS] 6. Context Optimization      [LOW      | ~5 min]  — .claudeignore covers 5 directories
   [SKIP] 7. Git Hygiene               — "Pre-commit hooks instead" (2026-02-15)
   [SKIP] 8. Stack Guides              — "Custom mono-repo stack" (2026-02-20)
+  [FAIL] 9. Polaris North Star        [LOW      | ~5 min]  — polaris.md exists but all sections empty
 
 Legend: Impact [CRITICAL/HIGH/MEDIUM/LOW] | Estimated fix time
 ```

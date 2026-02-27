@@ -78,6 +78,33 @@ try {
   }
 } catch (_) { /* non-blocking */ }
 
+// --- Inject Polaris / North Star (~100 tokens) ---
+const POLARIS_FILE = path.join(PROJECT_ROOT, 'memory', 'polaris.md');
+try {
+  if (fs.existsSync(POLARIS_FILE)) {
+    const raw = fs.readFileSync(POLARIS_FILE, 'utf8');
+    const sections = [];
+    const tomMatch = raw.match(/## Top of Mind\n([\s\S]*?)(?=\n## |$)/);
+    if (tomMatch) {
+      const content = tomMatch[1].replace(/<!--[\s\S]*?-->/g, '').trim();
+      if (content) sections.push(`Top of mind: ${content}`);
+    }
+    const goalsMatch = raw.match(/## Goals & Direction\n([\s\S]*?)(?=\n## |$)/);
+    if (goalsMatch) {
+      const content = goalsMatch[1].replace(/<!--[\s\S]*?-->/g, '').trim();
+      if (content) sections.push(`Goals: ${content}`);
+    }
+    const valuesMatch = raw.match(/## Values & Principles\n([\s\S]*?)(?=\n## |$)/);
+    if (valuesMatch) {
+      const content = valuesMatch[1].replace(/<!--[\s\S]*?-->/g, '').trim();
+      if (content) sections.push(`Values: ${content}`);
+    }
+    if (sections.length) {
+      lines.push(`Polaris (north star):\n${sections.join('\n')}`);
+    }
+  }
+} catch (_) { /* non-blocking */ }
+
 // --- Inject Active Context (truncated: focus + next steps only, ~150 tokens) ---
 const ACTIVE_CONTEXT_FILE = path.join(PROJECT_ROOT, 'memory', 'active-context.md');
 try {
