@@ -35,7 +35,7 @@ Claude Code is powerful out of the box. But without guardrails, it will:
 - Create inconsistent commits with no quality checks
 - Forget lessons learned in previous sessions
 
-This starter kit solves all of that with **6 hooks**, **7 commands**, **5 auto-skills**, and a **persistent memory system** — all language-agnostic, all battle-tested in production.
+This starter kit solves all of that with **6 hooks**, **7 commands**, **14 skills**, and a **persistent memory system** — all language-agnostic, all battle-tested in production.
 
 ---
 
@@ -102,6 +102,44 @@ Then run `/setup` or manually replace the `{{PLACEHOLDER}}` values ([see guide](
 | `/review` | yes | yes — activates before commit (3+ files), after feature completion |
 | `/simplify` | yes | yes — activates after feature/refactor, when complexity detected |
 | `/test-runner` | yes | yes — activates when tests need running, after implementation |
+
+### Skills (14 total)
+
+Skills are auto-invoked by Claude when the context matches — no slash command needed. Organized in 3 tiers:
+
+**Workflow skills** (end-to-end processes):
+
+| Skill | What it does |
+|-------|-------------|
+| **tdd** | Red-Green-Refactor cycle enforcement |
+| **commit** | Quality-gated commit with secret scan, slop scan, format + test gate |
+| **review** | Code review sub-agent (correctness, conventions, security) |
+| **simplify** | Code simplifier sub-agent (dead code, over-abstraction, duplication) |
+| **test-runner** | Test diagnostics sub-agent (run, parse failures, diagnose) |
+
+**Interactive skills** (guided discovery with adaptive questions):
+
+| Skill | What it does |
+|-------|-------------|
+| **tech-debt-audit** | Codebase health assessment with prioritized remediation plan (RICE scoring) |
+| **security-audit** | OWASP Top 10 + dependency + secrets audit with severity-ranked findings |
+| **prioritization-advisor** | Choose the right prioritization framework (RICE, ICE, Kano...) |
+| **discovery-interview-prep** | Prepare customer discovery interviews (Mom Test style) |
+| **opportunity-solution-tree** | Build an OST: outcomes, opportunities, solutions, POC selection |
+| **workshop-facilitation** | Canonical facilitation protocol for all interactive skills |
+
+**Component skills** (templates for specific deliverables):
+
+| Skill | What it does |
+|-------|-------------|
+| **user-story** | User stories with Mike Cohn format + Gherkin acceptance criteria |
+
+**Workflow skills** (multi-step orchestration):
+
+| Skill | What it does |
+|-------|-------------|
+| **prd-development** | Structured PRD creation across 8 phases (2-4 days) |
+| **doc-generate** | Generate architecture, API, or onboarding docs in `docs/` |
 
 ### Memory System (cross-session persistence)
 
@@ -202,12 +240,21 @@ claude-code-starter-kit/
 │   │   ├── session-context.js   # Memory + env injection at startup + compact
 │   │   ├── post-commit-lessons.js # Lesson evaluation after each commit
 │   │   └── commit-reminder.js   # Commit suggestion after tests pass
-│   └── skills/                  # Auto-invoked by Claude when context matches
-│       ├── tdd/SKILL.md         # Auto-activates on bug fix / feature work
-│       ├── commit/SKILL.md      # Auto-activates when staging changes
-│       ├── review/SKILL.md      # Auto-activates before commit (3+ files), after features
-│       ├── simplify/SKILL.md    # Auto-activates after feature/refactor completion
-│       └── test-runner/SKILL.md # Auto-activates when tests need running
+│   └── skills/                  # Auto-invoked by Claude when context matches (14 skills)
+│       ├── tdd/                 # TDD Red-Green-Refactor enforcement
+│       ├── commit/              # Quality-gated commit workflow
+│       ├── review/              # Code review sub-agent
+│       ├── simplify/            # Code simplifier sub-agent
+│       ├── test-runner/         # Test diagnostics sub-agent
+│       ├── tech-debt-audit/     # Codebase health assessment (interactive)
+│       ├── security-audit/      # OWASP + dependency audit (interactive)
+│       ├── doc-generate/        # Architecture/API/onboarding docs (workflow)
+│       ├── user-story/          # Cohn format + Gherkin criteria (component)
+│       ├── prd-development/     # Structured PRD in 8 phases (workflow)
+│       ├── prioritization-advisor/ # Framework selection (interactive)
+│       ├── discovery-interview-prep/ # Customer interview prep (interactive)
+│       ├── opportunity-solution-tree/ # OST mapping (interactive)
+│       └── workshop-facilitation/ # Facilitation protocol for interactive skills
 └── memory/
     ├── MEMORY.md                # Auto-injected index (< 200 lines)
     ├── active-context.md        # Current work context (focus + next steps injected)

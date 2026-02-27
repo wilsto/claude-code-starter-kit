@@ -6,6 +6,21 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), using [Conventi
 
 ## [Unreleased]
 
+## [1.7.0] - 2026-02-27
+
+### Added
+
+- **9 new skills** expanding the starter kit from 5 to 14 skills across 3 tiers:
+  - **PM skills (6)**: user-story, prd-development, prioritization-advisor, discovery-interview-prep, opportunity-solution-tree, workshop-facilitation
+  - **Audit skills (2)**: tech-debt-audit (interactive codebase health with RICE-prioritized remediation), security-audit (OWASP Top 10 + dependency + secrets audit with severity-ranked findings)
+  - **Documentation skill (1)**: doc-generate (workflow to generate architecture, API, or onboarding docs with Mermaid diagrams)
+- **Skills Conventions** section in CLAUDE.md: taxonomy (component/interactive/workflow), required frontmatter, 6-section anatomy, interactive protocol
+- `type: workflow` field added to existing skill frontmatters (commit, review, simplify, tdd, test-runner)
+
+### Changed
+
+- README updated with full Skills section (14 skills organized by tier) and expanded project structure tree
+
 ## [1.6.0] - 2026-02-26
 
 ### Changed
@@ -115,7 +130,8 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), using [Conventi
 - Plan mode approval required before audit applies fixes
 - Language examples for Python, Node.js, Go, Rust (later replaced by stacks)
 
-[Unreleased]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.6.0...HEAD
+[Unreleased]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.7.0...HEAD
+[1.7.0]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.6.0...v1.7.0
 [1.6.0]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.5.0...v1.6.0
 [1.5.0]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.4.0...v1.5.0
 [1.4.0]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.3.0...v1.4.0
