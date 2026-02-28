@@ -36,6 +36,14 @@
 - `memory/active-context.md` — current work context ("Current Focus" + "Next Steps" sections only)
 - `memory/scratchpad.md` — running work log, last 30 lines (survives /compact)
 
+## Plugin Watch
+
+- Source: https://github.com/wshobson/agents
+- Dernière revue: 2026-02-28
+- Fréquence: mensuelle
+- Agents évalués (9): python-development, cicd-automation, shell-scripting, security-compliance, observability-monitoring, cloud-infrastructure, security-scanning, incident-response, agent-orchestration
+- Checker: (1) mises à jour des 9 agents existants, (2) nouveaux agents dans le repo
+
 ## Session Notes
 
 (keep last 3 entries, most recent first)

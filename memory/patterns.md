@@ -19,3 +19,35 @@
 ## Anti-Patterns Discovered
 
 <!-- Things that seemed right but weren't — with the lesson learned -->
+
+## Agent Orchestration Patterns (from wshobson/agents evaluation)
+
+> Source: `agent-orchestration` plugin — evaluated 2026-02-28, not integrated (too theoretical/enterprise)
+
+### Patterns worth remembering
+
+1. **Failure mode classification** (6 categories for agent issues):
+   - Instruction misunderstanding
+   - Output format errors
+   - Context loss (long conversations)
+   - Tool misuse
+   - Constraint violations
+   - Edge case handling
+   → Useful for improving skill prompts and debugging agent behavior.
+
+2. **File-based context between steps** (also seen in incident-response):
+   - Write intermediate outputs to files, read them back in next step
+   - Survives `/compact` and context window limits
+   - Pattern: `state.json` + numbered output files (`01-step.md`, `02-step.md`)
+   → Already used in `/incident-response` skill. Consider for other long workflows.
+
+3. **Agent versioning** (MAJOR.MINOR.PATCH for skill prompts):
+   - Track skill prompt changes with semantic versioning
+   - Rollback triggers: success rate drops >10%, critical errors >5%
+   → Premature for now, but worth considering if skills grow complex.
+
+### Not adopted (too complex for our use case)
+
+- Vector databases / knowledge graphs for context (our `memory/` system is simpler and sufficient)
+- Dynamic model selection per task complexity (our Model Selection table in CLAUDE.md is manual but adequate)
+- A/B testing framework for agents (interesting but premature)

@@ -6,6 +6,20 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), using [Conventi
 
 ## [Unreleased]
 
+## [1.9.0] - 2026-02-28
+
+### Added
+
+- **4 new stack guides** extracted from `wshobson/agents` plugins: CI/CD (GitHub Actions, deployment strategies, DORA metrics), Observability (SLI/SLO, PromQL golden signals, OpenTelemetry), Shell scripting (10 defensive patterns, Bats testing, ShellCheck), Terraform (module architecture, state management, cost optimization)
+- **`/incident-response` skill + command**: 5-phase guided workflow (triage → investigate → resolve → communicate → postmortem) with file-based checkpoints, runbook templates, and on-call handoff
+- **Plugin Watch** in MEMORY.md: monthly re-evaluation of `wshobson/agents` for updates to 9 evaluated plugins and new agents
+
+### Changed
+
+- `python.md` stack guide enriched with async patterns, background jobs (Celery), FastAPI/Pydantic V2, SQLAlchemy 2.0 async, performance profiling, and advanced anti-patterns (+252 lines)
+- `security-audit` skill enriched with DevSecOps pipeline integration, SAST tooling, STRIDE→requirements→tests workflow, attack tree analysis, and compliance mapping (+137 lines)
+- `patterns.md` updated with agent orchestration patterns (failure mode classification, file-based context between steps)
+
 ## [1.8.0] - 2026-02-28
 
 ### Added
@@ -149,7 +163,8 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), using [Conventi
 - Plan mode approval required before audit applies fixes
 - Language examples for Python, Node.js, Go, Rust (later replaced by stacks)
 
-[Unreleased]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.8.0...HEAD
+[Unreleased]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.9.0...HEAD
+[1.9.0]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.8.0...v1.9.0
 [1.8.0]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.7.0...v1.8.0
 [1.7.0]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.6.0...v1.7.0
 [1.6.0]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.5.0...v1.6.0
