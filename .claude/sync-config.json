@@ -15,7 +15,8 @@
       "simplify.md",
       "polaris.md",
       "incident-response.md",
-      "sync-global.md"
+      "sync-global.md",
+      "setup.md"
     ],
     "hooks": [
       "block-secrets.js",
@@ -63,8 +64,7 @@
     "commands": [
       "commit.md",
       "tdd.md",
-      "test-runner.md",
-      "setup.md"
+      "test-runner.md"
     ],
     "skills": [
       "commit",
