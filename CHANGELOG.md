@@ -6,17 +6,24 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), using [Conventi
 
 ## [Unreleased]
 
+## [1.8.0] - 2026-02-28
+
 ### Added
 
 - **Polaris north star** (`memory/polaris.md`): strategic context layer (top of mind, goals, values) auto-injected at session start (~100 tokens) to align Claude's recommendations with user priorities
 - **`/polaris` command**: interactive fill/update with Update, Rewrite, and Review modes
 - **Polaris skill** (interactive): 8-question guided flow across 3 phases, auto-proposed when polaris.md is empty
 - **Audit check #9** (`polaris-memory`): informational check for Polaris presence and content
+- **Bidirectional sync** (`/sync-global`): sync rules, commands, and hooks between template and `~/.claude/` global config with hash-based change detection and interactive conflict resolution
+- **Config health check** (`config-health-check.js`): global SessionStart hook for all projects — detects contradictions between local and global rules, verifies hooks integrity, memory health, and permissions coherence
+- **7 generic rule files** (`.claude/rules/`): conventions, git, quality, roles, security, workflow, python-uv — extracted from CLAUDE.md for sync with global config
+- **Sync config** (`.claude/sync-config.json`): classification of syncable vs project-only files with name mapping support
 
 ### Changed
 
 - `session-context.js`: injects Polaris between session notes and active context
-- `CLAUDE.md`: Polaris Protocol section, updated structure tree and CLAUDE.md reconciliation sections
+- `CLAUDE.md`: lightened from ~269 to ~145 lines by delegating duplicated sections to rule files
+- `block-secrets.js`: fixed basename matching — `includes()` replaced by exact `===` to prevent false positives (e.g. `sync-config.json` no longer blocked by `config.json` rule)
 
 ## [1.7.0] - 2026-02-27
 
@@ -142,7 +149,8 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), using [Conventi
 - Plan mode approval required before audit applies fixes
 - Language examples for Python, Node.js, Go, Rust (later replaced by stacks)
 
-[Unreleased]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.7.0...HEAD
+[Unreleased]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.8.0...HEAD
+[1.8.0]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.7.0...v1.8.0
 [1.7.0]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.6.0...v1.7.0
 [1.6.0]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.5.0...v1.6.0
 [1.5.0]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.4.0...v1.5.0

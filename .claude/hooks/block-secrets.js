@@ -26,7 +26,7 @@ process.stdin.on('end', () => {
     const basename = path.basename(filePath);
 
     const isBlocked =
-      BLOCKED_PATHS.some((s) => filePath.includes(s)) ||
+      BLOCKED_PATHS.some((s) => basename === s) ||
       basename.startsWith('.env');
 
     if (isBlocked) {

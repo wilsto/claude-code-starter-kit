@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "syncable": {
+    "rules": [
+      "conventions.md",
+      "git.md",
+      "quality.md",
+      "roles.md",
+      "security.md",
+      "workflow.md",
+      "python-uv.md"
+    ],
+    "commands": [
+      "review.md",
+      "simplify.md",
+      "polaris.md"
+    ],
+    "hooks": [
+      "block-secrets.js",
+      "session-context.js",
+      "skill-evaluator.js",
+      "commit-reminder.js",
+      "post-commit-lessons.js",
+      "tdd-guard.js"
+    ]
+  },
+  "projectOnly": {
+    "rules": [
+      "python.md",
+      "node.md",
+      "nextjs.md",
+      "go.md",
+      "rust.md"
+    ],
+    "commands": [
+      "commit.md",
+      "tdd.md",
+      "test-runner.md",
+      "setup.md"
+    ],
+    "skills": [
+      "commit",
+      "tdd",
+      "test-runner"
+    ]
+  },
+  "auditInstallable": {
+    "commands": [
+      "audit-conformity.md"
+    ]
+  },
+  "nameMapping": {
+    "rules": {
+      "python-uv.md": "python.md"
+    }
+  },
+  "settingsSync": {
+    "deny": "union",
+    "allow": "base-additive"
+  }
+}
