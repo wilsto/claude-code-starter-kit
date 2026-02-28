@@ -6,6 +6,11 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), using [Conventi
 
 ## [Unreleased]
 
+### Added
+
+- **Stacks and skills sync**: `sync-config.json` now tracks 9 stacks and 13 skills as syncable categories, propagated to `~/.claude/` via `/sync-global`
+- **`security.md` secrets centralisés**: centralized secrets management rule synced from global config
+
 ## [1.9.0] - 2026-02-28
 
 ### Added

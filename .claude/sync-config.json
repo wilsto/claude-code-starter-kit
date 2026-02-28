@@ -13,7 +13,9 @@
     "commands": [
       "review.md",
       "simplify.md",
-      "polaris.md"
+      "polaris.md",
+      "incident-response.md",
+      "sync-global.md"
     ],
     "hooks": [
       "block-secrets.js",
@@ -22,6 +24,32 @@
       "commit-reminder.js",
       "post-commit-lessons.js",
       "tdd-guard.js"
+    ],
+    "stacks": [
+      "cicd.md",
+      "go.md",
+      "nextjs.md",
+      "node.md",
+      "observability.md",
+      "python.md",
+      "rust.md",
+      "shell.md",
+      "terraform.md"
+    ],
+    "skills": [
+      "workshop-facilitation",
+      "polaris",
+      "user-story",
+      "prd-development",
+      "prioritization-advisor",
+      "discovery-interview-prep",
+      "opportunity-solution-tree",
+      "doc-generate",
+      "incident-response",
+      "security-audit",
+      "tech-debt-audit",
+      "review",
+      "simplify"
     ]
   },
   "projectOnly": {
