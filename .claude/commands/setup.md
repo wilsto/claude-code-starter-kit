@@ -60,6 +60,7 @@ Standard placeholder replacement:
 - `{{SRC_DIR}}` → source directory
 - `{{TEST_DIR}}` → test directory
 - `{{TEST_COMMAND}}` → from stack defaults
+- `{{TEST_COMMAND_COVERAGE}}` → from stack defaults
 - `{{FORMAT_COMMAND}}` → FORMAT_CHECK_COMMAND from stack defaults
 - `{{DEFAULT_BRANCH}}` → default branch
 - `{{CONVERSATION_LANGUAGE}}` → conversation language
@@ -100,6 +101,7 @@ For each stack, generate a subsection:
 - `{{FORMAT_CHECK_COMMAND}}` → from primary stack (single) or `See Active Stacks in CLAUDE.md` (multi)
 - `{{FORMAT_FIX_COMMAND}}` → from primary stack (single) or note about Active Stacks (multi)
 - `{{TEST_COMMAND}}` → from primary stack
+- `{{TEST_COMMAND_COVERAGE}}` → from primary stack
 - `{{DEFAULT_BRANCH}}` → default branch
 
 #### memory/MEMORY.md

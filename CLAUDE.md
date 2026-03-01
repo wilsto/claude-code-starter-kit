@@ -139,7 +139,7 @@ All interactive skills delegate facilitation behavior to `workshop-facilitation`
 ## Project-Specific Config
 
 - **TDD**: use `/tdd` skill — hook `tdd-guard.js` reminds automatically
-- **Quality gate**: `/commit` runs secret scan, slop scan, format (`{{FORMAT_COMMAND}}`), tests (`{{TEST_COMMAND}}`)
+- **Quality gate**: `/commit` runs secret scan, slop scan, format (`{{FORMAT_COMMAND}}`), tests (`{{TEST_COMMAND}}`), coverage report (`{{TEST_COMMAND_COVERAGE}}`), doc completeness check
 - **Commit rhythm**: `commit-reminder.js` (auto-detect), `post-commit-lessons.js` (post-commit eval)
 - **Environment awareness**: `session-context.js` injects cwd, branch, git status, stack at session start
 

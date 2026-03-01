@@ -40,3 +40,20 @@ Advisory only — never auto-commit. If declined, don't repeat for same change.
 - TodoWrite tracks in-session subtask execution only — the backlog lives in GitHub
 - Phase transitions are Level 3 decisions (propose & wait for PO approval)
 - Use `/roadmap` to discuss phases, check progress, or migrate internal plans
+
+## Definition of Ready / Done (DoR/DoD)
+
+### DoR — An issue is Ready when:
+
+- Title is clear and actionable
+- Description includes acceptance criteria (what "done" looks like)
+- Phase, Priority, Size are set in GitHub Project
+- Dependencies are identified (no hidden blockers)
+
+### DoD — An issue is Done when:
+
+- All acceptance criteria are met with verifiable proof
+- Tests pass AND coverage did not drop (advisory)
+- Public symbols are documented
+- Changes are committed via `/commit` (quality gate passed)
+- Issue is closed by PO (never auto-closed by Claude)

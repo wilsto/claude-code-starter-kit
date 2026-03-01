@@ -6,6 +6,24 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), using [Conventi
 
 ## [Unreleased]
 
+## [1.13.0] - 2026-03-01
+
+### Added
+
+- **Coverage report** (advisory step 5b in `/commit`): runs `{{TEST_COMMAND_COVERAGE}}` after tests pass, reports %, warns if coverage dropped
+- **Doc completeness check** (advisory step 5c in `/commit`): detects public symbols without docstrings/JSDoc/godoc in staged files
+- **Definition of Ready / Done** in `workflow.md`: concrete DoR (5 criteria) and DoD (5 criteria) for GitHub Project issues
+- **DoR check in `/roadmap`** Add Work flow: warns before creating issues missing acceptance criteria, phase, or priority
+- **Coverage mode** in `test-runner` agent: optional "with coverage" invocation using `{{TEST_COMMAND_COVERAGE}}`
+- **Real coverage metrics** in `tech-debt-auditor` agent: replaces qualitative estimation with actual coverage command output
+- **Coverage after GREEN** in `/tdd` skill: shows coverage for modified file after test passes
+
+### Changed
+
+- Quality gate expanded from 4 to 6 items: added coverage report (advisory) and doc completeness (advisory)
+- `/setup` now propagates `{{TEST_COMMAND_COVERAGE}}` to commit skill files alongside tdd files
+- README updated with coverage and doc completeness in `/commit` description
+
 ## [1.12.1] - 2026-03-01
 
 ### Changed
@@ -226,7 +244,8 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), using [Conventi
 - Plan mode approval required before audit applies fixes
 - Language examples for Python, Node.js, Go, Rust (later replaced by stacks)
 
-[Unreleased]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.12.1...HEAD
+[Unreleased]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.13.0...HEAD
+[1.13.0]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.12.1...v1.13.0
 [1.12.1]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.12.0...v1.12.1
 [1.12.0]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.11.2...v1.12.0
 [1.11.2]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.11.1...v1.11.2

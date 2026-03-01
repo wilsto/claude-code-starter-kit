@@ -67,6 +67,41 @@ Then re-stage affected files.
 
 If tests fail → **STOP**. Do not commit broken code. Show the failure output.
 
+## Step 5b: Coverage Report (advisory)
+
+```bash
+{{TEST_COMMAND_COVERAGE}}
+```
+
+Run after tests pass. Report the overall coverage percentage.
+
+- If coverage data was previously noted in `memory/scratchpad.md`, compare and warn if it dropped:
+  > Coverage: X% (↓ from Y% — consider adding tests before committing)
+- If no baseline exists, just report the current value
+- For multi-stack projects, run each stack's coverage command separately
+- This step is **advisory** — do not block the commit
+
+## Step 5c: Doc Completeness Check (advisory)
+
+Check staged files for public symbols (functions, classes, methods) that lack documentation.
+
+```bash
+git diff --cached --name-only | grep -E '\.(py|ts|tsx|js|go|rs)$'
+```
+
+For each staged source file, scan for undocumented public symbols:
+
+| Stack | Public symbol pattern | Missing doc indicator |
+| ----- | -------------------- | -------------------- |
+| Python | `def ` / `class ` (not `_`-prefixed) | No docstring on next line |
+| TypeScript/JS | `export function` / `export class` / `export const` | No `/** ... */` JSDoc above |
+| Go | `^func [A-Z]` (exported) | No `// FunctionName` comment above |
+| Rust | `^pub fn` / `^pub struct` | No `/// doc comment` above |
+
+- If undocumented symbols found: list them and ask whether to document before committing
+- Skip test files (`*_test.*`, `test_*`, `*.test.*`, `*.spec.*`), config files, and generated files
+- This step is **advisory** — do not block the commit
+
 ## Step 6: Post-change Documentation (advisory)
 
 Follow the `/spec-update` skill to handle documentation updates. This step has 3 sub-tasks:

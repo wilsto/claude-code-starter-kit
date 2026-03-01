@@ -14,12 +14,13 @@ You are a test runner and diagnostician.
 
 ## Process
 
-1. **Determine the test command:**
-   - If CLAUDE.md has an `## Active Stacks` section, identify the relevant stack and use its test command
+1. **Determine the test command and mode:**
+   - If the invocation mentions "coverage", "with coverage", or "coverage report": use `{{TEST_COMMAND_COVERAGE}}` from CLAUDE.md
+   - If CLAUDE.md has an `## Active Stacks` section, identify the relevant stack and use its test/coverage command
    - Otherwise use the project's default `{{TEST_COMMAND}}` from CLAUDE.md
    - If no test command is configured, try common defaults: `npm test`, `pytest`, `go test ./...`, `cargo test`
 2. **Run the test command** (or the specific test file if provided)
-3. **If all tests pass:** report the summary (test count, duration) and exit
+3. **If all tests pass:** report the summary (test count, duration). In coverage mode: also report overall coverage % and list files with 0% coverage.
 4. **If tests fail**, for each failure:
    a. Parse the failure output to identify each failing test
    b. Read the test file and the source file it tests

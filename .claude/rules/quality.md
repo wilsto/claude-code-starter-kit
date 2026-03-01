@@ -14,5 +14,7 @@
 
 - **Secret scan** (blocking): no api_key/token/password/bearer in staged files
 - **Slop scan** (advisory): no debug prints, no comments restating code
-- **Format check**: run project formatter
-- **Tests must be green**
+- **Format check** (advisory): run project formatter
+- **Tests** (blocking): all tests must pass
+- **Coverage report** (advisory): run `{{TEST_COMMAND_COVERAGE}}`, report %, warn if dropped
+- **Doc completeness** (advisory): staged public symbols must have docstrings/JSDoc/godoc

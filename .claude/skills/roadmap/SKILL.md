@@ -106,9 +106,14 @@ On invocation, present 3 modes:
 #### Add Work Flow
 
 1. Ask: title, description, phase, priority, size, type
-2. Create issue: `gh issue create --repo wilsto/<REPO> --title "..." --body "..." --label "phase:..."`
-3. If epic with sub-tasks, create parent issue then sub-issues via `mcp__github__sub_issue_write`
-4. Confirm creation with issue numbers
+2. **DoR check** — Before creating, verify the issue meets Definition of Ready (see `workflow.md`):
+   - Title is clear and actionable
+   - Description includes acceptance criteria
+   - Phase, Priority, Size are set
+   - If any field is missing, warn and ask PO to complete before creating
+3. Create issue: `gh issue create --repo wilsto/<REPO> --title "..." --body "..." --label "phase:..."`
+4. If epic with sub-tasks, create parent issue then sub-issues via `mcp__github__sub_issue_write`
+5. Confirm creation with issue numbers
 
 ### Mode 3: Migrate
 

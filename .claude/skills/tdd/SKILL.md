@@ -28,6 +28,7 @@ type: workflow
 - Run: `{{TEST_COMMAND}}`
 - **CONFIRM** all tests pass
 - Do NOT add extra logic "while you're at it"
+- **Coverage check**: after GREEN, run `{{TEST_COMMAND_COVERAGE}}` and show coverage for the modified file. Informational only — confirms the new test covers the new code.
 
 ### 3. REFACTOR (optional)
 - Only if there is clear duplication or code smell

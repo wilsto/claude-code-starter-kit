@@ -82,7 +82,7 @@ Then run `/setup` or manually replace the `{{PLACEHOLDER}}` values ([see guide](
 | Command | What it does |
 |---------|-------------|
 | **`/tdd`** | Red-Green-Refactor workflow. Write failing test, confirm RED, implement, confirm GREEN. |
-| **`/commit`** | Quality gate: secret scan + slop scan + format + test gate + functional spec + changelog + conventional commit + push/release. 9 steps. |
+| **`/commit`** | Quality gate: secret scan + slop scan + format + test gate + **coverage report** + **doc completeness** + functional spec + changelog + conventional commit + push/release. 9 steps (+ 2 advisory sub-steps). |
 | **`/setup`** | Interactive wizard. Asks your stack, fills all placeholders, configures hooks automatically. |
 | **`/audit-conformity`** | Analyzes an existing project against the template. Produces a scorecard, then lets you cherry-pick fixes, skip checks, or defer — with CLAUDE.md reconciliation and zero-loss guarantee. |
 | **`/review`** | Routes to the appropriate `pr-review-toolkit` agent for code review. Read-only. |
@@ -110,7 +110,7 @@ Skills are auto-invoked by Claude when the context matches — no slash command 
 | Skill | What it does |
 |-------|-------------|
 | **tdd** | Red-Green-Refactor cycle enforcement |
-| **commit** | Quality-gated commit: checks → functional spec → changelog → commit → push/release (9 steps) |
+| **commit** | Quality-gated commit: checks → coverage report → doc completeness → functional spec → changelog → commit → push/release (9 steps + 2 advisory sub-steps) |
 | **review** | Routes to pr-review-toolkit agents (correctness, conventions, security) |
 | **test-runner** | Delegates to test-runner agent (run, parse failures, diagnose) |
 

@@ -49,6 +49,18 @@ Then re-stage affected files.
 
 If tests fail → **STOP**. Do not commit broken code. Show the failure output.
 
+## Step 5b: Coverage Report (advisory)
+
+```bash
+{{TEST_COMMAND_COVERAGE}}
+```
+
+After tests pass, run coverage and report %. Warn if coverage dropped compared to previous baseline. Advisory only — do not block the commit.
+
+## Step 5c: Doc Completeness (advisory)
+
+Grep staged source files for public symbols (functions/classes) without docstrings/JSDoc/godoc. List any undocumented public API and ask whether to document before committing. Skip test files and generated files. Advisory only.
+
 ## Step 6: Stage and Commit
 
 - Stage specific files with `git add <file>` — **NEVER** `git add -A` or `git add .`
