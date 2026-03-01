@@ -6,6 +6,19 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), using [Conventi
 
 ## [Unreleased]
 
+## [1.14.0] - 2026-03-01
+
+### Added
+
+- `/setup` now creates GitHub Project automatically from template via `copyProjectV2` GraphQL mutation (no manual steps for PO)
+- `/setup` caches all project field/option IDs in `CLAUDE.local.md` for fast GraphQL mutations
+- Date rules in issue creation: Start date auto-derived from status (today for In Progress/Done, empty for Todo), never asked to PO
+
+### Changed
+
+- `/roadmap` Add Work no longer asks PO for start date (auto-derived)
+- `/roadmap` Migrate derives dates from commit/release history for historical issues
+
 ## [1.13.2] - 2026-03-01
 
 ### Changed

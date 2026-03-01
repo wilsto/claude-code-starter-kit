@@ -27,7 +27,7 @@
 1. `gh issue create` — creates the issue
 2. `gh project item-add` — adds to project board (returns item ID)
 3. GraphQL mutations — sets all project fields (Status, Phase, Priority, Size, Type, Start date)
-**Prevention**: Field/option IDs cached in `CLAUDE.local.md`. Rule in workflow.md: "Never consider an issue created until all 3 steps are complete."
+**Prevention**: Field/option IDs cached in `CLAUDE.local.md`. Rule in workflow.md: "Never consider an issue created until all 3 steps are complete." Dates are auto-derived from status (see Date rules in workflow.md) — never ask the PO for dates.
 
 ## Agent Orchestration Patterns (from wshobson/agents evaluation)
 

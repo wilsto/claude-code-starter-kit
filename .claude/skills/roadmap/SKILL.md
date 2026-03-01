@@ -29,6 +29,8 @@ The skill reads the project number from `CLAUDE.md` (section "Project Tracking")
 gh project list --owner wilsto --format json
 ```
 
+If no project exists for the current repo, create one automatically from the **Project Template** (see `/setup` Step 1c for the full procedure: `copyProjectV2` GraphQL mutation + field ID caching in `CLAUDE.local.md`).
+
 ### Phase Model
 
 Projects use a custom field "Phase" with values:
@@ -105,7 +107,7 @@ On invocation, present 3 modes:
 
 #### Add Work Flow
 
-1. Ask: title, description, phase, priority, size, type, start date
+1. Ask: title, description, phase, priority, size, type
 2. **DoR check** — Before creating, verify the issue meets Definition of Ready (see `workflow.md`):
    - Title is clear and actionable
    - Description includes acceptance criteria
@@ -114,7 +116,7 @@ On invocation, present 3 modes:
 3. **Create the issue** (3-step mandatory process — see `workflow.md` → Issue Creation Procedure):
    a. `gh issue create --repo wilsto/<REPO> --title "..." --body "..."`
    b. `gh project item-add <PROJECT_NUMBER> --owner wilsto --url <ISSUE_URL>` — **without this, the issue is invisible on the board**
-   c. Set ALL project fields via GraphQL: Status, Phase, Priority, Size, Type, Start date
+   c. Set ALL project fields via GraphQL: Status, Phase, Priority, Size, Type, Start date (auto: today if status ≠ Todo, empty otherwise — see `workflow.md` Date rules)
    - Read field/option IDs from `CLAUDE.local.md` (cached) or `gh project field-list <N> --owner wilsto`
    - An issue is NOT "created" until all 3 sub-steps are complete
 4. If epic with sub-tasks, create parent issue then sub-issues via `mcp__github__sub_issue_write` (repeat steps 3a-3c for each sub-issue)
@@ -158,7 +160,7 @@ Preview — "Phase 2 — Stripe + MBTI" (10 issues to create):
    f. If approved, for each issue follow the 3-step creation process (see `workflow.md`):
       - `gh issue create` → `gh project item-add` → set all fields via GraphQL
    g. Create epic issue first, then sub-issues for each slice/task
-   h. Set Phase, Priority, Size, Type, Start date fields on each item
+   h. Set Phase, Priority, Size, Type fields. Start date = earliest commit or release date for Done items, today for In Progress, empty for Todo.
    i. Link sub-issues to the epic via `mcp__github__sub_issue_write`
 5. Show summary of created issues with links and verify all appear on the project board
 6. Do NOT delete the plan files (keep as historical reference)

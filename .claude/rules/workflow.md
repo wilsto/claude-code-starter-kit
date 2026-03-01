@@ -40,6 +40,7 @@ Advisory only — never auto-commit. If declined, don't repeat for same change.
 - TodoWrite tracks in-session subtask execution only — the backlog lives in GitHub
 - Phase transitions are Level 3 decisions (propose & wait for PO approval)
 - Use `/roadmap` to discuss phases, check progress, or migrate internal plans
+- **Project Template**: a GitHub Project named "Project Template" exists with all standard fields pre-configured. New projects are created by copying it via the `copyProjectV2` GraphQL mutation (see `/setup` Step 1c). Never ask the PO to create projects manually.
 
 ### Issue Creation Procedure (mandatory)
 
@@ -76,7 +77,12 @@ Fields to set (all required for DoR):
 | **Priority** | Critical / High / Medium / Low | same |
 | **Size** | XS / S / M / L / XL | same |
 | **Type** | Feature / Bug / Chore / Docs / Infra | same |
-| **Start date** | Date when work begins (YYYY-MM-DD) | `value: { date: "YYYY-MM-DD" }` |
+| **Start date** | Auto: today if In Progress/Done, empty if Todo | `value: { date: "YYYY-MM-DD" }` |
+
+**Date rules** (never ask the PO for dates — derive them automatically):
+
+- **Start date**: set to today when Status = In Progress or Done. Leave empty for Todo (work hasn't started). For historical/migrated issues, use the earliest known date (first commit, release date).
+- **Target date**: leave empty unless the PO spontaneously provides a deadline. Never invent deadlines.
 
 **Shortcut**: cache field/option IDs in `CLAUDE.local.md` after first lookup to avoid repeated queries.
 

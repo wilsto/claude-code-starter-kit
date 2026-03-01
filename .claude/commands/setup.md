@@ -25,6 +25,86 @@ For each selected stack, ask:
 - **Source directory** — Where is source code relative to root? (default: from stack file `SRC_DIR`)
 - **Test directory** — Where are tests relative to root? (default: from stack file `TEST_DIR`)
 
+## Step 1c: GitHub Project setup (fully automatic)
+
+Every project needs a GitHub Project V2 for tracking. Claude handles this entirely — the PO only confirms.
+
+### 1. Check existing projects
+
+```bash
+gh project list --owner wilsto --format json
+```
+
+- If a project already exists for this repo name → use it, skip to step 4
+- Otherwise → proceed to step 2
+
+### 2. Create project from template via API
+
+a. Find the Project Template (title contains "template", case-insensitive):
+
+```bash
+gh api graphql -f query='query { viewer { projectsV2(first: 10) { nodes { id number title } } } }'
+```
+
+b. If template found, copy it via GraphQL (no manual UI step needed):
+
+```bash
+gh api graphql -f query='mutation {
+  copyProjectV2(input: {
+    projectId: "<TEMPLATE_PROJECT_NODE_ID>",
+    ownerId: "<USER_NODE_ID>",
+    title: "📋 {project_name}"
+  }) { projectV2 { id number url } }
+}'
+```
+
+Get the owner node ID with: `gh api graphql -f query='query { viewer { id } }'`
+
+c. If no template found, create a blank project and add required fields manually via `gh project field-create`.
+
+d. Inform the PO: "Created GitHub Project #{number} from template. All fields pre-configured."
+
+### 3. Validate required fields
+
+```bash
+gh project field-list {PROJECT_NUMBER} --owner wilsto --format json
+```
+
+Required fields: Status, Phase, Priority, Size, Type, Start date, Target date.
+If any are missing (e.g., blank project), create them with appropriate options.
+
+### 4. Cache field IDs in CLAUDE.local.md
+
+Write the project config and all field/option IDs to `CLAUDE.local.md` using this format:
+
+```markdown
+## Project Config
+
+- **Project number**: {NUMBER}
+- **Repo name**: {REPO_NAME}
+- **GitHub Project**: https://github.com/users/wilsto/projects/{NUMBER}
+- **Read backlog**: `gh project item-list {NUMBER} --owner wilsto --format json`
+- **Read issues**: `gh issue list --repo wilsto/{REPO_NAME} --state open`
+
+## GitHub Project Field IDs (cached)
+
+Project ID: `{PROJECT_NODE_ID}`
+
+| Field | Field ID | Options |
+| --- | --- | --- |
+| **Status** | `{ID}` | Todo: `{ID}`, In Progress: `{ID}`, Done: `{ID}` |
+| **Phase** | `{ID}` | Discovery: `{ID}`, MVP: `{ID}`, Beta: `{ID}`, Stable: `{ID}`, Maintenance: `{ID}` |
+| **Priority** | `{ID}` | Critical: `{ID}`, High: `{ID}`, Medium: `{ID}`, Low: `{ID}` |
+| **Size** | `{ID}` | XS: `{ID}`, S: `{ID}`, M: `{ID}`, L: `{ID}`, XL: `{ID}` |
+| **Type** | `{ID}` | Feature: `{ID}`, Bug: `{ID}`, Chore: `{ID}`, Docs: `{ID}`, Infra: `{ID}` |
+| **Start date** | `{ID}` | value: `{ date: "YYYY-MM-DD" }` |
+| **Target date** | `{ID}` | value: `{ date: "YYYY-MM-DD" }` |
+```
+
+### 5. Update CLAUDE.md placeholders
+
+Replace `{{PROJECT_NUMBER}}` and `{{REPO_NAME}}` in CLAUDE.md.
+
 ## Step 2: Load stack defaults
 
 For each selected stack:
@@ -149,8 +229,14 @@ Files modified:
 Stack guides available (Claude reads these for language-specific patterns):
 {list of .claude/stacks/<stack>.md files}
 
+GitHub Project:
+  Project: #{number} — {project_name}
+  URL: https://github.com/users/wilsto/projects/{number}
+  Fields: Status, Phase, Priority, Size, Type, Start date, Target date
+  Field IDs cached in CLAUDE.local.md
+
 Next steps:
-1. Fill in CLAUDE.local.md with your personal preferences
+1. Review CLAUDE.local.md (project config and field IDs)
 2. Add project-specific secret files to block-secrets.js BLOCKED_PATHS
 3. Run: git add -A && git commit -m "chore: configure claude-code-starter-kit"
 ```
