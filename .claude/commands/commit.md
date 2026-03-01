@@ -1,5 +1,22 @@
 # Commit — Quality Gate Workflow
 
+## Project Commands (auto-detected)
+
+Before running tests or formatters, resolve commands for this project:
+
+1. **Read CLAUDE.md** — look for explicit commands in "Workflow" or "Active Stacks" sections
+2. **If not found, detect from project marker files:**
+
+| Marker file | Test | Coverage | Format check | Format fix |
+|---|---|---|---|---|
+| `package.json` | `npm test` | `npm test -- --coverage` | `npx eslint .` | `npx eslint . --fix` |
+| `pyproject.toml` | `pytest` | `pytest --cov` | `ruff check .` | `ruff check . --fix` |
+| `go.mod` | `go test ./...` | `go test -cover ./...` | `gofmt -l .` | `gofmt -w .` |
+| `Cargo.toml` | `cargo test` | `cargo tarpaulin` | `cargo fmt --check` | `cargo fmt` |
+| `Makefile` (test target) | `make test` | `make coverage` | `make lint` | `make format` |
+
+3. **Default branch**: `git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null | sed 's@^refs/remotes/origin/@@'` → fallback `main`
+
 ## Step 1: Check what changed
 
 ```bash
@@ -30,32 +47,17 @@ If slop found: list items and ask the user whether to fix them first.
 
 ## Step 4: Format Check (advisory)
 
-```bash
-# CUSTOMIZE: replace with your formatter
-{{FORMAT_CHECK_COMMAND}}
-```
-
-If format issues found:
-```bash
-{{FORMAT_FIX_COMMAND}}
-```
-Then re-stage affected files.
+Run the project's format check command (resolved above). If format issues found, run the format fix command, then re-stage affected files.
 
 ## Step 5: Test Gate (BLOCKING)
 
-```bash
-{{TEST_COMMAND}}
-```
+Run the project's test command (resolved above).
 
 If tests fail → **STOP**. Do not commit broken code. Show the failure output.
 
 ## Step 5b: Coverage Report (advisory)
 
-```bash
-{{TEST_COMMAND_COVERAGE}}
-```
-
-After tests pass, run coverage and report %. Warn if coverage dropped compared to previous baseline. Advisory only — do not block the commit.
+Run the project's coverage command (resolved above). Report %. Warn if coverage dropped compared to previous baseline. Advisory only — do not block the commit.
 
 ## Step 5c: Doc Completeness (advisory)
 
@@ -97,7 +99,7 @@ If CHANGELOG.md does not exist, create it with the [Keep a Changelog](https://ke
 ## Step 8: Push and Release (if requested)
 
 ```bash
-git push origin {{DEFAULT_BRANCH}}
+git push origin <default-branch>
 ```
 
 After push, create an incremental release:
@@ -121,7 +123,7 @@ After push, create an incremental release:
      ```bash
      git add CHANGELOG.md
      git commit --amend --no-edit
-     git push origin {{DEFAULT_BRANCH}} --force-with-lease
+     git push origin <default-branch> --force-with-lease
      ```
 
 4. **Create the tag and GitHub release**:

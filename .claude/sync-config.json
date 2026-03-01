@@ -15,7 +15,10 @@
       "polaris.md",
       "incident-response.md",
       "sync-global.md",
-      "setup.md"
+      "setup.md",
+      "commit.md",
+      "tdd.md",
+      "test-runner.md"
     ],
     "hooks": [
       "block-secrets.js",
@@ -49,7 +52,11 @@
       "security-audit",
       "tech-debt-audit",
       "review",
-      "roadmap"
+      "roadmap",
+      "commit",
+      "tdd",
+      "test-runner",
+      "spec-update"
     ],
     "agents": [
       "test-runner.md",
@@ -64,16 +71,6 @@
       "nextjs.md",
       "go.md",
       "rust.md"
-    ],
-    "commands": [
-      "commit.md",
-      "tdd.md",
-      "test-runner.md"
-    ],
-    "skills": [
-      "commit",
-      "tdd",
-      "test-runner"
     ]
   },
   "auditInstallable": {

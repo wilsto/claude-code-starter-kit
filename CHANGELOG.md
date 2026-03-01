@@ -6,6 +6,15 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), using [Conventi
 
 ## [Unreleased]
 
+## [1.15.0] - 2026-03-01
+
+### Changed
+
+- Skills `/commit`, `/tdd`, `/test-runner` made stack-agnostic: replaced all `{{PLACEHOLDER}}` with dynamic command resolution (reads CLAUDE.md or auto-detects from project marker files)
+- Skills moved from `projectOnly` to `syncable` in sync-config — now available globally in all projects
+- Added `spec-update` to syncable skills (was missing from config)
+- `/audit-conformity` Check 10 "Skill Prerequisites": verifies project has explicit or detectable test/format commands before skills can function
+
 ## [1.14.0] - 2026-03-01
 
 ### Added
@@ -275,7 +284,9 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), using [Conventi
 - Plan mode approval required before audit applies fixes
 - Language examples for Python, Node.js, Go, Rust (later replaced by stacks)
 
-[Unreleased]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.13.0...HEAD
+[Unreleased]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.15.0...HEAD
+[1.15.0]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.14.0...v1.15.0
+[1.14.0]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.13.0...v1.14.0
 [1.13.0]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.12.1...v1.13.0
 [1.12.1]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.12.0...v1.12.1
 [1.12.0]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.11.2...v1.12.0

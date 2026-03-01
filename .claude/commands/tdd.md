@@ -1,5 +1,22 @@
 # TDD Workflow — Red-Green-Refactor
 
+## Project Commands (auto-detected)
+
+Before running tests, resolve commands for this project:
+
+1. **Read CLAUDE.md** — look for explicit commands in "Workflow" or "Active Stacks" sections
+2. **If not found, detect from project marker files:**
+
+| Marker file | Test | Single test | Coverage |
+|---|---|---|---|
+| `package.json` | `npm test` | `npx jest <path>` / `npx vitest <path>` | `npm test -- --coverage` |
+| `pyproject.toml` | `pytest` | `pytest <path>` | `pytest --cov` |
+| `go.mod` | `go test ./...` | `go test <path>` | `go test -cover ./...` |
+| `Cargo.toml` | `cargo test` | `cargo test <name>` | `cargo tarpaulin` |
+| `Makefile` (test target) | `make test` | — | `make coverage` |
+
+3. **Multi-stack**: if CLAUDE.md has "Active Stacks", resolve per-stack commands based on the file path
+
 ## When to use
 - Bug fixes: **always** (prove the bug exists with a failing test first)
 - New features in source directories: **always**
@@ -9,14 +26,14 @@
 
 ### 1. RED — Write the failing test
 - Write ONE test that describes the expected behavior
-- Run: `{{TEST_COMMAND}}`
+- Run the project's test command (resolved above)
 - **CONFIRM** the test FAILS (output must show FAIL/error)
 - If the test passes immediately → the test is wrong OR the behavior already exists. Investigate.
 - DO NOT proceed to GREEN until failure is confirmed and shown to the user
 
 ### 2. GREEN — Minimal implementation
 - Write the MINIMUM code to make the failing test pass
-- Run: `{{TEST_COMMAND}}`
+- Run the project's test command (resolved above)
 - **CONFIRM** all tests pass
 - Do NOT add extra logic "while you're at it"
 
@@ -31,25 +48,6 @@
 - Tests must survive refactoring — if they break during refactor, they test internals
 - Always show the user: RED output first, then GREEN output
 - Never skip RED confirmation
-
-## Test commands
-
-```bash
-# CUSTOMIZE: replace with your actual test commands
-
-# Run all tests
-{{TEST_COMMAND}}
-
-# Run a single test file
-{{TEST_COMMAND_SINGLE}} path/to/test
-
-# Run with coverage
-{{TEST_COMMAND_COVERAGE}}
-```
-
-## Multi-stack projects
-
-If CLAUDE.md has an `## Active Stacks` section, determine which stack the current file belongs to based on its path, then use that stack's test command. Read the corresponding `.claude/stacks/<stack>.md` for language-specific testing conventions.
 
 ## Anti-patterns to avoid
 

@@ -19,6 +19,7 @@ Use this table throughout the audit for display and persistence.
 | `git-hygiene` | 7 | Git Hygiene | MEDIUM | ~2 min | Hygiene |
 | `stack-guides` | 8 | Stack Guides | LOW | ~20 min | Documentation |
 | `polaris-memory` | 9 | Polaris North Star | LOW | ~5 min | Productivity |
+| `skill-prerequisites` | 10 | Skill Prerequisites | HIGH | ~5 min | Configuration |
 
 ---
 
@@ -296,6 +297,42 @@ For each detected stack:
 
 > Note: This check is informational (LOW impact). Polaris is optional but recommended for strategic alignment.
 
+## Check 10: Skill Prerequisites
+
+**ID**: `skill-prerequisites`
+
+Verify that global skills (`/commit`, `/tdd`, `/test-runner`) can resolve their commands in this project.
+
+### Condition A — Explicit commands (priority)
+
+- Does CLAUDE.md contain a "Workflow" or "Active Stacks" section with actual test/format commands (not `{{PLACEHOLDER}}`)?
+
+### Condition B — Auto-detection (fallback)
+
+- Does at least one detectable marker file exist at the project root?
+
+| Marker file | Stack detected |
+| --- | --- |
+| `package.json` | Node.js / Next.js |
+| `pyproject.toml`, `requirements.txt`, `setup.py` | Python |
+| `go.mod` | Go |
+| `Cargo.toml` | Rust |
+| `Makefile` (with `test` target) | Generic |
+
+### Condition C — Default branch
+
+- Does `git symbolic-ref refs/remotes/origin/HEAD` resolve? Or does CLAUDE.md specify the branch?
+
+### Result
+
+**PASS**: (A or B) and C — skills can resolve all commands.
+**WARN**: B only (auto-detection works but CLAUDE.md should explicitly declare commands for reliability). Mapped to PASS in audit-config.json.
+**FAIL**: Neither A nor B — no way to resolve test/format commands. List what's missing.
+
+### Fix proposal
+
+If FAIL or WARN: propose adding a "Workflow" section to CLAUDE.md with the detected commands based on marker files, or guide the user to fill it manually.
+
 ---
 
 ## Phase 2: Display Enriched Scorecard
@@ -316,6 +353,7 @@ Score: X/Y applicable (Z skipped)
   [SKIP] 7. Git Hygiene               — "Pre-commit hooks instead" (2026-02-15)
   [SKIP] 8. Stack Guides              — "Custom mono-repo stack" (2026-02-20)
   [FAIL] 9. Polaris North Star        [LOW      | ~5 min]  — polaris.md exists but all sections empty
+  [WARN] 10. Skill Prerequisites      [HIGH     | ~5 min]  — auto-detection OK (pyproject.toml) but CLAUDE.md has no explicit commands
 
 Legend: Impact [CRITICAL/HIGH/MEDIUM/LOW] | Estimated fix time
 ```
