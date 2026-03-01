@@ -41,6 +41,47 @@ Advisory only — never auto-commit. If declined, don't repeat for same change.
 - Phase transitions are Level 3 decisions (propose & wait for PO approval)
 - Use `/roadmap` to discuss phases, check progress, or migrate internal plans
 
+### Issue Creation Procedure (mandatory)
+
+Creating a GitHub issue is a **3-step process**. An issue that exists only in the repo but not in the project is invisible on the board.
+
+**Step 1 — Create the issue:**
+```bash
+gh issue create --repo wilsto/<REPO> --title "type: description" --body "..."
+```
+
+**Step 2 — Add to the GitHub Project:**
+```bash
+gh project item-add <PROJECT_NUMBER> --owner wilsto --url <ISSUE_URL>
+```
+This returns an item ID (`PVTI_...`). Without this step, the issue will NOT appear on the project board.
+
+**Step 3 — Set ALL project fields** via GraphQL (labels on the issue are NOT project fields):
+```bash
+# Get the item ID from step 2, then set each field:
+gh api graphql -f query='mutation { updateProjectV2ItemFieldValue(input: {
+  projectId: "<PROJECT_ID>",
+  itemId: "<ITEM_ID>",
+  fieldId: "<FIELD_ID>",
+  value: { singleSelectOptionId: "<OPTION_ID>" }
+}) { projectV2Item { id } } }'
+```
+
+Fields to set (all required for DoR):
+
+| Field | Description | How to get IDs |
+| --- | --- | --- |
+| **Status** | Todo / In Progress / Done | `gh project field-list <N> --owner wilsto` |
+| **Phase** | Discovery / MVP / Beta / Stable / Maintenance | same |
+| **Priority** | Critical / High / Medium / Low | same |
+| **Size** | XS / S / M / L / XL | same |
+| **Type** | Feature / Bug / Chore / Docs / Infra | same |
+| **Start date** | Date when work begins (YYYY-MM-DD) | `value: { date: "YYYY-MM-DD" }` |
+
+**Shortcut**: cache field/option IDs in `CLAUDE.local.md` after first lookup to avoid repeated queries.
+
+> **Rule**: Never consider an issue "created" until all 3 steps are complete. If any step fails, fix it before moving on.
+
 ## Definition of Ready / Done (DoR/DoD)
 
 ### DoR — An issue is Ready when:

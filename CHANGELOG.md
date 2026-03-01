@@ -6,6 +6,15 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), using [Conventi
 
 ## [Unreleased]
 
+## [1.13.1] - 2026-03-01
+
+### Fixed
+
+- Issue creation procedure now explicit 3-step process: `gh issue create` → `gh project item-add` → set all project fields via GraphQL (prevents orphan issues invisible on board)
+- All project fields documented as mandatory: Status, Phase, Priority, Size, Type, Start date
+- `/roadmap` Add Work and Migrate flows reference the 3-step procedure
+- Anti-pattern documented in `memory/patterns.md` as lesson learned
+
 ## [1.13.0] - 2026-03-01
 
 ### Added

@@ -179,11 +179,15 @@ Maintain `memory/scratchpad.md` as a running work log during active sessions:
 - **Project number**: `{{PROJECT_NUMBER}}` (set per repo after template copy)
 - **Read backlog**: `gh project item-list {{PROJECT_NUMBER}} --owner wilsto --format json`
 - **Read issues**: `gh issue list --repo wilsto/{{REPO_NAME}} --state open`
-- **Create issue**: `mcp__github__issue_write` or `gh issue create --repo wilsto/{{REPO_NAME}}`
+- **Create issue**: 3-step process (see `workflow.md` → Issue Creation Procedure):
+  1. `gh issue create --repo wilsto/{{REPO_NAME}}` — creates the issue
+  2. `gh project item-add {{PROJECT_NUMBER}} --owner wilsto --url <URL>` — adds to project board
+  3. Set all fields via GraphQL (Status, Phase, Priority, Size, Type, Start date)
 - **Sub-issues**: `mcp__github__sub_issue_write` for epic decomposition
 - **Phase transitions**: Level 3 (propose & wait for PO approval)
 - **At session start**: Claude reads the project backlog to understand current context
 - **Discuss/migrate**: use `/roadmap` skill
+- **Field IDs**: cached in `CLAUDE.local.md` → "GitHub Project Field IDs" section
 
 ## Compact Instructions
 

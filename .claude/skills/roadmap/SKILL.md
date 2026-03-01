@@ -105,15 +105,20 @@ On invocation, present 3 modes:
 
 #### Add Work Flow
 
-1. Ask: title, description, phase, priority, size, type
+1. Ask: title, description, phase, priority, size, type, start date
 2. **DoR check** — Before creating, verify the issue meets Definition of Ready (see `workflow.md`):
    - Title is clear and actionable
    - Description includes acceptance criteria
    - Phase, Priority, Size are set
    - If any field is missing, warn and ask PO to complete before creating
-3. Create issue: `gh issue create --repo wilsto/<REPO> --title "..." --body "..." --label "phase:..."`
-4. If epic with sub-tasks, create parent issue then sub-issues via `mcp__github__sub_issue_write`
-5. Confirm creation with issue numbers
+3. **Create the issue** (3-step mandatory process — see `workflow.md` → Issue Creation Procedure):
+   a. `gh issue create --repo wilsto/<REPO> --title "..." --body "..."`
+   b. `gh project item-add <PROJECT_NUMBER> --owner wilsto --url <ISSUE_URL>` — **without this, the issue is invisible on the board**
+   c. Set ALL project fields via GraphQL: Status, Phase, Priority, Size, Type, Start date
+   - Read field/option IDs from `CLAUDE.local.md` (cached) or `gh project field-list <N> --owner wilsto`
+   - An issue is NOT "created" until all 3 sub-steps are complete
+4. If epic with sub-tasks, create parent issue then sub-issues via `mcp__github__sub_issue_write` (repeat steps 3a-3c for each sub-issue)
+5. Confirm creation with issue numbers and verify they appear on the project board
 
 ### Mode 3: Migrate
 
@@ -150,11 +155,12 @@ Preview — "Phase 2 — Stripe + MBTI" (10 issues to create):
 
    d. Ask PO: "Create these N issues? (Yes / Edit / Cancel)"
    e. If "Edit", let PO modify titles, phases, priorities, or sizes before creation
-   f. If approved, create epic issue with the plan title
-   g. Create sub-issues for each slice/task
-   h. Set Phase, Priority, Size, Type fields where inferrable
+   f. If approved, for each issue follow the 3-step creation process (see `workflow.md`):
+      - `gh issue create` → `gh project item-add` → set all fields via GraphQL
+   g. Create epic issue first, then sub-issues for each slice/task
+   h. Set Phase, Priority, Size, Type, Start date fields on each item
    i. Link sub-issues to the epic via `mcp__github__sub_issue_write`
-5. Show summary of created issues with links
+5. Show summary of created issues with links and verify all appear on the project board
 6. Do NOT delete the plan files (keep as historical reference)
 
 ## Examples
