@@ -6,6 +6,12 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), using [Conventi
 
 ## [Unreleased]
 
+## [1.11.1] - 2026-03-01
+
+### Changed
+
+- Clarified centralized secrets rule: multi-project secrets (LLM keys, GitHub tokens, HA credentials) stay in `~/.secrets.env`, project-specific secrets (Stripe test key, local DB) are legitimate in local `.env` (gitignored)
+
 ## [1.11.0] - 2026-03-01
 
 ### Added
@@ -197,7 +203,8 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), using [Conventi
 - Plan mode approval required before audit applies fixes
 - Language examples for Python, Node.js, Go, Rust (later replaced by stacks)
 
-[Unreleased]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.11.0...HEAD
+[Unreleased]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.11.1...HEAD
+[1.11.1]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.11.0...v1.11.1
 [1.11.0]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.10.1...v1.11.0
 [1.10.1]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.10.0...v1.10.1
 [1.10.0]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.9.0...v1.10.0
