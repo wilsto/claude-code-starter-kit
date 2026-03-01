@@ -130,10 +130,25 @@ Which plans do you want to migrate? (1, 2, both, none)
 4. For each selected plan:
    a. Read the full plan file
    b. Extract structured slices/phases/tasks
-   c. Create an epic issue with the plan title
-   d. Create sub-issues for each slice/task
-   e. Set Phase, Priority, Size, Type fields where inferrable
-   f. Link sub-issues to the epic via `mcp__github__sub_issue_write`
+   c. **Preview**: Display a detailed table of all issues to be created:
+
+```
+Preview — "Phase 2 — Stripe + MBTI" (10 issues to create):
+
+| # | Type | Title | Phase | Priority | Size |
+|---|------|-------|-------|----------|------|
+| Epic | Epic | "Phase 2 — Stripe + MBTI" | 🏗️ MVP | — | — |
+| 1 | Sub | "Implement Stripe checkout" | 🏗️ MVP | 🔴 Critical | M |
+| 2 | Sub | "Add MBTI test flow" | 🏗️ MVP | 🟠 High | L |
+| ... | ... | ... | ... | ... | ... |
+```
+
+   d. Ask PO: "Create these N issues? (Yes / Edit / Cancel)"
+   e. If "Edit", let PO modify titles, phases, priorities, or sizes before creation
+   f. If approved, create epic issue with the plan title
+   g. Create sub-issues for each slice/task
+   h. Set Phase, Priority, Size, Type fields where inferrable
+   i. Link sub-issues to the epic via `mcp__github__sub_issue_write`
 5. Show summary of created issues with links
 6. Do NOT delete the plan files (keep as historical reference)
 
@@ -192,11 +207,24 @@ Claude: Found 2 plans related to coachbywill-v2:
 2. scalable-sauteeing-clock.md — "Admin Toggle Tier" (2 tasks)
 
 Which to migrate? (1, 2, both, none)
-User: both
+User: 1
+
+Claude:
+Preview — "Phase 2 — Stripe + MBTI" (11 issues to create):
+
+| # | Type | Title | Phase | Priority | Size |
+|---|------|-------|-------|----------|------|
+| Epic | Epic | "Phase 2 — Stripe + MBTI" | 🏗️ MVP | — | — |
+| 1 | Sub | "Implement Stripe checkout" | 🏗️ MVP | 🔴 Critical | M |
+| 2 | Sub | "Add pricing page" | 🏗️ MVP | 🟠 High | S |
+| ... | ... | ... | ... | ... | ... |
+| 10 | Sub | "E2E payment tests" | 🏗️ MVP | 🟡 Medium | M |
+
+Create these 11 issues? (Yes / Edit / Cancel)
+User: Yes
 
 Claude: Migrating...
 ✅ Created epic #60 "Phase 2 — Stripe + MBTI" with 10 sub-issues (#61-#70)
-✅ Created epic #71 "Admin Toggle Tier" with 2 sub-issues (#72-#73)
 All items set to Phase: 🏗️ MVP, Status: Todo.
 ```
 

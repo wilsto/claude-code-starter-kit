@@ -48,7 +48,8 @@
       "incident-response",
       "security-audit",
       "tech-debt-audit",
-      "review"
+      "review",
+      "roadmap"
     ],
     "agents": [
       "test-runner.md",

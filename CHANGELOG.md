@@ -6,6 +6,14 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), using [Conventi
 
 ## [Unreleased]
 
+## [1.12.1] - 2026-03-01
+
+### Changed
+
+- `/roadmap` skill Migrate mode: added detailed preview table (titles, phases, priorities, sizes) with PO confirmation before creating issues
+- `sync-config.json`: added `roadmap` to syncable skills list
+- GitHub Project #2 created for claude-code-starter-kit with 17 historical release issues (v1.0.0–v1.12.0)
+
 ## [1.12.0] - 2026-03-01
 
 ### Added
@@ -218,7 +226,8 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), using [Conventi
 - Plan mode approval required before audit applies fixes
 - Language examples for Python, Node.js, Go, Rust (later replaced by stacks)
 
-[Unreleased]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.12.0...HEAD
+[Unreleased]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.12.1...HEAD
+[1.12.1]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.12.0...v1.12.1
 [1.12.0]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.11.2...v1.12.0
 [1.11.2]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.11.1...v1.11.2
 [1.11.1]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.11.0...v1.11.1
