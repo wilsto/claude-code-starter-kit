@@ -30,3 +30,13 @@ Suggest commit at these natural breakpoints:
 - **Before switching context**: about to start different work
 
 Advisory only — never auto-commit. If declined, don't repeat for same change.
+
+## Project Tracking (source of truth)
+
+- **Roadmap, phases, and tasks** live in GitHub Projects V2 — not in Claude's internal plans
+- Before starting work on a project, read its GitHub Project:
+  `gh project item-list <NUMBER> --owner wilsto --format json`
+- Claude's internal plans (`~/.claude/plans/`) are ephemeral implementation details — not the roadmap
+- TodoWrite tracks in-session subtask execution only — the backlog lives in GitHub
+- Phase transitions are Level 3 decisions (propose & wait for PO approval)
+- Use `/roadmap` to discuss phases, check progress, or migrate internal plans

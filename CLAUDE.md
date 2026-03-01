@@ -173,6 +173,18 @@ Maintain `memory/scratchpad.md` as a running work log during active sessions:
 - **Modification**: Level 3 (propose & wait for PO approval)
 - **Usage**: reference Polaris when evaluating alignment of decisions, priorities, or new opportunities
 
+## Project Tracking
+
+- **Source of truth**: GitHub Projects V2 — [view project](https://github.com/users/wilsto/projects/{{PROJECT_NUMBER}})
+- **Project number**: `{{PROJECT_NUMBER}}` (set per repo after template copy)
+- **Read backlog**: `gh project item-list {{PROJECT_NUMBER}} --owner wilsto --format json`
+- **Read issues**: `gh issue list --repo wilsto/{{REPO_NAME}} --state open`
+- **Create issue**: `mcp__github__issue_write` or `gh issue create --repo wilsto/{{REPO_NAME}}`
+- **Sub-issues**: `mcp__github__sub_issue_write` for epic decomposition
+- **Phase transitions**: Level 3 (propose & wait for PO approval)
+- **At session start**: Claude reads the project backlog to understand current context
+- **Discuss/migrate**: use `/roadmap` skill
+
 ## Compact Instructions
 
 When /compact is triggered, always preserve in the summary:

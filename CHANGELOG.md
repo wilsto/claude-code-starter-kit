@@ -6,6 +6,13 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), using [Conventi
 
 ## [Unreleased]
 
+## [1.12.0] - 2026-03-01
+
+### Added
+
+- `/roadmap` skill: interactive skill to check project status, discuss phases, and migrate legacy Claude plans into GitHub Issues (3 modes: Status, Discuss, Migrate)
+- Project Tracking section in CLAUDE.md and workflow.md: GitHub Projects V2 as source of truth for roadmaps, phases, and tasks
+
 ## [1.11.2] - 2026-03-01
 
 ### Changed
@@ -211,7 +218,8 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), using [Conventi
 - Plan mode approval required before audit applies fixes
 - Language examples for Python, Node.js, Go, Rust (later replaced by stacks)
 
-[Unreleased]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.11.1...HEAD
+[Unreleased]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.12.0...HEAD
+[1.12.0]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.11.2...v1.12.0
 [1.11.2]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.11.1...v1.11.2
 [1.11.1]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.11.0...v1.11.1
 [1.11.0]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.10.1...v1.11.0
