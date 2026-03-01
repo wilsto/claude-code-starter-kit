@@ -6,10 +6,18 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), using [Conventi
 
 ## [Unreleased]
 
+## [1.10.0] - 2026-03-01
+
 ### Added
 
 - **Stacks and skills sync**: `sync-config.json` now tracks 9 stacks and 13 skills as syncable categories, propagated to `~/.claude/` via `/sync-global`
 - **`security.md` secrets centralisés**: centralized secrets management rule synced from global config
+- **`/spec-update` skill**: post-change documentation workflow that generates/updates functional specs per domain in `docs/specs/<scope>.md`, proposes README updates, and evaluates lessons learned
+
+### Changed
+
+- **`/commit` workflow reorganized** (9 steps): documentation phase (step 6) now runs before commit (step 8) — single commit includes code + docs + changelog without amends. Push and release (step 9) is now systematic, no longer optional. PO questions rule added at every step.
+- `post-commit-lessons.js` hook marked as superseded by `/commit` step 6c (kept as fallback for direct git commits)
 
 ## [1.9.0] - 2026-02-28
 
@@ -168,7 +176,8 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), using [Conventi
 - Plan mode approval required before audit applies fixes
 - Language examples for Python, Node.js, Go, Rust (later replaced by stacks)
 
-[Unreleased]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.9.0...HEAD
+[Unreleased]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.10.0...HEAD
+[1.10.0]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.9.0...v1.10.0
 [1.9.0]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.8.0...v1.9.0
 [1.8.0]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.7.0...v1.8.0
 [1.7.0]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.6.0...v1.7.0

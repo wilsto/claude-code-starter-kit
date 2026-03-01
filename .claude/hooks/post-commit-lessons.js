@@ -3,6 +3,8 @@
 // PURPOSE: After a successful git commit, remind Claude to evaluate if lessons
 //          should be saved to memory/MEMORY.md or memory/patterns.md.
 // BEHAVIOR: Advisory only — injects context, never blocks.
+// NOTE: Superseded by /commit step 6c (lessons learned) when using the /commit workflow.
+//       This hook remains as a fallback for direct git commit commands outside /commit.
 
 let data = '';
 process.stdin.on('data', (chunk) => { data += chunk; });

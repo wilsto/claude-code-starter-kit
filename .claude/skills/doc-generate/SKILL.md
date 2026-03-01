@@ -217,6 +217,7 @@ After generating docs:
 - Tom Preston-Werner, *Readme Driven Development* (2010)
 
 ### Related Skills
+- `/spec-update` -- Generates functional specs per domain scope (invoked by /commit step 6)
 - `/review` -- May flag missing documentation as a suggestion
 - `/tech-debt-audit` -- Includes documentation gaps in its assessment
 
