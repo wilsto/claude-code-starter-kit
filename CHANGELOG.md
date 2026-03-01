@@ -6,6 +6,14 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), using [Conventi
 
 ## [Unreleased]
 
+## [1.11.2] - 2026-03-01
+
+### Changed
+
+- Explicit development principles in conventions: YAGNI → KISS → DRY → SINE → SOLID → DoR/DoD as ordered sequence with clear definitions
+- DoR/DoD labels added to workflow execution flow and stopping protocol
+- README Philosophy aligned with KISS: "Built-in/plugin first" replaces "Custom skills over plugins"
+
 ## [1.11.1] - 2026-03-01
 
 ### Changed
@@ -204,6 +212,7 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), using [Conventi
 - Language examples for Python, Node.js, Go, Rust (later replaced by stacks)
 
 [Unreleased]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.11.1...HEAD
+[1.11.2]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.11.1...v1.11.2
 [1.11.1]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.11.0...v1.11.1
 [1.11.0]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.10.1...v1.11.0
 [1.10.1]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.10.0...v1.10.1

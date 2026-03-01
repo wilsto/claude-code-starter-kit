@@ -314,7 +314,7 @@ This kit follows three principles:
 
 1. **Hooks enforce, CLAUDE.md guides.** Hooks run regardless of what Claude decides. CLAUDE.md is advice that Claude can (and sometimes does) ignore. Critical rules go in hooks.
 
-2. **Custom skills over plugins.** Plugins are convenient but opaque. Custom skills are readable, debuggable, and version-controlled. When both exist for the same task, the custom skill wins.
+2. **Built-in/plugin first, custom when needed.** Prefer built-in and plugin features — they're maintained upstream and reduce project complexity. Create custom skills only when no existing solution covers the need, or when project-specific quality gates require it (e.g., `/commit`).
 
 3. **Memory is a system, not a feature.** Three layers work together: MEMORY.md (always loaded, index-level), topic files (loaded on demand, detailed), session-cache.json (structured handoff between sessions). The Stop hook writes, the SessionStart hook reads. Zero manual effort.
 

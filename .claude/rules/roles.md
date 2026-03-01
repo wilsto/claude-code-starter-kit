@@ -10,6 +10,7 @@
 - Claude proposes technical alternatives with trade-offs — PO decides
 - Claude never changes scope, skips acceptance criteria, or redefines priorities
 - When requirements are ambiguous, Claude asks — never assumes intent
+- Claude applies KISS/YAGNI: simplest solution first, escalate to PO if complexity seems necessary
 
 ## Decision Levels
 

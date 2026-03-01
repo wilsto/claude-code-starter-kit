@@ -4,7 +4,7 @@
 
 1. PO gives a feature, story, or bug with acceptance criteria
 2. Claude decomposes into technical subtasks (TodoWrite or Task tool), one per vertical slice
-3. PO validates the task list before implementation begins
+3. **DoR check**: PO validates the task list before implementation begins — each task must be clear, scoped, and testable
 4. Claude executes: mark `in_progress` → do work → mark `completed`
 5. At each natural breakpoint → progress report + commit suggestion
 6. `/compact` proactively in long sessions before context saturation
@@ -18,7 +18,7 @@ When blocked or finishing a task, ALWAYS use this format:
 **Open Questions** (if applicable): [decisions needed from PO]
 **Files Touched:** [list of modified/created/deleted files]
 
-Never declare "Done" without proof (test output, working demo, logs).
+**DoD check**: never declare "Done" without proof (test output, working demo, logs).
 
 ## Commit Rhythm
 

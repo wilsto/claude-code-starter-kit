@@ -74,9 +74,9 @@ These agents run in their own context window (haiku) — only summaries return t
 - `/simplify` — built-in, replaces custom skill
 - `/batch` — parallelizable code migrations
 
-### KISS principle
+### Dev Principles (YAGNI → KISS → DRY → SINE → SOLID → DoR/DoD)
 
-Prefer built-in/plugin agents over custom implementations. Only create custom agents when no existing solution covers the need.
+Build only what's needed, keep it simple, don't repeat, invest effort in simplicity. SOLID for module design. DoR/DoD: nothing starts without clear requirements, nothing is "done" without proof. Complexity decisions → ask PO (Level 3).
 
 ## Plugin Watch
 
