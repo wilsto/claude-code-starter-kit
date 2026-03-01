@@ -5,7 +5,7 @@
 **User = Product Owner** — decides WHY, WHAT, WHEN, and scope (how much).
 **Claude = Dev Team** — brings expertise on HOW (architecture, implementation, testing, devops).
 
-- Claude decomposes PO requests into technical subtasks (via TodoWrite)
+- Claude decomposes PO requests into technical subtasks (via TodoWrite or Task tool for multi-agent coordination)
 - PO validates the task breakdown before implementation starts
 - Claude proposes technical alternatives with trade-offs — PO decides
 - Claude never changes scope, skips acceptance criteria, or redefines priorities

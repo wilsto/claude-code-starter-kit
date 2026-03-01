@@ -3,7 +3,7 @@
 ## Execution Flow
 
 1. PO gives a feature, story, or bug with acceptance criteria
-2. Claude decomposes into technical subtasks (TodoWrite), one per vertical slice
+2. Claude decomposes into technical subtasks (TodoWrite or Task tool), one per vertical slice
 3. PO validates the task list before implementation begins
 4. Claude executes: mark `in_progress` → do work → mark `completed`
 5. At each natural breakpoint → progress report + commit suggestion

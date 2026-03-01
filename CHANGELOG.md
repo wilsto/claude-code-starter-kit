@@ -6,6 +6,20 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), using [Conventi
 
 ## [Unreleased]
 
+## [1.11.0] - 2026-03-01
+
+### Added
+
+- **Custom agents** (`.claude/agents/`): 3 declarative agent definitions (test-runner, security-auditor, tech-debt-auditor) running on haiku with project memory — isolates heavy codebase scans from the main context window
+- **Progressive disclosure**: security-audit advanced techniques (DevSecOps, STRIDE, attack trees, compliance) extracted to `advanced-techniques.md`, prd-development phases 5-8 extracted to `phases-5-8.md` — loaded on demand instead of all at once
+
+### Changed
+
+- Skills `test-runner`, `security-audit`, `tech-debt-audit` now delegate codebase scans to dedicated agents instead of inline prompts
+- Task coordination: `roles.md` and `workflow.md` now reference Task tool alongside TodoWrite for multi-agent workflows
+- CLAUDE.md updated with `agents/` directory and Task Coordination section
+- README updated with 3 custom agents, corrected counts (6 commands, 14 skills), removed simplify residuals from v1.10.1
+
 ## [1.10.1] - 2026-03-01
 
 ### Changed
@@ -183,7 +197,8 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), using [Conventi
 - Plan mode approval required before audit applies fixes
 - Language examples for Python, Node.js, Go, Rust (later replaced by stacks)
 
-[Unreleased]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.10.1...HEAD
+[Unreleased]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.11.0...HEAD
+[1.11.0]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.10.1...v1.11.0
 [1.10.1]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.10.0...v1.10.1
 [1.10.0]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.9.0...v1.10.0
 [1.9.0]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.8.0...v1.9.0

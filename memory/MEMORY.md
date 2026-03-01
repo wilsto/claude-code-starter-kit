@@ -38,6 +38,16 @@
 - `memory/active-context.md` — current work context ("Current Focus" + "Next Steps" sections only)
 - `memory/scratchpad.md` — running work log, last 30 lines (survives /compact)
 
+## Custom Agents (`.claude/agents/`)
+
+| Agent | Model | Purpose |
+| ----- | ----- | ------- |
+| `test-runner` | haiku | Run tests and diagnose failures with root cause analysis |
+| `security-auditor` | haiku | Deep security scan (OWASP Top 10, secrets, deps, auth) |
+| `tech-debt-auditor` | haiku | Codebase health analysis (complexity, duplication, dead code) |
+
+These agents run in their own context window (haiku) — only summaries return to the main thread.
+
 ## Available Agents (from plugins)
 
 ### pr-review-toolkit (6 agents)

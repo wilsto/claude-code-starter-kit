@@ -35,7 +35,7 @@ Claude Code is powerful out of the box. But without guardrails, it will:
 - Create inconsistent commits with no quality checks
 - Forget lessons learned in previous sessions
 
-This starter kit solves all of that with **6 hooks**, **7 commands**, **15 skills**, and a **persistent memory system** — all language-agnostic, all battle-tested in production.
+This starter kit solves all of that with **6 hooks**, **6 commands**, **14 skills**, **3 custom agents**, and a **persistent memory system** — all language-agnostic, all battle-tested in production.
 
 ---
 
@@ -77,7 +77,7 @@ Then run `/setup` or manually replace the `{{PLACEHOLDER}}` values ([see guide](
 | **post-commit-lessons** | `PostToolUse` (advisory) | After a successful `git commit`, prompts Claude to evaluate if lessons should be saved to memory. |
 | **commit-reminder** | `PostToolUse` (advisory) | After tests pass with uncommitted changes, suggests committing at natural breakpoints. |
 
-### 7 Slash Commands
+### 6 Slash Commands
 
 | Command | What it does |
 |---------|-------------|
@@ -85,9 +85,8 @@ Then run `/setup` or manually replace the `{{PLACEHOLDER}}` values ([see guide](
 | **`/commit`** | Quality gate: secret scan + slop scan + format + test gate + functional spec + changelog + conventional commit + push/release. 9 steps. |
 | **`/setup`** | Interactive wizard. Asks your stack, fills all placeholders, configures hooks automatically. |
 | **`/audit-conformity`** | Analyzes an existing project against the template. Produces a scorecard, then lets you cherry-pick fixes, skip checks, or defer — with CLAUDE.md reconciliation and zero-loss guarantee. |
-| **`/review`** | Spawns a code-review sub-agent. Analyzes `git diff` for correctness, conventions, security. Read-only. |
-| **`/simplify`** | Spawns a simplifier sub-agent. Finds dead code, over-abstraction, duplication. Read-only. |
-| **`/test-runner`** | Spawns a test diagnostics sub-agent. Runs tests, parses failures, diagnoses root causes. Read-only. |
+| **`/review`** | Routes to the appropriate `pr-review-toolkit` agent for code review. Read-only. |
+| **`/test-runner`** | Delegates to the test-runner agent. Runs tests, parses failures, diagnoses root causes. Read-only. |
 
 > **Commands vs Skills** — Claude Code has two extension mechanisms:
 > - **Slash commands** (`.claude/commands/*.md`) — You type `/name` to invoke them explicitly.
@@ -100,10 +99,9 @@ Then run `/setup` or manually replace the `{{PLACEHOLDER}}` values ([see guide](
 | `/setup` | yes | no — runs only when you ask |
 | `/audit-conformity` | yes | no — runs only when you ask |
 | `/review` | yes | yes — activates before commit (3+ files), after feature completion |
-| `/simplify` | yes | yes — activates after feature/refactor, when complexity detected |
 | `/test-runner` | yes | yes — activates when tests need running, after implementation |
 
-### Skills (15 total)
+### Skills (14 total)
 
 Skills are auto-invoked by Claude when the context matches — no slash command needed. Organized in 3 tiers:
 
@@ -113,9 +111,8 @@ Skills are auto-invoked by Claude when the context matches — no slash command 
 |-------|-------------|
 | **tdd** | Red-Green-Refactor cycle enforcement |
 | **commit** | Quality-gated commit: checks → functional spec → changelog → commit → push/release (9 steps) |
-| **review** | Code review sub-agent (correctness, conventions, security) |
-| **simplify** | Code simplifier sub-agent (dead code, over-abstraction, duplication) |
-| **test-runner** | Test diagnostics sub-agent (run, parse failures, diagnose) |
+| **review** | Routes to pr-review-toolkit agents (correctness, conventions, security) |
+| **test-runner** | Delegates to test-runner agent (run, parse failures, diagnose) |
 
 **Interactive skills** (guided discovery with adaptive questions):
 
@@ -232,9 +229,12 @@ claude-code-starter-kit/
 │   │   ├── commit.md            # /commit
 │   │   ├── setup.md             # /setup
 │   │   ├── audit-conformity.md  # /audit-conformity
-│   │   ├── review.md            # /review (sub-agent code review)
-│   │   ├── simplify.md          # /simplify (sub-agent complexity analysis)
-│   │   └── test-runner.md       # /test-runner (sub-agent test diagnostics)
+│   │   ├── review.md            # /review (routes to pr-review-toolkit)
+│   │   └── test-runner.md       # /test-runner (delegates to agent)
+│   ├── agents/                  # Custom agent definitions
+│   │   ├── test-runner.md       # Test runner + diagnostics (haiku)
+│   │   ├── security-auditor.md  # OWASP Top 10 deep scan (haiku)
+│   │   └── tech-debt-auditor.md # Codebase health analysis (haiku)
 │   ├── hooks/                   # Automatic hooks (run without user action)
 │   │   ├── block-secrets.js     # Hard-deny on secret files
 │   │   ├── tdd-guard.js         # Soft TDD reminder on source edits
@@ -242,12 +242,11 @@ claude-code-starter-kit/
 │   │   ├── session-context.js   # Memory + env injection at startup + compact
 │   │   ├── post-commit-lessons.js # Lesson evaluation after each commit
 │   │   └── commit-reminder.js   # Commit suggestion after tests pass
-│   └── skills/                  # Auto-invoked by Claude when context matches (15 skills)
+│   └── skills/                  # Auto-invoked by Claude when context matches (14 skills)
 │       ├── tdd/                 # TDD Red-Green-Refactor enforcement
 │       ├── commit/              # Quality-gated commit workflow (9 steps)
-│       ├── review/              # Code review sub-agent
-│       ├── simplify/            # Code simplifier sub-agent
-│       ├── test-runner/         # Test diagnostics sub-agent
+│       ├── review/              # Routes to pr-review-toolkit agents
+│       ├── test-runner/         # Delegates to test-runner agent
 │       ├── tech-debt-audit/     # Codebase health assessment (interactive)
 │       ├── security-audit/      # OWASP + dependency audit (interactive)
 │       ├── spec-update/          # Functional specs per domain + README + lessons (workflow)

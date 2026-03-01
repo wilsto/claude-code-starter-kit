@@ -49,6 +49,11 @@
       "security-audit",
       "tech-debt-audit",
       "review"
+    ],
+    "agents": [
+      "test-runner.md",
+      "security-auditor.md",
+      "tech-debt-auditor.md"
     ]
   },
   "projectOnly": {

@@ -87,53 +87,15 @@ This interactive skill asks **up to 4 adaptive questions**, then performs a deep
 
 ### Audit Process
 
-After collecting answers, perform the audit:
+After collecting answers, delegate the codebase scan to the **tech-debt-auditor agent** (`.claude/agents/tech-debt-auditor.md`):
 
-1. **Scan the codebase** using Glob, Grep, and Read tools
-2. **Analyze each debt category**: complexity, duplication, coupling, tests, dependencies, dead code
-3. **Score each file** against the selected thresholds
-4. **Cross-reference with git history** to identify high-churn + high-complexity hotspots
-
-### Output: Technical Debt Report
-
-Produce a structured report:
-
-```markdown
-## Technical Debt Report — [Project Name]
-
-### Health Score: [A-F]
-
-| Category | Score | Key Finding |
-| --- | --- | --- |
-| Complexity | B | 3 files above threshold |
-| Duplication | C | ~15% near-duplicate logic |
-| Coupling | A | Clean module boundaries |
-| Test Coverage | D | 40% of critical paths untested |
-| Dependencies | B | 2 outdated, 0 vulnerable |
-| Dead Code | C | 12 unused exports |
-
-### Top 10 Files at Risk
-
-| # | File | Risk | Reason |
-| --- | --- | --- | --- |
-| 1 | path/to/file.ts | High | Complexity 35, 0% test coverage, 28 commits/month |
-| ... | ... | ... | ... |
-
-### Remediation Plan
-
-#### Quick Wins (< 1 day each)
-1. [action] — [file] — [expected impact]
-
-#### Medium Effort (1-3 days)
-1. [action] — [file] — [expected impact]
-
-#### Strategic Refactors (1+ week)
-1. [action] — [scope] — [expected impact]
-
-### Reassess When
-- [trigger 1]
-- [trigger 2]
+```text
+Use the Agent tool with subagent_type="general-purpose" and model="haiku".
+Pass the collected context (scope, priorities, constraints, thresholds) as the prompt.
+The agent scans the codebase and returns a structured Technical Debt Report.
 ```
+
+The agent handles: codebase scanning, debt category analysis, file scoring, git churn cross-referencing. It returns a health-scored report with a prioritized remediation plan.
 
 ## Examples
 
