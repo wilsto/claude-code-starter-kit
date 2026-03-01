@@ -25,6 +25,8 @@
 <!-- Architectural decisions and WHY — prevents relitigating across sessions -->
 <!-- Format: [DECISION] Short title → rationale -->
 
+- [DECISION] Questions au PO = AskUserQuestion, pas du texte → quand le workflow /commit ou un skill a un doute, toujours utiliser AskUserQuestion pour poser la question au PO de manière interactive, jamais écrire la question dans le texte de sortie
+
 ## Topic Files (Read on demand, NOT auto-injected)
 
 - `memory/patterns.md` — technical patterns, debugging lessons, reusable solutions

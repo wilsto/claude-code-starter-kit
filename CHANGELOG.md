@@ -6,6 +6,10 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), using [Conventi
 
 ## [Unreleased]
 
+### Changed
+
+- README updated with `/spec-update` skill, 15 skills count, `docs/specs/` in project structure, and revised `/commit` description (9 steps)
+
 ## [1.10.0] - 2026-03-01
 
 ### Added
