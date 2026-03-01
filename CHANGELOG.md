@@ -6,9 +6,12 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), using [Conventi
 
 ## [Unreleased]
 
+## [1.10.1] - 2026-03-01
+
 ### Changed
 
 - README updated with `/spec-update` skill, 15 skills count, `docs/specs/` in project structure, and revised `/commit` description (9 steps)
+- **KISS subagent modernization**: removed custom `/simplify` skill (replaced by built-in `/simplify` v2.1.63 + `pr-review-toolkit:code-simplifier` plugin), refactored `/review` to route to `pr-review-toolkit` agents instead of inline prompts, added KISS principle to conventions, documented 9 available plugin agents in MEMORY.md
 
 ## [1.10.0] - 2026-03-01
 
@@ -180,7 +183,8 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), using [Conventi
 - Plan mode approval required before audit applies fixes
 - Language examples for Python, Node.js, Go, Rust (later replaced by stacks)
 
-[Unreleased]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.10.0...HEAD
+[Unreleased]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.10.1...HEAD
+[1.10.1]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.10.0...v1.10.1
 [1.10.0]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.9.0...v1.10.0
 [1.9.0]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.8.0...v1.9.0
 [1.8.0]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.7.0...v1.8.0

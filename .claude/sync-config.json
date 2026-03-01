@@ -12,7 +12,6 @@
     ],
     "commands": [
       "review.md",
-      "simplify.md",
       "polaris.md",
       "incident-response.md",
       "sync-global.md",
@@ -49,8 +48,7 @@
       "incident-response",
       "security-audit",
       "tech-debt-audit",
-      "review",
-      "simplify"
+      "review"
     ]
   },
   "projectOnly": {

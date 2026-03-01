@@ -38,6 +38,36 @@
 - `memory/active-context.md` — current work context ("Current Focus" + "Next Steps" sections only)
 - `memory/scratchpad.md` — running work log, last 30 lines (survives /compact)
 
+## Available Agents (from plugins)
+
+### pr-review-toolkit (6 agents)
+
+| Agent | Use when |
+| ----- | -------- |
+| `pr-review-toolkit:code-reviewer` | General review (correctness, conventions) |
+| `pr-review-toolkit:code-simplifier` | Post-feature cleanup, complexity reduction |
+| `pr-review-toolkit:silent-failure-hunter` | Error handling, logging gaps |
+| `pr-review-toolkit:pr-test-analyzer` | Test coverage gaps |
+| `pr-review-toolkit:type-design-analyzer` | Type invariants, encapsulation |
+| `pr-review-toolkit:comment-analyzer` | Comment accuracy vs code |
+
+### feature-dev (3 agents)
+
+| Agent | Use when |
+| ----- | -------- |
+| `feature-dev:code-architect` | Design architecture for new features |
+| `feature-dev:code-explorer` | Deep codebase exploration |
+| `feature-dev:code-reviewer` | Review oriented feature implementation |
+
+### Built-in skills (v2.1.63+)
+
+- `/simplify` — built-in, replaces custom skill
+- `/batch` — parallelizable code migrations
+
+### KISS principle
+
+Prefer built-in/plugin agents over custom implementations. Only create custom agents when no existing solution covers the need.
+
 ## Plugin Watch
 
 - Source: https://github.com/wshobson/agents

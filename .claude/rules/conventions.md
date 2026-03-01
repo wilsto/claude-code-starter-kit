@@ -5,3 +5,4 @@
 - Autonomous bug fixing: diagnose and fix without asking for step-by-step guidance
 - Prefer clean solutions over workarounds ("le plus simple et stable et pérenne")
 - Never close/validate a ticket or GitHub issue without explicit user approval
+- KISS (Keep It Simple): prefer built-in and plugin features over custom implementations. Only create custom agents, skills, or hooks when no existing solution covers the need.

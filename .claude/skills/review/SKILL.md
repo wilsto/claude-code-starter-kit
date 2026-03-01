@@ -1,56 +1,47 @@
 ---
 name: review
 description: >
-  Auto-invoke a code review sub-agent before committing or when significant changes accumulate.
-  Evaluates correctness, conventions, testing coverage, security, and simplicity.
+  Route code reviews to the appropriate pr-review-toolkit agent.
   Triggers: before /commit with 3+ files changed, after completing a feature, after refactoring,
   when the user asks for review, "review my code", "check my changes", "is this correct".
 type: workflow
 ---
 
-# Code Review — Sub-agent Workflow
+# Code Review — Plugin Routing
 
 ## When to use (auto-trigger)
 
-- **Before /commit** when 3+ files have been changed — catch issues before they're committed
-- **After completing a feature** — verify the implementation before declaring "Done"
+- **Before /commit** when 3+ files have been changed
+- **After completing a feature** — verify before declaring "Done"
 - **After a refactor** — ensure behavior is preserved
-- **When unsure about correctness** — delegate the review to get a second opinion
 - **Never** on trivial changes (typo fix, single-line config change)
+
+## Available agents (pr-review-toolkit plugin)
+
+| Agent | Use when |
+| ----- | -------- |
+| `pr-review-toolkit:code-reviewer` | General review (correctness, conventions, quality) |
+| `pr-review-toolkit:code-simplifier` | Post-feature cleanup, complexity reduction |
+| `pr-review-toolkit:silent-failure-hunter` | Error handling, logging, silent failures |
+| `pr-review-toolkit:pr-test-analyzer` | Test coverage gaps, missing tests |
+| `pr-review-toolkit:type-design-analyzer` | Type invariants, encapsulation quality |
+| `pr-review-toolkit:comment-analyzer` | Comment accuracy, technical debt in docs |
 
 ## Process
 
-Use the Task tool to spawn a code-review sub-agent with the following instructions:
+### Quick review (default)
 
-### Sub-agent prompt
+Use the Agent tool with `subagent_type: "pr-review-toolkit:code-reviewer"` to review current changes.
 
-You are a code reviewer for this project. Review ALL current changes.
+### Deep review (3+ files or pre-release)
 
-1. Run `git diff` to see unstaged changes, and `git diff --cached` for staged changes
-2. For each changed file, evaluate:
-   - **Correctness**: Logic errors, edge cases, null/undefined checks, error handling
-   - **Conventions**: Does the code follow patterns described in CLAUDE.md and the relevant stack guide in `.claude/stacks/`?
-   - **Testing**: Are new behaviors covered by tests? Flag untested paths.
-   - **Security**: Hardcoded secrets, SQL injection, XSS, auth bypasses, OWASP top 10
-   - **Simplicity**: Unnecessary complexity, dead code, premature abstraction
-3. Produce a review in this format:
+Launch multiple agents in parallel for comprehensive coverage:
 
-```
-## Review Summary
-- Files reviewed: N
-- Issues found: N (X critical, Y suggestions)
+1. `pr-review-toolkit:code-reviewer` — correctness and conventions
+2. `pr-review-toolkit:silent-failure-hunter` — error handling gaps
+3. `pr-review-toolkit:pr-test-analyzer` — test coverage
 
-## Critical Issues (must fix)
-- [file:line] description
-
-## Suggestions (nice to have)
-- [file:line] description
-
-## Good Patterns Noticed
-- description
-```
-
-Do NOT make changes. Report only.
+Synthesize results into a single verdict: **Ready to Merge**, **Needs Attention**, or **Needs Work**.
 
 ## After the review
 
