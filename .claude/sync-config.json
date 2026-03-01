@@ -87,7 +87,9 @@
     }
   },
   "settingsSync": {
-    "deny": "union",
-    "allow": "base-additive"
+    "ask": "union",
+    "allow": "base-additive",
+    "hooks": "template-is-source",
+    "enabledPlugins": "template-is-source"
   }
 }

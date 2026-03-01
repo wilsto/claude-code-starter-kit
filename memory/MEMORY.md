@@ -26,6 +26,8 @@
 <!-- Format: [DECISION] Short title → rationale -->
 
 - [DECISION] Questions au PO = AskUserQuestion, pas du texte → quand le workflow /commit ou un skill a un doute, toujours utiliser AskUserQuestion pour poser la question au PO de manière interactive, jamais écrire la question dans le texte de sortie
+- [DECISION] Hooks en global only → les hooks MERGE entre scopes (doc officielle). Si un hook est dans le template ET le global, il s'exécute DEUX FOIS. Solution : hooks config dans `~/.claude/settings.json` uniquement, hook JS files synced via `/sync-global`
+- [DECISION] deny → ask → permissions destructives demandent confirmation au lieu de bloquer définitivement. Aucun deny dans la config
 
 ## Topic Files (Read on demand, NOT auto-injected)
 

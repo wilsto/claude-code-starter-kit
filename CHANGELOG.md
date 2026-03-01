@@ -6,6 +6,15 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), using [Conventi
 
 ## [Unreleased]
 
+## [1.13.2] - 2026-03-01
+
+### Changed
+
+- Hooks config moved from project settings to global `~/.claude/settings.json` (all projects inherit hooks automatically)
+- Permissions `deny` replaced with `ask` (destructive operations require confirmation instead of hard block)
+- Added `enabledPlugins` to template as source of truth (6 official plugins)
+- Extended `settingsSync` with `hooks` and `enabledPlugins` strategies (`template-is-source`)
+
 ## [1.13.1] - 2026-03-01
 
 ### Fixed
