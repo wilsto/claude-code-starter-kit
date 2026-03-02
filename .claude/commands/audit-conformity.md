@@ -20,6 +20,7 @@ Use this table throughout the audit for display and persistence.
 | `stack-guides` | 8 | Stack Guides | LOW | ~20 min | Documentation |
 | `polaris-memory` | 9 | Polaris North Star | LOW | ~5 min | Productivity |
 | `skill-prerequisites` | 10 | Skill Prerequisites | HIGH | ~5 min | Configuration |
+| `coverage-config` | 11 | Coverage Configuration | HIGH | ~10 min | Quality |
 
 ---
 
@@ -335,9 +336,203 @@ If FAIL or WARN: propose adding a "Workflow" section to CLAUDE.md with the detec
 
 ---
 
+## Check 11: Coverage Configuration
+
+**ID**: `coverage-config`
+
+Verify that the project's coverage tooling is properly configured — not just installed, but enforced and actionable.
+
+### Stack detection
+
+Reuse the same indicator files from Check 8 / Check 10:
+
+| Indicator files | Stack |
+| --- | --- |
+| `pyproject.toml`, `requirements.txt`, `setup.py`, `Pipfile` | Python |
+| `next.config.*`, `package.json` (with vitest/jest) | Node.js |
+| `go.mod` | Go |
+| `Cargo.toml` | Rust |
+
+If no stack is detected, mark this check **SKIP** (not applicable).
+
+### 4 sub-checks (universal, concept-based)
+
+| Sub-check | What it means | Why it matters |
+| --- | --- | --- |
+| **A. Threshold** | A minimum coverage % that fails the build | Without it, coverage is informational only — never enforced |
+| **B. Branch coverage** | Measures if/else/match branch paths, not just lines | Line-only coverage hides untested conditional logic |
+| **C. Source filtering** | Explicit include/exclude of source vs non-source files | Migrations, `__init__`, config, test files pollute the report |
+| **D. Report output** | At least one human-readable format (HTML, LCOV) beyond terminal | Terminal-only makes it hard to visually analyze uncovered zones |
+
+### Where to look per stack
+
+#### Python
+
+Search in order of precedence:
+
+1. `pyproject.toml`: `[tool.coverage.run]`, `[tool.coverage.report]`, `[tool.coverage.html]`, `[tool.pytest.ini_options]`
+2. `.coveragerc` (legacy standalone)
+3. `setup.cfg`: `[coverage:run]`, `[coverage:report]`
+
+| Sub-check | What to find |
+| --- | --- |
+| Threshold | `fail_under` in `[tool.coverage.report]` OR `--cov-fail-under` in pytest addopts |
+| Branch | `branch = true` in `[tool.coverage.run]` OR `--cov-branch` in pytest addopts |
+| Source filter | `source`, `include`, or `omit` in `[tool.coverage.run]` |
+| Report | `[tool.coverage.html]` exists OR `--cov-report=html` or `xml` in addopts |
+
+#### Node.js (Vitest)
+
+Search in `vitest.config.ts/js` or `vite.config.ts` (test section):
+
+| Sub-check | What to find |
+| --- | --- |
+| Threshold | `coverage.thresholds` with `lines`, `branches`, `functions`, `statements` |
+| Branch | `coverage.thresholds.branches` set (Vitest enables branch measurement by default with V8/istanbul, but threshold must be set) |
+| Source filter | `coverage.include` and/or `coverage.exclude` arrays |
+| Report | `coverage.reporter` array containing `html`, `lcov`, or `cobertura` (beyond default `text`) |
+
+#### Node.js (Jest)
+
+Search in `jest.config.ts/js` or `package.json` `jest` section:
+
+| Sub-check | What to find |
+| --- | --- |
+| Threshold | `coverageThreshold.global` with `branches`, `functions`, `lines`, `statements` |
+| Branch | `coverageThreshold.global.branches` set |
+| Source filter | `collectCoverageFrom` array |
+| Report | `coverageReporters` containing `html`, `lcov`, or `cobertura` |
+
+#### Go
+
+No config file — search in `Makefile` and scripts:
+
+| Sub-check | What to find |
+| --- | --- |
+| Threshold | A script/target that parses `go tool cover -func` output and compares to a threshold |
+| Branch | **Auto-PASS** — Go coverage is statement-based, no branch option |
+| Source filter | `-coverpkg=./...` or specific package lists in the coverage command |
+| Report | `-coverprofile=coverage.out` AND `go tool cover -html` or equivalent |
+
+#### Rust
+
+Search in `tarpaulin.toml`, `Makefile`, or CI workflows:
+
+| Sub-check | What to find |
+| --- | --- |
+| Threshold | `--fail-under` flag or `fail-under` in `tarpaulin.toml` |
+| Branch | `--branch` flag or `branch = true` in `tarpaulin.toml` |
+| Source filter | `--packages` or `--exclude` in tarpaulin, or `packages`/`exclude` in config |
+| Report | `--out Html` or `--out Lcov` in tarpaulin invocation |
+
+### Result
+
+**PASS**: All 4 sub-checks pass (auto-pass counts for N/A items like Go branch).
+**WARN**: 3 of 4 pass AND threshold is among them. Mapped to PASS in `audit-config.json`.
+**FAIL**: Threshold sub-check fails, OR 2+ sub-checks fail. List the gaps.
+
+### Output format
+
+```text
+=== Check 11: Coverage Configuration ===
+
+Stack detected: Python (pyproject.toml)
+Coverage config found in: pyproject.toml [tool.coverage.*]
+
+  [PASS] A. Threshold        — fail_under = 80 in [tool.coverage.report]
+  [FAIL] B. Branch coverage  — branch not set in [tool.coverage.run]
+  [FAIL] C. Source filtering  — no source/omit in [tool.coverage.run] (all files measured)
+  [PASS] D. Report output    — html report configured in [tool.coverage.html]
+
+Result: FAIL (2/4 — threshold passes but 2+ sub-checks fail)
+```
+
+For multi-stack projects, run sub-checks per stack and aggregate (worst stack result = overall result).
+
+### Fix proposals
+
+#### Python (pyproject.toml)
+
+```toml
+[tool.coverage.run]
+branch = true
+source = ["src"]
+omit = [
+    "*/migrations/*",
+    "*/__init__.py",
+    "*/conftest.py",
+]
+
+[tool.coverage.report]
+fail_under = 80
+show_missing = true
+exclude_lines = [
+    "pragma: no cover",
+    "if TYPE_CHECKING:",
+    "if __name__ == .__main__.",
+]
+
+[tool.coverage.html]
+directory = "htmlcov"
+```
+
+#### Node.js / Vitest (vitest.config.ts)
+
+```typescript
+coverage: {
+  provider: "v8",
+  include: ["src/**/*.{ts,tsx}"],
+  exclude: ["src/**/*.test.{ts,tsx}", "src/**/*.d.ts"],
+  reporter: ["text", "html", "lcov"],
+  thresholds: {
+    lines: 80,
+    branches: 80,
+    functions: 80,
+    statements: 80,
+  },
+},
+```
+
+#### Node.js / Jest (jest.config.js)
+
+```javascript
+collectCoverageFrom: ["src/**/*.{ts,tsx}", "!src/**/*.test.{ts,tsx}", "!src/**/*.d.ts"],
+coverageThreshold: {
+  global: { branches: 80, functions: 80, lines: 80, statements: 80 },
+},
+coverageReporters: ["text", "html", "lcov"],
+```
+
+#### Go (Makefile target)
+
+```makefile
+.PHONY: coverage
+coverage:
+	go test -coverprofile=coverage.out -coverpkg=./... ./...
+	go tool cover -func=coverage.out
+	go tool cover -html=coverage.out -o coverage.html
+	@COVERAGE=$$(go tool cover -func=coverage.out | grep total | awk '{print $$3}' | tr -d '%'); \
+	if [ $$(echo "$$COVERAGE < 80" | bc) -eq 1 ]; then \
+		echo "Coverage $$COVERAGE% is below 80% threshold"; exit 1; \
+	fi
+```
+
+#### Rust (tarpaulin.toml)
+
+```toml
+[general]
+fail-under = 80
+branch = true
+out = ["Html", "Lcov"]
+packages = ["my-crate"]
+exclude = ["my-crate-migrations"]
+```
+
+---
+
 ## Phase 2: Display Enriched Scorecard
 
-After all 9 checks, produce the scorecard with impact/effort metadata:
+After all 11 checks, produce the scorecard with impact/effort metadata:
 
 ```text
 === Claude Code Conformity Audit ===
@@ -354,6 +549,7 @@ Score: X/Y applicable (Z skipped)
   [SKIP] 8. Stack Guides              — "Custom mono-repo stack" (2026-02-20)
   [FAIL] 9. Polaris North Star        [LOW      | ~5 min]  — polaris.md exists but all sections empty
   [WARN] 10. Skill Prerequisites      [HIGH     | ~5 min]  — auto-detection OK (pyproject.toml) but CLAUDE.md has no explicit commands
+  [FAIL] 11. Coverage Configuration   [HIGH     | ~10 min] — Python: threshold ✗, branch ✗, filter ✗, report ✓ (1/4)
 
 Legend: Impact [CRITICAL/HIGH/MEDIUM/LOW] | Estimated fix time
 ```

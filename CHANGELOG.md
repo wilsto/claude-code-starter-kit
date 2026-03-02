@@ -6,6 +6,12 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), using [Conventi
 
 ## [Unreleased]
 
+## [1.17.0] - 2026-03-02
+
+### Added
+
+- Check 11 `coverage-config` in `/audit-conformity`: audits coverage configuration quality (threshold, branch, source filtering, report output) across Python, Node.js, Go, and Rust stacks
+
 ### Removed
 
 - `auto-format.js` PostToolUse hook: removed due to critical bug (formatter emptying files — 5/7 files corrupted in coachbywill)
