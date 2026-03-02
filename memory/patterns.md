@@ -67,3 +67,15 @@
 - Vector databases / knowledge graphs for context (our `memory/` system is simpler and sufficient)
 - Dynamic model selection per task complexity (our Model Selection table in CLAUDE.md is manual but adequate)
 - A/B testing framework for agents (interesting but premature)
+
+## Learnings
+
+> Cross-session corrections captured via the `[LEARN]` protocol (see `.claude/rules/self-correction.md`).
+> Format: `[LEARN] Category: Rule` → user approves → appended here.
+
+<!-- Template entries below — replace with actual learnings -->
+<!-- ### [Category] Rule description
+- **Mistake**: what went wrong
+- **Correction**: what to do instead
+- **Project**: project name
+- **Date**: YYYY-MM-DD -->

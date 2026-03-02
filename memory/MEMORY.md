@@ -88,6 +88,13 @@ Build only what's needed, keep it simple, don't repeat, invest effort in simplic
 - Agents évalués (9): python-development, cicd-automation, shell-scripting, security-compliance, observability-monitoring, cloud-infrastructure, security-scanning, incident-response, agent-orchestration
 - Checker: (1) mises à jour des 9 agents existants, (2) nouveaux agents dans le repo
 
+## Références plugins externes
+
+- **pro-workflow** (v1.3.0) : `~/.claude/plugins/marketplaces/pro-workflow/`
+  - Status : installé mais désactivé (90% couvert par le template)
+  - Cherry-picked : protocole `[LEARN]` (version markdown, voir `.claude/rules/self-correction.md`)
+  - Features consultables si besoin futur : SQLite learnings DB + FTS5, drift-detector (scope creep), scout agent (confidence scoring 0-100), insights analytics, deslop patterns (premature abstraction), adaptive quality gates
+
 ## Session Notes
 
 (keep last 3 entries, most recent first)
