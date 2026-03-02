@@ -6,11 +6,14 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), using [Conventi
 
 ## [Unreleased]
 
+### Removed
+
+- `auto-format.js` PostToolUse hook: removed due to critical bug (formatter emptying files — 5/7 files corrupted in coachbywill)
+
 ## [1.16.0] - 2026-03-02
 
 ### Added
 
-- `auto-format.js` PostToolUse hook: auto-runs project formatter (Prettier/ruff/gofmt/rustfmt) after each Edit/Write
 - `debug-warning.js` PostToolUse hook: warns when edits introduce debug artifacts (console.log, print, etc.)
 
 ### Fixed

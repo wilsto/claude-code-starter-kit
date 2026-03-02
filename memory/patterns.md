@@ -5,12 +5,19 @@
 
 ## Debugging Patterns
 
-<!-- Add patterns as you discover them. Format: -->
-<!-- ### Problem Title -->
-<!-- **Symptom**: what you see -->
-<!-- **Root Cause**: what actually happened -->
-<!-- **Fix**: what solved it -->
-<!-- **Prevention**: how to avoid it next time -->
+### CRLF conversion can empty files on Windows
+
+**Symptom**: After `git add` + `git commit`, a file (CHANGELOG.md) becomes 0 bytes on disk and in the commit.
+**Root Cause**: Git's CRLF auto-conversion (`LF will be replaced by CRLF`) can corrupt files when the Edit tool writes content and git immediately stages it. The file ends up empty in the working tree.
+**Fix**: Restore from `git show HEAD~1:<file>`, re-apply changes, amend the commit.
+**Prevention**: After editing files that trigger CRLF warnings, verify file content before staging (`wc -l <file>`). Consider adding `*.md text eol=lf` to `.gitattributes`.
+
+### PostToolUse auto-format hook can empty files
+
+**Symptom**: After Edit/Write, files become 0 bytes. In coachbywill, 5/7 files were emptied by the formatter.
+**Root Cause**: The `auto-format.js` PostToolUse hook runs `npx prettier --write` (or ruff/gofmt) after every Edit/Write. On Windows, formatter subprocesses can race with Claude's file writes, resulting in empty files. Backup/restore logic was added but proved insufficient.
+**Fix**: Hook removed entirely from global settings.json and template. Files deleted.
+**Prevention**: Never auto-run formatters as PostToolUse hooks. Use format-on-save in IDE or format explicitly before commit (quality gate in `/commit` skill). The risk of data loss outweighs the convenience.
 
 ## Reusable Solutions
 
