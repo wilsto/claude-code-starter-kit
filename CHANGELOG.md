@@ -6,6 +6,12 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), using [Conventi
 
 ## [Unreleased]
 
+## [1.20.1] - 2026-03-02
+
+### Fixed
+
+- `block-secrets` hook now uses `ask` instead of `deny` for all sensitive files — no more silent blocks on `.env*`, `config.json`, etc.
+
 ## [1.20.0] - 2026-03-02
 
 ### Added

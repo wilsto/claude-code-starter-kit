@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 // block-secrets.js — PreToolUse hook for Edit and Write tools
-// PURPOSE: Hard-blocks writing to files that should never be committed.
-// BEHAVIOR: Returns permissionDecision:"deny" — the operation is cancelled.
-// CUSTOMIZE: Add project-specific secret file names to BLOCKED_PATHS below.
+// PURPOSE: Prompts for confirmation before writing to sensitive files.
+// BEHAVIOR: Returns permissionDecision:"ask" — the user is asked to confirm.
+// CUSTOMIZE: Add project-specific secret file names to SENSITIVE_PATHS below.
 
 // ============================================================
 // CUSTOMIZE THIS ARRAY for your project
 // ============================================================
-const BLOCKED_PATHS = [
+const SENSITIVE_PATHS = [
   'secrets.yaml',
   'secrets.json',
   'config.json',
@@ -25,16 +25,16 @@ process.stdin.on('end', () => {
     const filePath = input.tool_input?.file_path || '';
     const basename = path.basename(filePath);
 
-    const isBlocked =
-      BLOCKED_PATHS.some((s) => basename === s) ||
+    const isSensitive =
+      SENSITIVE_PATHS.some((s) => basename === s) ||
       basename.startsWith('.env');
 
-    if (isBlocked) {
+    if (isSensitive) {
       process.stdout.write(JSON.stringify({
         hookSpecificOutput: {
           hookEventName: 'PreToolUse',
-          permissionDecision: 'deny',
-          permissionDecisionReason: `Blocked: ${basename} is a protected secret file. Edit manually if needed.`,
+          permissionDecision: 'ask',
+          permissionDecisionReason: `${basename} is a sensitive file. Please confirm this edit.`,
         },
       }));
     }
