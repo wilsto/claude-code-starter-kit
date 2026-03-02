@@ -6,6 +6,12 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), using [Conventi
 
 ## [Unreleased]
 
+## [1.19.1] - 2026-03-02
+
+### Added
+
+- Plugins reference in rules (`plugins.md`) listing all installed plugin capabilities, triggers, and agents
+
 ## [1.19.0] - 2026-03-02
 
 ### Added
