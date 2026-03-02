@@ -1,8 +1,8 @@
 ---
 name: tech-debt-audit
 description: >
-  Audit the codebase for technical debt: complexity, duplication, dead code, outdated deps,
-  and missing tests. Produces a prioritized remediation plan.
+  Audit the codebase for technical debt across 4 dimensions: code health, test & reliability,
+  documentation & specs, dependencies & infra. Produces a prioritized remediation plan.
   Triggers: "tech debt", "audit technique", "dette technique", "code health", "assess technical debt".
 type: interactive
 ---
@@ -22,14 +22,14 @@ This is not a code review -- `/review` evaluates individual changes. This skill 
 | **Deliberate** | "We know we're cutting corners, and we'll fix it" | "We don't have time for design" |
 | **Inadvertent** | "Now we know how we should have done it" | "What's layering?" |
 
-### Debt Categories
+### Debt Dimensions
 
-- **Complexity debt** -- High cyclomatic complexity, deeply nested logic, god classes/functions
-- **Duplication debt** -- Copy-pasted logic, near-identical functions, redundant patterns
-- **Coupling debt** -- Tight dependencies between modules, circular imports, leaky abstractions
-- **Test debt** -- Missing coverage, brittle tests, untested critical paths
-- **Dependency debt** -- Outdated packages, known vulnerabilities, abandoned libraries
-- **Dead code debt** -- Unused imports, unreachable branches, orphaned functions/exports
+| Dimension | Debt categories scanned |
+| --- | --- |
+| **Code Health** | Complexity (cyclomatic, nesting), Duplication (near-identical logic), Coupling (circular deps, leaky abstractions), Dead code (unused exports, unreachable branches) |
+| **Test & Reliability** | Test coverage (missing/brittle tests), Error handling (silent failures, missing catch), Security (delegates to `security-auditor` agent if available) |
+| **Documentation & Specs** | Spec coverage (domains without `docs/specs/<domain>.md`), Spec freshness (History entry vs recent commits), Spec completeness (missing User Stories/Behavior), Config docs (`.env.example` sync, undocumented settings), README alignment |
+| **Dependencies & Infra** | Outdated packages, Known vulnerabilities, Build/CI health (slow pipelines, flaky tests), Migration debt (pending/irreversible migrations) |
 
 ### Anti-Patterns
 
@@ -58,14 +58,17 @@ This interactive skill asks **up to 4 adaptive questions**, then performs a deep
 3. **Recently changed files** -- Last 30 days of git history
 4. **Hot paths only** -- Files with most commits/changes (churn analysis)
 
-### Question 2: Team Priorities (multi-select)
+### Question 2: Audit Dimensions (multi-select)
 
-"Which dimensions matter to your team? Select all that apply."
+"Which dimensions should this audit cover? Select all that apply."
 
-1. **Maintainability** -- Code is hard to understand or modify
-2. **Reliability** -- Bugs keep appearing in certain areas
-3. **Performance** -- Slow paths or resource-heavy operations
-4. **Testability** -- Hard to test, low confidence in changes
+1. **Code Health** -- Complexity, duplication, coupling, dead code
+2. **Test & Reliability** -- Test coverage, error handling, security patterns (delegates to security-auditor)
+3. **Documentation & Specs** -- Spec coverage/freshness, config docs, README alignment
+4. **Dependencies & Infra** -- Outdated deps, vulnerabilities, build/CI health, migration debt
+
+> Default if none selected: all 4 dimensions.
+> Security scan within "Test & Reliability" delegates to the `security-auditor` agent (`.claude/agents/security-auditor.md`) -- it does NOT duplicate `/security-audit`.
 
 ### Question 3: Constraints
 
@@ -95,7 +98,7 @@ Pass the collected context (scope, priorities, constraints, thresholds) as the p
 The agent scans the codebase and returns a structured Technical Debt Report.
 ```
 
-The agent handles: codebase scanning, debt category analysis, file scoring, git churn cross-referencing. It returns a health-scored report with a prioritized remediation plan.
+The agent handles: codebase scanning, dimension-based analysis, file scoring, git churn cross-referencing. It returns a health-scored report with a prioritized remediation plan. Pass the selected dimensions so the agent scans only what was requested.
 
 ## Examples
 

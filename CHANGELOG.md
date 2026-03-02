@@ -6,6 +6,15 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), using [Conventi
 
 ## [Unreleased]
 
+## [1.20.0] - 2026-03-02
+
+### Added
+
+- Spec integration across workflow: TDD Step 0 (read spec before RED), DoR/DoD spec requirements, review spec pre-check, advisory spec-reminder hook
+- Tech-debt audit expanded to 4 holistic dimensions: Code Health, Test & Reliability, Documentation & Specs, Dependencies & Infra — replacing the previous 6 flat categories
+- New debt categories: spec coverage/freshness, config docs, error handling, build/CI health, with security delegating to existing security-auditor agent
+- Code review and code-simplifier steps (3b/3c) in `/commit` workflow for 3+ file changes
+
 ## [1.19.1] - 2026-03-02
 
 ### Added

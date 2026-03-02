@@ -1,8 +1,8 @@
 ---
 name: commit
 description: >
-  Quality-gated commit workflow: secret scan, slop scan, format check, test gate,
-  post-change documentation, changelog, conventional commit, push and release.
+  Quality-gated commit workflow: secret scan, slop scan, code review, format check,
+  test gate, post-change documentation, changelog, conventional commit, push and release.
   Use /commit instead of raw git commands.
   Triggers: "commit", "git commit", "push changes".
 type: workflow
@@ -63,6 +63,40 @@ Check staged diff for:
 - Leftover TODO/FIXME in new code
 
 If slop found: list items and ask the user whether to fix them first.
+
+## Step 3b: Code Review (advisory — conditional)
+
+Count changed files:
+
+```bash
+git diff --name-only | wc -l
+```
+
+**If fewer than 3 files changed:** skip this step silently.
+
+**If 3+ files changed:** invoke the `/review` skill in quick mode:
+
+1. Launch `pr-review-toolkit:code-reviewer` agent on the diff
+2. If the diff touches error handling (`try/catch`, `.catch(`, `except`, `recover`) → also launch `pr-review-toolkit:silent-failure-hunter` in parallel
+3. Present findings to the user:
+   - **Critical issues (confidence ≥ 90):** strongly recommend fixing before commit
+   - **Important issues (confidence 80-89):** inform, user decides
+   - **Below 80:** not reported (filtered by agent)
+
+This step is **advisory** — the user can always proceed without fixing.
+
+If all clean: continue silently to Step 3c.
+
+## Step 3c: Code Simplifier (advisory — conditional)
+
+> Only runs if Step 3b ran AND the code-reviewer flagged complexity, unnecessary abstractions, or redundant code.
+
+1. Ask the user: "The review found simplification opportunities. Run code-simplifier to auto-fix?"
+2. If yes → launch `pr-review-toolkit:code-simplifier` agent on modified files
+3. After simplification: re-stage affected files (Step 5 will re-run tests to verify)
+4. If no → continue without changes
+
+This step **modifies files** — always requires user confirmation before applying.
 
 ## Step 4: Format Check (advisory)
 
@@ -238,7 +272,9 @@ If CLAUDE.md has an `## Active Stacks` section, run format check and tests for *
 
 - Secret scan is always blocking — no exceptions
 - If tests fail, the commit does not happen
-- Slop, format, and documentation are advisory — user decides
+- Slop, code review, format, and documentation are advisory — user decides
+- Code review (Step 3b) only runs when 3+ files changed — skipped silently for small commits
+- Code simplifier (Step 3c) only runs with user confirmation and only if review flagged simplification opportunities
 - Never amend a previous commit without explicit user request
 - Never force push (except `--force-with-lease` for changelog finalization in step 9c)
 - At every step, ask the PO if in doubt — never guess intent

@@ -27,6 +27,17 @@ type: workflow
 | `pr-review-toolkit:type-design-analyzer` | Type invariants, encapsulation quality |
 | `pr-review-toolkit:comment-analyzer` | Comment accuracy, technical debt in docs |
 
+## Spec consistency pre-check
+
+Before routing to agents, check spec alignment:
+
+1. `git diff --name-only` → list changed source files
+2. For each, infer domain from parent directory (`src/<domain>/`, `app/<domain>/`)
+3. If `docs/specs/<domain>.md` exists → pass its **User Stories** and **Behavior** sections as context to `code-reviewer`
+4. If no spec exists and change is a new feature → flag that `/spec-update` should run
+
+Advisory only — never blocks the review.
+
 ## Process
 
 ### Quick review (default)
@@ -40,6 +51,7 @@ Launch multiple agents in parallel for comprehensive coverage:
 1. `pr-review-toolkit:code-reviewer` — correctness and conventions
 2. `pr-review-toolkit:silent-failure-hunter` — error handling gaps
 3. `pr-review-toolkit:pr-test-analyzer` — test coverage
+4. **Spec context** (when `docs/specs/<domain>.md` exists): pass relevant spec sections to `code-reviewer` to detect behavioral regressions
 
 Synthesize results into a single verdict: **Ready to Merge**, **Needs Attention**, or **Needs Work**.
 

@@ -96,11 +96,13 @@ Fields to set (all required for DoR):
 - Description includes acceptance criteria (what "done" looks like)
 - Phase, Priority, Size are set in GitHub Project
 - Dependencies are identified (no hidden blockers)
+- Functional spec exists in `docs/specs/<domain>.md` OR explicitly waived by PO (advisory for bug fixes, expected for new features)
 
 ### DoD — An issue is Done when:
 
 - All acceptance criteria are met with verifiable proof
 - Tests pass AND coverage did not drop (advisory)
+- Functional spec updated if user-visible behavior changed (automated by `/commit` step 6, verify if skipped)
 - Public symbols are documented
 - Changes are committed via `/commit` (quality gate passed)
 - Issue is closed by PO (never auto-closed by Claude)

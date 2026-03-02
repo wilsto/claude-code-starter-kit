@@ -35,6 +35,17 @@ Use the resolved commands throughout all steps below.
 
 ## Cycle
 
+### 0. SPEC — Read the functional spec
+
+Before writing any test, check if a functional spec exists for the domain:
+
+1. Look in `docs/specs/` for a file matching the domain being modified
+2. **Spec exists** → read User Stories / Behavior sections. Use acceptance criteria as test source. If spec conflicts with the requested change → flag to user before writing code.
+3. **No spec exists** → flag to user. For new features, run `/spec-update` first (advisory — user can proceed without).
+4. **Behavior not in spec** → spec gap. After GREEN, run `/spec-update` to document it.
+
+> Skip for: pure bug fixes contradicting spec, pure refactors (no behavior change), config/docs files.
+
 ### 1. RED — Write the failing test
 - Write ONE test that describes the expected behavior
 - Run the project's test command (resolved in "Project Commands" above)

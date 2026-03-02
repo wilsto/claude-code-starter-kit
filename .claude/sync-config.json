@@ -26,7 +26,8 @@
       "skill-evaluator.js",
       "commit-reminder.js",
       "post-commit-lessons.js",
-      "tdd-guard.js"
+      "tdd-guard.js",
+      "spec-reminder.js"
     ],
     "stacks": [
       "cicd.md",
