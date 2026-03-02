@@ -13,7 +13,7 @@ Use this table throughout the audit for display and persistence.
 | `secret-protection` | 1 | Secret Protection | CRITICAL | ~5 min | Security |
 | `tdd-guard` | 2 | TDD Guard | HIGH | ~10 min | Quality |
 | `session-memory` | 3 | Session Memory | MEDIUM | ~5 min | Productivity |
-| `deny-list` | 4 | Destructive Deny List | CRITICAL | ~2 min | Security |
+| `deny-list` | 4 | Destructive Command Protection | CRITICAL | ~2 min | Security |
 | `claude-md-reconciliation` | 5 | CLAUDE.md Reconciliation | HIGH | ~15 min | Documentation |
 | `context-optimization` | 6 | Context Optimization | LOW | ~5 min | Performance |
 | `git-hygiene` | 7 | Git Hygiene | MEDIUM | ~2 min | Hygiene |
@@ -94,19 +94,19 @@ For each check: if the check ID is in `skipped`, mark it **SKIP** immediately (d
 **PASS**: Memory file exists with content, hook wired for both startup and compact.
 **FAIL**: Missing files or empty memory. List what's missing.
 
-## Check 4: Destructive Command Deny List
+## Check 4: Destructive Command Protection
 
 **ID**: `deny-list`
 **File**: `.claude/settings.json`
 
 - Does the file exist?
-- Does `permissions.deny` include at minimum:
+- Does `permissions.ask` include at minimum:
   - `Bash(rm -rf /*)` or equivalent
   - `Bash(git push *--force*)` or equivalent
   - `Bash(git reset --hard *)`
 
-**PASS**: All critical destructive commands are denied.
-**FAIL**: Missing deny rules. List the gaps.
+**PASS**: All critical destructive commands require confirmation.
+**FAIL**: Missing ask rules. List the gaps.
 
 ## Check 5: CLAUDE.md Reconciliation
 
@@ -347,7 +347,7 @@ Score: X/Y applicable (Z skipped)
   [PASS] 1. Secret Protection        [CRITICAL | ~5 min]  — block-secrets.js covers N secret files
   [FAIL] 2. TDD Guard                [HIGH     | ~10 min] — SRC_DIRS missing: internal/, pkg/
   [PASS] 3. Session Memory            [MEDIUM   | ~5 min]  — MEMORY.md has content, hooks wired
-  [PASS] 4. Deny List                 [CRITICAL | ~2 min]  — all critical patterns denied
+  [PASS] 4. Deny List                 [CRITICAL | ~2 min]  — all critical patterns protected
   [FAIL] 5. CLAUDE.md Reconciliation  [HIGH     | ~15 min] — CRITICAL: 4/5, RECOMMENDED: 3/5 (missing: Decision Authority, Task Workflow, Scratchpad)
   [PASS] 6. Context Optimization      [LOW      | ~5 min]  — .claudeignore covers 5 directories
   [SKIP] 7. Git Hygiene               — "Pre-commit hooks instead" (2026-02-15)
@@ -456,7 +456,7 @@ Before proposing fixes, analyze the project's existing setup — but **only for 
 
 For each selected FAIL item, check if the proposed fix would conflict with existing configuration:
 
-- Would a new deny rule conflict with an existing allow rule in settings?
+- Would a new ask rule conflict with an existing allow rule in settings?
 - Would new `BLOCKED_PATHS` entries block files the project legitimately edits?
 - Would `SRC_DIRS` in tdd-guard overlap or conflict with existing hook logic?
 - Would adding sections to CLAUDE.md duplicate or contradict existing content?
@@ -477,7 +477,7 @@ Also report what the project already does well that complements the template:
 
 1. **Enter plan mode** (use EnterPlanMode tool) to propose the corrective actions
 2. In the plan, organize into 3 sections:
-   - **Conflicts** — things that need careful merging (e.g., "settings.json already has a deny list — need to merge, not replace")
+   - **Conflicts** — things that need careful merging (e.g., "settings.json already has an ask list — need to merge, not replace")
    - **Complementarities** — things already in place that work well with the template
    - **Actions** — for each selected FAIL item only, the exact file and change to make, noting any merge considerations
 3. Wait for user approval before making any changes

@@ -149,7 +149,7 @@ L'audit detecte le CLAUDE.md existant, identifie les gaps et conflits, puis prop
 
 - `block-secrets.js` : verifier que `BLOCKED_PATHS` couvre les secrets du projet
 - `tdd-guard.js` : ajuster `SRC_DIRS` pour le layout reel
-- `settings.json` : fusionner deny list avec les permissions existantes
+- `settings.json` : fusionner ask list avec les permissions existantes
 - `memory/MEMORY.md` : remplir les sections
 
 ### Checklist de conformite
@@ -160,7 +160,7 @@ L'audit detecte le CLAUDE.md existant, identifie les gaps et conflits, puis prop
 - [ ] `CLAUDE.md` contient TDD Rules + Quality Gate + Conventions ?
 - [ ] Directives projet-specifiques dans `.claude/rules/` (pas dans CLAUDE.md) ?
 - [ ] `memory/MEMORY.md` existe avec Session Notes ?
-- [ ] `settings.json` deny list inclut les destructives ?
+- [ ] `settings.json` ask list inclut les destructives ?
 - [ ] `.gitignore` inclut `CLAUDE.local.md` ?
 
 > **Tip** : Relancez `/audit-conformity` apres les modifications pour valider le score. Les checks non applicables peuvent etre marques "skip" avec une raison.

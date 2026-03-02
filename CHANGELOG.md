@@ -6,6 +6,17 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), using [Conventi
 
 ## [Unreleased]
 
+## [1.16.0] - 2026-03-02
+
+### Added
+
+- `auto-format.js` PostToolUse hook: auto-runs project formatter (Prettier/ruff/gofmt/rustfmt) after each Edit/Write
+- `debug-warning.js` PostToolUse hook: warns when edits introduce debug artifacts (console.log, print, etc.)
+
+### Fixed
+
+- Corrected `deny` → `ask` terminology in audit-conformity, sync-global, and GUIDE.md to match actual permissions model
+
 ## [1.15.0] - 2026-03-01
 
 ### Changed
@@ -239,24 +250,28 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), using [Conventi
 ## [1.2.0] - 2026-02-26
 
 ### Added
+
 - PO/DevTeam role separation: User decides WHY/WHAT, Claude brings expertise on HOW
 - 4-level Decision Authority matrix (full autonomy → hard deny)
 - Task Workflow with TodoWrite decomposition and PO validation gate
 - Structured Stopping Protocol (done/blocked/questions/files touched)
 
 ### Changed
+
 - Merged duplicate Secrets section into Conventions
 - Condensed Commit Rhythm and TDD sections for conciseness
 
 ## [1.1.1] - 2026-02-26
 
 ### Fixed
+
 - Stacks directory now correctly nested under `.claude/` in README project structure tree
 - Added CHANGELOG.md to README project structure
 
 ## [1.1.0] - 2026-02-26
 
 ### Added
+
 - **Stackable language complements** (`.claude/stacks/`): Python, Next.js (complete), Go, Rust, Node.js (stubs) — replaces old `examples/` with real value: opinionated tools, patterns, CI/CD, deploy, docs links
 - Multi-stack support in `/setup` (multi-select), CLAUDE.md (Active Stacks section), and `/commit` + `/tdd` (per-stack commands)
 - Stack detection in `/audit-conformity` (Check 8) via indicator files (`pyproject.toml`, `next.config.*`, `go.mod`, `Cargo.toml`)
@@ -265,15 +280,18 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), using [Conventi
 - Incremental release with semver in `/commit` workflow (Step 8)
 
 ### Changed
+
 - Python tooling: ruff replaces black across all references
 - `/setup` wizard reads defaults from stack files instead of hardcoded table
 
 ### Removed
+
 - `examples/` directory (4 pre-filled CLAUDE.md that duplicated template without adding value)
 
 ## [1.0.0] - 2026-02-26
 
 ### Added
+
 - **5 hooks**: block-secrets (hard deny), tdd-guard (soft reminder), session-context (memory injection), post-commit-lessons (lesson evaluation), commit-reminder (natural breakpoint detection)
 - **4 slash commands**: `/tdd`, `/commit`, `/setup`, `/audit-conformity`
 - **2 auto-skills**: tdd (triggers on bug fix/feature), commit (triggers on staging)

@@ -35,11 +35,11 @@ node -e "const crypto=require('crypto'),fs=require('fs');console.log(crypto.crea
 
 ### Step 4 — Check settings.json permissions
 
-Compare `permissions.deny` arrays between:
+Compare `permissions.ask` arrays between:
 - Template: `.claude/settings.json`
 - Global: `~/.claude/settings.json`
 
-Strategy for deny: **union** (all items from both sides should be present in both).
+Strategy for ask: **union** (all items from both sides should be present in both).
 Strategy for allow: **base-additive** (template base always present in global, global additions preserved).
 
 ### Step 5 — Present the sync report
@@ -62,7 +62,7 @@ HOOKS:
   [TEMPLATE→GLOBAL]  session-context.js — template updated
 
 SETTINGS:
-  [DENY] 2 new rules in template not in global
+  [ASK] 2 new rules in template not in global
   [ALLOW] 3 new entries in global not in template
 ```
 
@@ -83,7 +83,7 @@ For CONFLICT files: always show a side-by-side diff and let the user choose:
 - **TEMPLATE→GLOBAL**: Copy template file to `~/.claude/<category>/`
 - **GLOBAL→TEMPLATE**: Copy global file to template `.claude/<category>/`, then `git add` the file
 - **NEW**: Copy to the other side
-- **SETTINGS deny (union)**: Add missing entries to both sides
+- **SETTINGS ask (union)**: Add missing entries to both sides
 - **SETTINGS allow**: Add missing template base entries to global
 
 ### Step 8 — Update manifest
@@ -100,7 +100,7 @@ Display what was done:
 Sync complete:
   - 3 files copied template → global
   - 1 file copied global → template (staged for commit)
-  - 2 deny rules added to global settings
+  - 2 ask rules added to global settings
   - Manifest updated
 ```
 
