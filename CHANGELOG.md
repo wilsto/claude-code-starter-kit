@@ -6,6 +6,12 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), using [Conventi
 
 ## [Unreleased]
 
+## [1.19.0] - 2026-03-02
+
+### Added
+
+- Multi-select team priorities in `/tech-debt-audit`: users can now select multiple dimensions (maintainability, reliability, performance, testability) instead of being limited to one
+
 ## [1.18.0] - 2026-03-02
 
 ### Added

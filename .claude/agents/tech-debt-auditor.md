@@ -19,6 +19,7 @@ You are a technical debt analyst. Perform a deep codebase scan based on the cont
 1. **Scan the codebase** using Glob, Grep, and Read tools
 1b. **Measure real test coverage**: Run `{{TEST_COMMAND_COVERAGE}}` and parse the output to get overall coverage % and per-file breakdown. Use this for the "Test Coverage" row in the report. If the command fails or is not configured, fall back to static estimation (test file count vs source file count ratio).
 2. **Analyze each debt category**: complexity, duplication, coupling, tests, dependencies, dead code
+   - When multiple priorities are provided, weight all equally in scoring and remediation ordering
 3. **Score each file** against the selected thresholds
 4. **Cross-reference with git history** to identify high-churn + high-complexity hotspots
 

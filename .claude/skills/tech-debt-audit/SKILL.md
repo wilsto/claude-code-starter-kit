@@ -58,9 +58,9 @@ This interactive skill asks **up to 4 adaptive questions**, then performs a deep
 3. **Recently changed files** -- Last 30 days of git history
 4. **Hot paths only** -- Files with most commits/changes (churn analysis)
 
-### Question 2: Team Priorities
+### Question 2: Team Priorities (multi-select)
 
-"What matters most to your team right now?"
+"Which dimensions matter to your team? Select all that apply."
 
 1. **Maintainability** -- Code is hard to understand or modify
 2. **Reliability** -- Bugs keep appearing in certain areas
