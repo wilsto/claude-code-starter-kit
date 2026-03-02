@@ -6,6 +6,13 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), using [Conventi
 
 ## [Unreleased]
 
+## [1.18.0] - 2026-03-02
+
+### Added
+
+- SDD (Spec-Driven Development) as principle #7 in development conventions
+- Init mode for `/spec-update`: bootstrap functional specs for all domains on a new project via codebase scan with 4-pass heuristic
+
 ## [1.17.0] - 2026-03-02
 
 ### Added

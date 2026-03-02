@@ -17,5 +17,6 @@ Apply in this order — each builds on the previous:
 4. **SINE** — Simple is not easy. A clean solution ("le plus simple, stable, performant et pérenne") takes more thought than a complex workaround. Invest that effort.
 5. **SOLID** — Apply to class/module design. Single Responsibility especially: one module, one reason to change.
 6. **DoR/DoD** — Nothing starts without clear requirements and acceptance criteria (Ready). Nothing is "done" without verifiable proof (Done). Applies at every level: a task has a definition of ready, a function has a test, a feature has acceptance criteria.
+7. **SDD** — Spec-Driven Development: every feature has a functional spec (`docs/specs/<domain>.md`) written BEFORE or alongside code. Specs describe WHAT from the user's perspective, not HOW. Code is the implementation of specs, not the other way around. Run `/spec-update` to bootstrap or update specs.
 
 When in doubt about the right level of simplicity → ask the PO (Level 3 decision).
