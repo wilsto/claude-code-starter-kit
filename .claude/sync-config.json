@@ -8,7 +8,8 @@
       "roles.md",
       "security.md",
       "workflow.md",
-      "python-uv.md"
+      "python-uv.md",
+      "research-first.md"
     ],
     "commands": [
       "review.md",
@@ -27,7 +28,8 @@
       "commit-reminder.js",
       "post-commit-lessons.js",
       "tdd-guard.js",
-      "spec-reminder.js"
+      "spec-reminder.js",
+      "research-first.js"
     ],
     "stacks": [
       "cicd.md",
