@@ -6,6 +6,14 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), using [Conventi
 
 ## [Unreleased]
 
+## [1.21.0] - 2026-03-03
+
+### Added
+
+- **"Research before acting" system**: rule + hook that forces Claude to check official docs (context7), forums (WebSearch), and community best practices before acting in high-risk situations — package installs, plan mode, error loops, brainstorming, new tech, API calls, and config changes
+- `research-first.js` hook (PreToolUse Bash/Agent + PostToolUse Bash): detects package installs, Plan subagent entry, and consecutive error loops (threshold: 2) with stateful tracking via session temp files
+- `research-first.md` rule: behavioral guidance covering 6 situations where Claude must research before acting, including brainstorm/ideation for collective intelligence
+
 ## [1.20.1] - 2026-03-02
 
 ### Fixed
@@ -345,7 +353,8 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), using [Conventi
 - Plan mode approval required before audit applies fixes
 - Language examples for Python, Node.js, Go, Rust (later replaced by stacks)
 
-[Unreleased]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.15.0...HEAD
+[Unreleased]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.21.0...HEAD
+[1.21.0]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.20.1...v1.21.0
 [1.15.0]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.14.0...v1.15.0
 [1.14.0]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.13.0...v1.14.0
 [1.13.0]: https://github.com/wilsto/claude-code-starter-kit/compare/v1.12.1...v1.13.0
