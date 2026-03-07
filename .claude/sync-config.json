@@ -9,7 +9,8 @@
       "security.md",
       "workflow.md",
       "python-uv.md",
-      "research-first.md"
+      "research-first.md",
+      "ux.md"
     ],
     "commands": [
       "review.md",
@@ -19,7 +20,8 @@
       "setup.md",
       "commit.md",
       "tdd.md",
-      "test-runner.md"
+      "test-runner.md",
+      "ux.md"
     ],
     "hooks": [
       "block-secrets.js",
@@ -29,7 +31,8 @@
       "post-commit-lessons.js",
       "tdd-guard.js",
       "spec-reminder.js",
-      "research-first.js"
+      "research-first.js",
+      "ux-guard.js"
     ],
     "stacks": [
       "cicd.md",
@@ -59,7 +62,8 @@
       "commit",
       "tdd",
       "test-runner",
-      "spec-update"
+      "spec-update",
+      "ux"
     ],
     "agents": [
       "test-runner.md",

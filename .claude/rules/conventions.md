@@ -6,6 +6,7 @@
 - If a plan goes off track: stop and re-plan immediately, do not push forward
 - Autonomous bug fixing: diagnose and fix without asking for step-by-step guidance
 - Never close/validate a ticket or GitHub issue without explicit user approval
+- **Always state your recommendation** when asking questions to the PO (mark it with "(Recommended)" or lead with "Ma reco :")
 
 ## Development Principles
 

@@ -17,6 +17,27 @@ Before running tests or formatters, resolve commands for this project:
 
 3. **Default branch**: `git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null | sed 's@^refs/remotes/origin/@@'` → fallback `main`
 
+## Step 0: Flash commit audit
+
+Before doing anything else, check if flash commits have accumulated since the last full commit:
+
+```bash
+git log --oneline | awk '/\[flash\]/{print} !/\[flash\]/{exit}'
+```
+
+This lists all consecutive `[flash]` commits at the top of the history (stopping at the first
+non-flash commit). If any are found, inform the user:
+
+```
+Found N flash commit(s) pending full gate validation:
+  - abc1234 feat(valeurs): add conflict alert card [flash]
+  - def5678 fix(ui): button alignment [flash]
+
+The quality gate will now cover all changes accumulated in these commits.
+```
+
+If none found, proceed silently.
+
 ## Step 1: Check what changed
 
 ```bash
@@ -49,9 +70,23 @@ If slop found: list items and ask the user whether to fix them first.
 
 Run the project's format check command (resolved above). If format issues found, run the format fix command, then re-stage affected files.
 
-## Step 5: Test Gate (BLOCKING)
+## Step 5: Test Gate (BLOCKING) — Smart Stack Detection
 
-Run the project's test command (resolved above).
+Before running tests, detect which stacks have staged changes:
+
+```bash
+git diff --staged --name-only
+```
+
+Apply this logic:
+
+| Staged files contain | Tests to run |
+|---|---|
+| Only `apps/api/**` | `cd apps/api && pytest` |
+| Only `apps/web/**` | `cd apps/web && pnpm test` |
+| Both (or root-level files) | Both stacks |
+
+Run only the relevant tests. This avoids running the full 10-minute suite when only one stack changed.
 
 If tests fail → **STOP**. Do not commit broken code. Show the failure output.
 

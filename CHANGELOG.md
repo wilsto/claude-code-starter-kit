@@ -6,6 +6,19 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), using [Conventi
 
 ## [Unreleased]
 
+## [1.22.0] - 2026-03-07
+
+## [1.22.0] - 2026-03-07
+
+### Added
+
+- **UX workflow**: `/ux` 3-phase skill (clarify → wireframe → implement), `ux-guard.js` advisory hook (reminds to run `/ux` before editing `.tsx`/`.jsx` UI files), `ux.md` rule (mandatory gates: wireframe approval, mobile-first, async states), `ux.md` command — full UX enforcement system
+- **Commit flash audit** (Step 0): `/commit` now detects accumulated `[flash]` commits before running the quality gate, so the gate covers all changes since the last full commit
+- **Smart stack detection** (Step 5): `/commit` now inspects staged files to run only the affected stack's tests (avoids running the full multi-stack suite for a single-stack change)
+- **After-plan commit-flash rule**: `workflow.md` now specifies that after executing a plan, the final action is to run `/commit-flash`
+- **Always-recommend convention**: `conventions.md` now mandates stating a recommendation (with "Ma reco:" or "(Recommended)") when asking the PO a question
+- UX skill, command, hook, and rule added to `sync-config.json` for future `/sync-global` propagation
+
 ## [1.21.0] - 2026-03-03
 
 ### Added

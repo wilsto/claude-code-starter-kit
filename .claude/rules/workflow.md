@@ -28,6 +28,7 @@ Suggest commit at these natural breakpoints:
 - **After REFACTOR**: tests still green → commit separately
 - **After a logical unit**: coherent piece of work done
 - **Before switching context**: about to start different work
+- **After plan execution**: when a plan (plan mode) has been fully executed, run `/commit-flash` as the final action
 
 Advisory only — never auto-commit. If declined, don't repeat for same change.
 
