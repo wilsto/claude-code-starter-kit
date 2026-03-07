@@ -264,6 +264,8 @@ Check CI status:
 gh run list --limit 3
 ```
 
+If CI is running, suggest: "Run `/loop 2m ci-watch` to monitor until green — or just `/ci-watch` for a one-shot check." Advisory only — never auto-start.
+
 ## Multi-stack projects
 
 If CLAUDE.md has an `## Active Stacks` section, run format check and tests for **each stack** using its specific commands. A commit should only proceed if all stacks pass their respective gates. Read the corresponding `.claude/stacks/<stack>.md` for language-specific conventions.

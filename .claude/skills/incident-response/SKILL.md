@@ -115,6 +115,8 @@ git bisect good <last-known-good>
 git log --oneline --since="24 hours ago"
 ```
 
+If monitoring a live service during investigation, suggest: `/loop 1m check service logs` — advisory, PO activates.
+
 Write findings to `.incident-response/02-investigation.md`.
 
 **CHECKPOINT**: Present root cause hypothesis. Wait for user to confirm before fix.

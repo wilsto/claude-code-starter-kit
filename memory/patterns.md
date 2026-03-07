@@ -73,9 +73,9 @@
 > Cross-session corrections captured via the `[LEARN]` protocol (see `.claude/rules/self-correction.md`).
 > Format: `[LEARN] Category: Rule` → user approves → appended here.
 
-<!-- Template entries below — replace with actual learnings -->
-<!-- ### [Category] Rule description
-- **Mistake**: what went wrong
-- **Correction**: what to do instead
-- **Project**: project name
-- **Date**: YYYY-MM-DD -->
+### [Architecture] Claude Code hooks must use process.stdout.write JSON, not console.log
+
+- **Mistake**: Used `console.log(message)` in `loop-suggest.js` hook for advisory output
+- **Correction**: Use `process.stdout.write(JSON.stringify({ hookSpecificOutput: { hookEventName, additionalContext } }))` — `debug-warning.js` flags `console.log` as a debug artifact, and all hooks use the structured JSON format
+- **Project**: Template-claude
+- **Date**: 2026-03-07

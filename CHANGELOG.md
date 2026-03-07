@@ -6,6 +6,19 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), using [Conventi
 
 ## [Unreleased]
 
+## [1.23.0] - 2026-03-07
+
+### Added
+
+- **`/loop` integration**: `workflow.md` now has a "Loop & Monitoring" section with patterns for CI watch, incident health monitoring, and Docker builds; `/session-wrap` reference added to Stopping Protocol
+- **`ci-watch` skill + command**: single-purpose CI status checker (`gh run list`), designed to run standalone or via `/loop 2m ci-watch`
+- **`ci-monitor` agent** (haiku): lightweight agent that checks GitHub Actions status and reports pass/fail/in-progress with failing step details
+- **`session-wrap` skill + command**: end-of-session protocol — captures `[LEARN]` items to `patterns.md`, updates scratchpad with next steps, checks for uncommitted changes, asks if polaris needs updating
+- **`loop-suggest.js` hook**: PostToolUse advisory after `git push` — suggests `/loop 2m ci-watch` to monitor CI (non-blocking)
+- **`commit` skill**: Step 9e now suggests `/ci-watch` or `/loop 2m ci-watch` after push
+- **`incident-response` skill**: Phase 2 (Investigation) now suggests `/loop 1m check logs` for live service monitoring
+- All new items registered in `sync-config.json` for `/sync-global` propagation
+
 ## [1.22.0] - 2026-03-07
 
 ## [1.22.0] - 2026-03-07

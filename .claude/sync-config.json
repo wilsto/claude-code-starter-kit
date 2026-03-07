@@ -21,7 +21,9 @@
       "commit.md",
       "tdd.md",
       "test-runner.md",
-      "ux.md"
+      "ux.md",
+      "ci-watch.md",
+      "session-wrap.md"
     ],
     "hooks": [
       "block-secrets.js",
@@ -32,7 +34,8 @@
       "tdd-guard.js",
       "spec-reminder.js",
       "research-first.js",
-      "ux-guard.js"
+      "ux-guard.js",
+      "loop-suggest.js"
     ],
     "stacks": [
       "cicd.md",
@@ -63,12 +66,15 @@
       "tdd",
       "test-runner",
       "spec-update",
-      "ux"
+      "ux",
+      "ci-watch",
+      "session-wrap"
     ],
     "agents": [
       "test-runner.md",
       "security-auditor.md",
-      "tech-debt-auditor.md"
+      "tech-debt-auditor.md",
+      "ci-monitor.md"
     ]
   },
   "projectOnly": {

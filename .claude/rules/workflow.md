@@ -20,6 +20,8 @@ When blocked or finishing a task, ALWAYS use this format:
 
 **DoD check**: never declare "Done" without proof (test output, working demo, logs).
 
+Run `/session-wrap` at the end of a session to capture learnings, update scratchpad, and check for uncommitted changes.
+
 ## Commit Rhythm
 
 Suggest commit at these natural breakpoints:
@@ -31,6 +33,16 @@ Suggest commit at these natural breakpoints:
 - **After plan execution**: when a plan (plan mode) has been fully executed, run `/commit-flash` as the final action
 
 Advisory only — never auto-commit. If declined, don't repeat for same change.
+
+## Loop & Monitoring
+
+Use `/loop` for recurring checks within a session:
+
+- After push: `/loop 2m ci-watch` — watch CI pass/fail, auto-stops at terminal state
+- During incident: `/loop 1m check logs` — monitor service health continuously
+- Docker build/deploy: `/loop 30s check container` — wait for container ready
+
+Advisory only — never auto-start a loop. Suggest and let PO activate.
 
 ## Project Tracking (source of truth)
 
