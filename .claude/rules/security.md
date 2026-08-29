@@ -7,7 +7,7 @@
 
 ## Secrets centralisés
 
-- **Source de vérité pour les secrets multi-projets** : `C:\Users\Will\.secrets.env` (sourcé par $PROFILE et ~/.bashrc)
+- **Source de vérité pour les secrets multi-projets** : `~/.secrets.env` (sourcé par $PROFILE et ~/.bashrc)
   - Exemples : clés API LLM, tokens GitHub/Docker, credentials Home Assistant
 - **Ne jamais dupliquer** un secret multi-projet dans un `.env` local — utiliser les variables d'environnement héritées du shell
 - **Secrets spécifiques projet** (ex: clé Stripe test, DB locale) : légitimes dans `.env` local, toujours gitignored
